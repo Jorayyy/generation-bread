@@ -43,7 +43,7 @@ export default function CartDrawer() {
             <Link
               href="/products"
               onClick={close}
-              className="px-6 py-3 bg-black text-white font-oswald text-xs font-bold tracking-[0.2em] uppercase hover:bg-neutral-800 transition-colors"
+              className="px-6 py-3 bg-brand-800 text-white font-oswald text-xs font-bold tracking-[0.2em] uppercase hover:bg-brand-900 transition-colors"
             >
               Shop Now
             </Link>
@@ -89,7 +89,7 @@ export default function CartDrawer() {
                       <button
                         type="button"
                         onClick={() => setQty(item.key, item.qty - 1)}
-                        className="w-8 h-8 border border-neutral-300 hover:border-black transition-colors"
+                        className="w-8 h-8 border border-neutral-300 hover:border-brand-700 transition-colors"
                         aria-label="Decrease quantity"
                       >
                         −
@@ -98,7 +98,7 @@ export default function CartDrawer() {
                       <button
                         type="button"
                         onClick={() => setQty(item.key, item.qty + 1)}
-                        className="w-8 h-8 border border-neutral-300 hover:border-black transition-colors"
+                        className="w-8 h-8 border border-neutral-300 hover:border-brand-700 transition-colors"
                         aria-label="Increase quantity"
                       >
                         +
@@ -128,13 +128,13 @@ export default function CartDrawer() {
                 <Link
                   href="/checkout"
                   onClick={close}
-                  className="block w-full py-4 bg-black text-white text-center font-oswald text-xs font-bold tracking-[0.2em] uppercase hover:bg-neutral-800 transition-colors"
+                  className="block w-full py-4 bg-brand-800 text-white text-center font-oswald text-xs font-bold tracking-[0.2em] uppercase hover:bg-brand-900 transition-colors"
                 >
                   Checkout
                 </Link>
                 <a
                   href={messengerUrl(
-                    "https://m.me/profile.php?id=61575002625239",
+                    "https://m.me/generationbread",
                     orderMessageText({
                       id: "cart",
                       orderNumber: "Cart",

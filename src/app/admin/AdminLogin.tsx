@@ -37,7 +37,7 @@ export default function AdminLogin() {
     <div className="min-h-screen bg-neutral-100 flex items-center justify-center px-4">
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
-          <div className="w-16 h-16 mx-auto bg-black flex items-center justify-center font-oswald text-2xl font-bold text-white mb-4">
+          <div className="w-16 h-16 mx-auto bg-brand-800 flex items-center justify-center font-oswald text-2xl font-bold text-white mb-4">
             MA
           </div>
           <h1 className="font-oswald text-3xl font-bold uppercase tracking-wider">
@@ -59,7 +59,7 @@ export default function AdminLogin() {
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className="w-full px-4 py-3.5 bg-neutral-50 border border-neutral-200 text-sm focus:outline-none focus:border-black transition-colors placeholder:text-neutral-400"
+            className="w-full px-4 py-3.5 bg-neutral-50 border border-neutral-200 text-sm focus:outline-none focus:border-brand-700 transition-colors placeholder:text-neutral-400"
             placeholder="Enter password"
             autoFocus
             required
@@ -70,7 +70,7 @@ export default function AdminLogin() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full mt-5 py-4 bg-black text-white font-oswald text-xs font-bold tracking-[0.2em] uppercase hover:bg-neutral-800 transition-colors disabled:opacity-50"
+            className="w-full mt-5 py-4 bg-brand-800 text-white font-oswald text-xs font-bold tracking-[0.2em] uppercase hover:bg-brand-900 transition-colors disabled:opacity-50"
           >
             {loading ? "Logging in…" : "Login"}
           </button>
@@ -81,7 +81,7 @@ export default function AdminLogin() {
             href="/"
             className="text-xs text-neutral-500 hover:text-black tracking-widest uppercase transition-colors"
           >
-            ← Back to site
+            â† Back to site
           </Link>
         </p>
       </div>

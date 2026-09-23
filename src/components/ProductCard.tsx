@@ -29,12 +29,12 @@ export default function ProductCard({ product, priority = false }: ProductCardPr
         />
 
         {product.badge && (
-          <div className="absolute top-3 left-3 px-2.5 py-1 bg-white text-black text-[10px] font-bold tracking-widest uppercase">
+          <div className="absolute top-3 left-3 px-2.5 py-1 bg-white text-brand-800 text-[10px] font-bold tracking-widest uppercase">
             {product.badge}
           </div>
         )}
 
-        <div className="absolute top-3 right-3 px-2.5 py-1.5 bg-white text-black text-xs font-bold">
+        <div className="absolute top-3 right-3 px-2.5 py-1.5 bg-brand-800 text-white text-xs font-bold">
           {formatPeso(product.price)}
         </div>
 
@@ -47,7 +47,7 @@ export default function ProductCard({ product, priority = false }: ProductCardPr
         )}
 
         <div className="absolute inset-x-0 bottom-0 p-4 translate-y-2 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300">
-          <span className="block w-full py-3 bg-black text-white text-center font-oswald text-xs font-bold tracking-[0.2em] uppercase">
+          <span className="block w-full py-3 bg-brand-800 text-white text-center font-oswald text-xs font-bold tracking-[0.2em] uppercase">
             View Product
           </span>
         </div>
@@ -57,11 +57,11 @@ export default function ProductCard({ product, priority = false }: ProductCardPr
         <p className="text-[10px] text-neutral-500 tracking-[0.2em] uppercase mb-1">
           {product.category}
         </p>
-        <h3 className="font-oswald text-base font-semibold uppercase tracking-wide text-black">
+        <h3 className="font-oswald text-base font-semibold uppercase tracking-wide text-brand-900">
           {product.name}
         </h3>
         <div className="flex items-center gap-2 mt-1">
-          <span className="text-sm font-medium text-black">
+          <span className="text-sm font-medium text-brand-900">
             {formatPeso(product.price)}
           </span>
           {product.compareAtPrice && product.compareAtPrice > product.price && (
@@ -70,6 +70,18 @@ export default function ProductCard({ product, priority = false }: ProductCardPr
             </span>
           )}
         </div>
+        {product.allergens && product.allergens.length > 0 && (
+          <div className="flex flex-wrap gap-1.5 mt-2">
+            {product.allergens.slice(0, 3).map((tag) => (
+              <span
+                key={tag}
+                className="px-1.5 py-0.5 bg-cream-100 text-brand-800 text-[9px] font-semibold tracking-wider uppercase border border-cream-200"
+              >
+                {tag}
+              </span>
+            ))}
+          </div>
+        )}
       </div>
     </Link>
   );

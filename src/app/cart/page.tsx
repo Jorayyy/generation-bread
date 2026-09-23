@@ -27,7 +27,7 @@ export default function CartPage() {
             </p>
             <Link
               href="/products"
-              className="inline-flex px-8 py-4 bg-black text-white font-oswald text-xs font-bold tracking-[0.2em] uppercase hover:bg-neutral-800 transition-colors"
+              className="inline-flex px-8 py-4 bg-brand-800 text-white font-oswald text-xs font-bold tracking-[0.2em] uppercase hover:bg-brand-900 transition-colors"
             >
               Start Shopping
             </Link>
@@ -115,8 +115,8 @@ export default function CartPage() {
                 <span className="font-medium">{formatPeso(subtotal)}</span>
               </div>
               <div className="flex items-center justify-between text-sm">
-                <span className="text-neutral-500">Delivery</span>
-                <span className="text-neutral-400 text-xs">Calculated on confirmation</span>
+                <span className="text-neutral-500">Fulfillment</span>
+                <span className="text-neutral-400 text-xs">Pickup or delivery at checkout</span>
               </div>
               <div className="flex items-center justify-between pt-4 border-t border-neutral-200">
                 <span className="font-oswald text-sm uppercase tracking-widest">Total</span>
@@ -126,13 +126,13 @@ export default function CartPage() {
               <div className="grid gap-2">
                 <Link
                   href="/checkout"
-                  className="block w-full py-4 bg-black text-white text-center font-oswald text-xs font-bold tracking-[0.2em] uppercase hover:bg-neutral-800 transition-colors"
+                  className="block w-full py-4 bg-brand-800 text-white text-center font-oswald text-xs font-bold tracking-[0.2em] uppercase hover:bg-brand-900 transition-colors"
                 >
                   Proceed to Checkout
                 </Link>
                 <a
                   href={messengerUrl(
-                    "https://m.me/profile.php?id=61575002625239",
+                    "https://m.me/generationbread",
                     orderMessageText({
                       id: "cart",
                       orderNumber: "Cart",
@@ -181,7 +181,7 @@ export default function CartPage() {
 
               <p className="text-[11px] text-neutral-400 leading-relaxed">
                 Payment options: GCash, Maya, bank transfer, or COD for select areas.
-                Final delivery fee is confirmed via Messenger or phone.
+                Choose free store pickup or Tacloban delivery at checkout.
               </p>
             </aside>
           </div>

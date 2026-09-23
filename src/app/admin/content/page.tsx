@@ -67,7 +67,7 @@ export default function AdminContent() {
       <div className="mb-8">
         <h1 className="font-oswald text-4xl font-bold uppercase tracking-tight">Content</h1>
         <p className="text-neutral-500 mt-2 text-sm">
-          Business information, FAQs — saved on the server so every visitor sees it
+          Business information, FAQs â€” saved on the server so every visitor sees it
         </p>
       </div>
 
@@ -84,7 +84,7 @@ export default function AdminContent() {
             onClick={() => setTab(item.key)}
             className={`px-5 py-3 text-[11px] font-bold tracking-[0.2em] uppercase border-b-2 transition-colors ${
               tab === item.key
-                ? "text-black border-black"
+                ? "text-brand-900 border-brand-700"
                 : "text-neutral-400 border-transparent hover:text-neutral-700"
             }`}
           >
@@ -319,19 +319,19 @@ function SaveButton({ saving, onClick }: { saving: boolean; onClick: () => void 
         type="button"
         onClick={onClick}
         disabled={saving}
-        className="px-8 py-4 bg-black text-white font-oswald text-xs font-bold tracking-[0.2em] uppercase hover:bg-neutral-800 transition-colors disabled:opacity-50"
+        className="px-8 py-4 bg-brand-800 text-white font-oswald text-xs font-bold tracking-[0.2em] uppercase hover:bg-brand-900 transition-colors disabled:opacity-50"
       >
         {saving ? "Saving…" : "Save Changes"}
       </button>
       <p className="text-neutral-400 text-xs mt-3">
-        Saved to the server — visible to every visitor immediately.
+        Saved to the server â€” visible to every visitor immediately.
       </p>
     </div>
   );
 }
 
 const inputCls =
-  "w-full px-3.5 py-2.5 bg-white border border-neutral-300 text-sm focus:outline-none focus:border-black transition-colors";
+  "w-full px-3.5 py-2.5 bg-white border border-neutral-300 text-sm focus:outline-none focus:border-brand-700 transition-colors";
 
 function Input({
   label,

@@ -110,7 +110,7 @@ export default async function AboutPage() {
                 className="flex gap-6 pb-10 border-l border-neutral-200 pl-7 relative group"
               >
                 <span
-                  className="absolute left-0 top-0 w-2 h-2 bg-black -translate-x-[4.5px] group-hover:scale-150 transition-transform"
+                  className="absolute left-0 top-0 w-2 h-2 bg-brand-700 -translate-x-[4.5px] group-hover:scale-150 transition-transform"
                   aria-hidden="true"
                 />
                 <div className="font-oswald text-sm font-bold text-neutral-400 tracking-widest uppercase w-20 shrink-0 pt-0.5">
@@ -144,7 +144,7 @@ export default async function AboutPage() {
               href={business.social.facebook}
               target="_blank"
               rel="noopener noreferrer"
-              className="px-8 py-4 bg-black text-white font-oswald text-xs font-bold tracking-[0.2em] uppercase hover:bg-neutral-800 transition-colors"
+              className="px-8 py-4 bg-brand-800 text-white font-oswald text-xs font-bold tracking-[0.2em] uppercase hover:bg-brand-900 transition-colors"
             >
               Follow on Facebook
             </a>

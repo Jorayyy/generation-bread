@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useEffect, useState } from "react";
 import type { MediaItem } from "@/lib/types";
@@ -87,7 +87,7 @@ export default function AdminMedia() {
             Upload images and copy their URLs into products, content, or logo
           </p>
         </div>
-        <label className="px-6 py-3 bg-black text-white font-oswald text-xs font-bold tracking-[0.2em] uppercase hover:bg-neutral-800 transition-colors cursor-pointer">
+        <label className="px-6 py-3 bg-brand-800 text-white font-oswald text-xs font-bold tracking-[0.2em] uppercase hover:bg-brand-900 transition-colors cursor-pointer">
           {uploading ? "Uploading…" : "Upload Image"}
           <input
             type="file"
@@ -116,7 +116,7 @@ export default function AdminMedia() {
 
       <div className="mb-6 bg-amber-50 border border-amber-200 px-4 py-3 text-sm text-amber-800">
         Uploads are stored in <code>.data/uploads</code> on the server. On serverless hosts
-        these files reset on redeploy — for permanent images, drop files into{" "}
+        these files reset on redeploy â€” for permanent images, drop files into{" "}
         <code>public/images</code> or paste an external URL.
       </div>
 

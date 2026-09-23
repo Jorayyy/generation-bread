@@ -24,7 +24,7 @@ export default async function CheckoutSuccessPage({ searchParams }: PageProps) {
   if (!order) notFound();
 
   const messenger = messengerUrl(
-    "https://m.me/profile.php?id=61575002625239",
+    "https://m.me/generationbread",
     orderMessageText(order)
   );
 
@@ -32,7 +32,7 @@ export default async function CheckoutSuccessPage({ searchParams }: PageProps) {
     <section className="bg-white">
       <div className="max-w-3xl mx-auto px-4 sm:px-6 py-14">
         <div className="text-center mb-10">
-          <div className="w-14 h-14 mx-auto bg-black text-white flex items-center justify-center mb-5">
+          <div className="w-14 h-14 mx-auto bg-brand-800 text-white flex items-center justify-center mb-5">
             <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
             </svg>
@@ -110,6 +110,12 @@ export default async function CheckoutSuccessPage({ searchParams }: PageProps) {
 
             <div className="pt-4 border-t border-neutral-200 text-sm space-y-1.5">
               <div className="flex justify-between gap-4">
+                <span className="text-neutral-400 text-xs uppercase tracking-widest">Fulfillment</span>
+                <span className="uppercase text-xs font-medium">
+                  {order.fulfillment === "pickup" ? "Store Pickup" : "Delivery"}
+                </span>
+              </div>
+              <div className="flex justify-between gap-4">
                 <span className="text-neutral-400 text-xs uppercase tracking-widest">Payment</span>
                 <span className="uppercase text-xs font-medium">{order.paymentMethod}</span>
               </div>
@@ -121,13 +127,15 @@ export default async function CheckoutSuccessPage({ searchParams }: PageProps) {
                 <span className="text-neutral-400 text-xs uppercase tracking-widest">Phone</span>
                 <span className="text-xs text-right">{order.customer.phone}</span>
               </div>
-              <div className="flex justify-between gap-4">
-                <span className="text-neutral-400 text-xs uppercase tracking-widest">Address</span>
-                <span className="text-xs text-right">
-                  {order.customer.address}, {order.customer.city}, {order.customer.province}{" "}
-                  {order.customer.zip}
-                </span>
-              </div>
+              {order.fulfillment !== "pickup" && (
+                <div className="flex justify-between gap-4">
+                  <span className="text-neutral-400 text-xs uppercase tracking-widest">Address</span>
+                  <span className="text-xs text-right">
+                    {order.customer.address}, {order.customer.city}, {order.customer.province}{" "}
+                    {order.customer.zip}
+                  </span>
+                </div>
+              )}
               <div className="flex justify-between gap-4">
                 <span className="text-neutral-400 text-xs uppercase tracking-widest">Placed</span>
                 <span className="text-xs text-right">{formatDateTime(order.createdAt)}</span>
@@ -140,7 +148,7 @@ export default async function CheckoutSuccessPage({ searchParams }: PageProps) {
               href={messenger}
               target="_blank"
               rel="noopener noreferrer"
-              className="py-4 bg-black text-white text-center font-oswald text-xs font-bold tracking-[0.2em] uppercase hover:bg-neutral-800 transition-colors"
+              className="py-4 bg-brand-800 text-white text-center font-oswald text-xs font-bold tracking-[0.2em] uppercase hover:bg-brand-900 transition-colors"
             >
               Confirm on Messenger
             </a>
@@ -155,7 +163,8 @@ export default async function CheckoutSuccessPage({ searchParams }: PageProps) {
 
         <p className="text-xs text-neutral-400 text-center mt-6 leading-relaxed">
           Keep your order number: <strong>{order.orderNumber}</strong>. We&apos;ll contact
-          you on {order.customer.phone} to confirm availability, pickup or delivery, and payment
+          you on {order.customer.phone} to confirm availability,{" "}
+          {order.fulfillment === "pickup" ? "pickup time" : "delivery"}, and payment
           instructions.
         </p>
       </div>

@@ -49,7 +49,7 @@ export const metadata: Metadata = {
       "Bakery café in Tacloban City serving fresh breads, pastries, and cakes daily. Home of the Ube Cheese Pandesal.",
     images: [
       {
-        url: `${SITE_URL}/logo.svg`,
+        url: `${SITE_URL}/images/logo.jpg`,
         width: 1200,
         height: 630,
         alt: "Generation Bread - Fresh Bakery Café",
@@ -61,7 +61,7 @@ export const metadata: Metadata = {
     title: "Generation Bread | Fresh Bakery Café in Tacloban City",
     description:
       "Bakery café in Tacloban City serving fresh breads, pastries, and cakes daily.",
-    images: [`${SITE_URL}/logo.svg`],
+    images: [`${SITE_URL}/images/logo.jpg`],
   },
   robots: {
     index: true,

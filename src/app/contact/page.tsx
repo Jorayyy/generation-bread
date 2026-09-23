@@ -166,7 +166,7 @@ export default async function ContactPage() {
             href={business.social.messenger}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex px-8 py-4 bg-black text-white font-oswald text-xs font-bold tracking-[0.2em] uppercase hover:bg-neutral-800 transition-colors"
+            className="inline-flex px-8 py-4 bg-brand-800 text-white font-oswald text-xs font-bold tracking-[0.2em] uppercase hover:bg-brand-900 transition-colors"
           >
             Order Now
           </a>

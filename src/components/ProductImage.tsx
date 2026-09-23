@@ -20,10 +20,10 @@ export default function ProductImage({
   if (!src) {
     return (
       <div
-        className={`relative overflow-hidden bg-gradient-to-br from-[#111] to-[#0a0a0a] flex items-center justify-center ${className}`}
+        className={`relative overflow-hidden bg-gradient-to-br from-brand-800 to-brand-950 flex items-center justify-center ${className}`}
         aria-hidden="true"
       >
-        <span className="font-oswald text-6xl font-bold text-white/10">MA</span>
+        <span className="font-oswald text-6xl font-bold text-white/10">GB</span>
       </div>
     );
   }

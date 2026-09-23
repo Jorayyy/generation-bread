@@ -101,7 +101,7 @@ export default function AdminCategories() {
             setEditing(empty);
             setIsNew(true);
           }}
-          className="px-6 py-3 bg-black text-white font-oswald text-xs font-bold tracking-[0.2em] uppercase hover:bg-neutral-800 transition-colors"
+          className="px-6 py-3 bg-brand-800 text-white font-oswald text-xs font-bold tracking-[0.2em] uppercase hover:bg-brand-900 transition-colors"
         >
           + Add Category
         </button>
@@ -187,7 +187,7 @@ export default function AdminCategories() {
             <button
               type="button"
               onClick={() => save(editing)}
-              className="px-6 py-3 bg-black text-white font-oswald text-xs font-bold tracking-[0.2em] uppercase hover:bg-neutral-800"
+              className="px-6 py-3 bg-brand-800 text-white font-oswald text-xs font-bold tracking-[0.2em] uppercase hover:bg-brand-900"
             >
               Save
             </button>
@@ -256,4 +256,4 @@ export default function AdminCategories() {
 }
 
 const inputCls =
-  "w-full px-3.5 py-2.5 bg-white border border-neutral-300 text-sm focus:outline-none focus:border-black transition-colors";
+  "w-full px-3.5 py-2.5 bg-white border border-neutral-300 text-sm focus:outline-none focus:border-brand-700 transition-colors";

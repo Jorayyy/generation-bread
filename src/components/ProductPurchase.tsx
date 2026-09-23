@@ -116,7 +116,7 @@ export default function ProductPurchase({ product }: ProductPurchaseProps) {
             </span>
           )}
           {product.badge && (
-            <span className="px-2.5 py-1 bg-black text-white text-[10px] font-bold tracking-widest uppercase">
+            <span className="px-2.5 py-1 bg-brand-800 text-white text-[10px] font-bold tracking-widest uppercase">
               {product.badge}
             </span>
           )}
@@ -125,11 +125,32 @@ export default function ProductPurchase({ product }: ProductPurchaseProps) {
 
       <p className="text-neutral-600 leading-relaxed">{product.description}</p>
 
+      {product.allergens && product.allergens.length > 0 && (
+        <div className="border border-cream-200 bg-cream-50 px-4 py-3">
+          <p className="text-[11px] font-bold tracking-[0.2em] uppercase text-brand-800 mb-2">
+            Contains
+          </p>
+          <div className="flex flex-wrap gap-1.5">
+            {product.allergens.map((tag) => (
+              <span
+                key={tag}
+                className="px-2 py-0.5 bg-white text-brand-900 text-[10px] font-semibold tracking-wider uppercase border border-cream-300"
+              >
+                {tag}
+              </span>
+            ))}
+          </div>
+          <p className="text-[11px] text-neutral-500 mt-2">
+            Baked in a facility that handles nuts. Message us for dietary concerns.
+          </p>
+        </div>
+      )}
+
       {product.features.length > 0 && (
         <ul className="grid sm:grid-cols-2 gap-2">
           {product.features.map((feature) => (
             <li key={feature} className="flex items-start gap-2 text-sm text-neutral-600">
-              <span className="mt-1.5 w-1.5 h-1.5 bg-black shrink-0" />
+              <span className="mt-1.5 w-1.5 h-1.5 bg-brand-600 shrink-0" />
               {feature}
             </li>
           ))}
@@ -153,8 +174,8 @@ export default function ProductPurchase({ product }: ProductPurchaseProps) {
                   }
                   className={`px-4 py-2.5 border text-sm transition-colors ${
                     active
-                      ? "border-black bg-black text-white"
-                      : "border-neutral-300 hover:border-black"
+                      ? "border-brand-800 bg-brand-800 text-white"
+                      : "border-neutral-300 hover:border-brand-700"
                   }`}
                   aria-pressed={active}
                 >
@@ -201,13 +222,13 @@ export default function ProductPurchase({ product }: ProductPurchaseProps) {
           type="button"
           onClick={handleAdd}
           disabled={!canAdd}
-          className="py-4 bg-black text-white font-oswald text-xs font-bold tracking-[0.2em] uppercase hover:bg-neutral-800 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+          className="py-4 bg-brand-800 text-white font-oswald text-xs font-bold tracking-[0.2em] uppercase hover:bg-brand-900 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
         >
           {needsSelection ? `Select ${variantGroups[0]?.name}` : "Add to Cart"}
         </button>
         <a
           href={messengerUrl(
-            "https://m.me/profile.php?id=61575002625239",
+            "https://m.me/generationbread",
             productInquiryText(product)
           )}
           target="_blank"

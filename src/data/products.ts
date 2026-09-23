@@ -43,6 +43,8 @@ type Seed = {
   featured?: boolean;
   isNew?: boolean;
   badge?: string | null;
+  allergens?: string[];
+  diet?: string[];
   id?: string;
   createdAt?: string;
 };
@@ -69,6 +71,7 @@ const seeds: Seed[] = [
     images: [breadImg.ube, breadImg.pandesal],
     badge: "Best Seller",
     featured: true,
+    allergens: ["Wheat", "Dairy"],
     createdAt: SEEDED_AT,
   },
   {
@@ -132,6 +135,7 @@ const seeds: Seed[] = [
     images: [pastryImg.painChoc, pastryImg.croissant],
     badge: "Popular",
     featured: true,
+    allergens: ["Wheat", "Dairy", "Eggs", "Tree Nuts"],
     createdAt: SEEDED_AT,
   },
   {
@@ -284,6 +288,7 @@ const seeds: Seed[] = [
     category: "cakes",
     images: [cakeImg.rocher, cakeImg.chocolate],
     badge: "Premium",
+    allergens: ["Wheat", "Dairy", "Eggs", "Tree Nuts"],
     createdAt: SEEDED_AT,
   },
   {
@@ -303,6 +308,12 @@ const seeds: Seed[] = [
   },
 ];
 
+const defaultAllergens: Record<Seed["category"], string[]> = {
+  breads: ["Wheat", "Dairy"],
+  pastries: ["Wheat", "Dairy", "Eggs"],
+  cakes: ["Wheat", "Dairy", "Eggs"],
+};
+
 export const products: Product[] = seeds.map((seed, index) => ({
   id: seed.id ?? `prod_${seed.slug}`,
   slug: seed.slug,
@@ -321,6 +332,8 @@ export const products: Product[] = seeds.map((seed, index) => ({
   stock: null,
   lowStockAt: 5,
   variants: [],
+  allergens: seed.allergens ?? defaultAllergens[seed.category],
+  diet: seed.diet ?? [],
   createdAt: seed.createdAt ?? addDays(index),
   updatedAt: seed.createdAt ?? addDays(index),
 }));

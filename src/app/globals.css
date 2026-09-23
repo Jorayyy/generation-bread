@@ -1,7 +1,25 @@
 @import "tailwindcss";
 
+@theme {
+  --color-brand-50: #eef8fa;
+  --color-brand-100: #d4eef3;
+  --color-brand-200: #a8dde8;
+  --color-brand-300: #6fc4d4;
+  --color-brand-400: #3aa7bc;
+  --color-brand-500: #188ba3;
+  --color-brand-600: #0e7490;
+  --color-brand-700: #0d5a70;
+  --color-brand-800: #0b4558;
+  --color-brand-900: #093645;
+  --color-brand-950: #062430;
+  --color-cream-50: #fdfaf5;
+  --color-cream-100: #f7f1e6;
+  --color-cream-200: #efe5d4;
+  --color-cream-300: #e4d5bc;
+}
+
 :root {
-  --black: #000000;
+  --black: #093645;
   --white: #ffffff;
   --gray-50: #fafafa;
   --gray-100: #f5f5f5;
@@ -47,7 +65,7 @@ body {
 }
 
 :focus-visible {
-  outline: 2px solid #000000;
+  outline: 2px solid #0b4558;
   outline-offset: 2px;
 }
 
@@ -70,7 +88,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 ::selection {
-  background-color: #000000;
+  background-color: #0b4558;
   color: #ffffff;
 }
 

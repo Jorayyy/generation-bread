@@ -92,7 +92,7 @@ export default function ShopBrowser({ products, categories }: ShopBrowserProps) 
   return (
     <>
       {/* Filter bar */}
-      <div className="sticky top-16 lg:top-20 z-30 bg-white/95 backdrop-blur border-y border-neutral-200">
+      <div className="sticky top-[5.75rem] lg:top-[7rem] z-30 bg-white/95 backdrop-blur border-y border-neutral-200">
         <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-10">
           <div className="flex flex-col lg:flex-row lg:items-center gap-3 py-3">
             <div className="flex items-center gap-1 overflow-x-auto scrollbar-hide flex-1">
@@ -103,8 +103,8 @@ export default function ShopBrowser({ products, categories }: ShopBrowserProps) 
                   onClick={() => updateParams({ category: cat.slug === "all" ? null : cat.slug })}
                   className={`px-4 py-2 text-[11px] font-bold tracking-[0.18em] uppercase whitespace-nowrap transition-colors ${
                     activeCategory === cat.slug
-                      ? "bg-black text-white"
-                      : "text-neutral-500 hover:text-black hover:bg-neutral-100"
+                      ? "bg-brand-800 text-cream-50"
+                      : "text-neutral-500 hover:text-brand-800 hover:bg-cream-100"
                   }`}
                 >
                   {cat.name}
@@ -117,7 +117,7 @@ export default function ShopBrowser({ products, categories }: ShopBrowserProps) 
                 value={sort}
                 onChange={(e) => updateParams({ sort: e.target.value === "featured" ? null : e.target.value })}
                 aria-label="Sort products"
-                className="px-3 py-2 border border-neutral-300 text-sm bg-white focus:outline-none focus:border-black"
+                className="px-3 py-2 border border-neutral-300 text-sm bg-white focus:outline-none focus:border-brand-700"
               >
                 {SORTS.map((option) => (
                   <option key={option.key} value={option.key}>
@@ -130,7 +130,7 @@ export default function ShopBrowser({ products, categories }: ShopBrowserProps) 
                 value={maxPrice || ""}
                 onChange={(e) => updateParams({ max: e.target.value || null })}
                 aria-label="Maximum price"
-                className="px-3 py-2 border border-neutral-300 text-sm bg-white focus:outline-none focus:border-black"
+                className="px-3 py-2 border border-neutral-300 text-sm bg-white focus:outline-none focus:border-brand-700"
               >
                 <option value="">Any price</option>
                 <option value="300">Under ₱300</option>
@@ -157,7 +157,7 @@ export default function ShopBrowser({ products, categories }: ShopBrowserProps) 
                   router.replace("/products", { scroll: false });
                   setLimit(PAGE_SIZE);
                 }}
-                className="text-xs tracking-[0.15em] uppercase text-neutral-500 hover:text-black transition-colors"
+                className="text-xs tracking-[0.15em] uppercase text-neutral-500 hover:text-brand-800 transition-colors"
               >
                 Clear filters
               </button>
@@ -174,7 +174,7 @@ export default function ShopBrowser({ products, categories }: ShopBrowserProps) 
                 onClick={() => {
                   router.replace("/products", { scroll: false });
                 }}
-                className="px-6 py-3 bg-black text-white font-oswald text-xs font-bold tracking-[0.2em] uppercase hover:bg-neutral-800 transition-colors"
+                className="px-6 py-3 bg-brand-800 text-white font-oswald text-xs font-bold tracking-[0.2em] uppercase hover:bg-brand-900 transition-colors"
               >
                 View All Products
               </button>

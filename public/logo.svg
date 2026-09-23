@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" role="img" aria-label="Generation Bread">
-  <rect width="400" height="400" fill="#000"/>
+  <rect width="400" height="400" fill="#0b4558"/>
   <text
     x="200"
     y="248"
@@ -7,7 +7,7 @@
     font-family="Arial Black, Arial, Helvetica, sans-serif"
     font-size="200"
     font-weight="900"
-    fill="#fff"
+    fill="#f7f1e6"
     letter-spacing="-8"
   >GB</text>
 </svg>

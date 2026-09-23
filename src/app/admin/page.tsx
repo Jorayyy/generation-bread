@@ -63,7 +63,7 @@ export default async function AdminDashboard() {
           <Link
             key={card.href}
             href={card.href}
-            className="p-6 bg-white border border-neutral-200 hover:border-black hover:shadow-sm transition-all group"
+            className="p-6 bg-white border border-neutral-200 hover:border-brand-700 hover:shadow-sm transition-all group"
           >
             <h2 className="font-oswald text-lg font-bold uppercase tracking-wide group-hover:text-neutral-600 transition-colors">
               {card.label}

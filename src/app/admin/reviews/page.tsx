@@ -98,7 +98,7 @@ export default function AdminReviews() {
           onClick={() => {
             setEditing(empty);
           }}
-          className="px-6 py-3 bg-black text-white font-oswald text-xs font-bold tracking-[0.2em] uppercase hover:bg-neutral-800 transition-colors"
+          className="px-6 py-3 bg-brand-800 text-white font-oswald text-xs font-bold tracking-[0.2em] uppercase hover:bg-brand-900 transition-colors"
         >
           + Add Review
         </button>
@@ -185,7 +185,7 @@ export default function AdminReviews() {
             <button
               type="button"
               onClick={() => save(editing)}
-              className="px-6 py-3 bg-black text-white font-oswald text-xs font-bold tracking-[0.2em] uppercase hover:bg-neutral-800"
+              className="px-6 py-3 bg-brand-800 text-white font-oswald text-xs font-bold tracking-[0.2em] uppercase hover:bg-brand-900"
             >
               Save
             </button>
@@ -222,8 +222,8 @@ export default function AdminReviews() {
                   {review.status}
                 </span>
                 <span className="text-xs" aria-label={`${review.rating} stars`}>
-                  {"★".repeat(review.rating)}
-                  {"☆".repeat(5 - review.rating)}
+                  {"â˜…".repeat(review.rating)}
+                  {"â˜†".repeat(5 - review.rating)}
                 </span>
               </div>
               <p className="text-neutral-600 text-sm mt-2">{review.text}</p>
@@ -261,4 +261,4 @@ export default function AdminReviews() {
 }
 
 const inputCls =
-  "w-full px-3.5 py-2.5 bg-white border border-neutral-300 text-sm focus:outline-none focus:border-black transition-colors";
+  "w-full px-3.5 py-2.5 bg-white border border-neutral-300 text-sm focus:outline-none focus:border-brand-700 transition-colors";

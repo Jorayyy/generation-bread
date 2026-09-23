@@ -6,6 +6,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { useContent } from "@/lib/content-context";
 import { useCart } from "@/lib/cart-context";
 import { messengerUrl } from "@/lib/messenger";
+import HoursBanner from "@/components/HoursBanner";
 
 const navLinks = [
   { href: "/products", label: "Shop" },
@@ -121,6 +122,7 @@ export default function Navbar() {
             : "bg-white/80 backdrop-blur-sm border-b border-transparent"
         }`}
       >
+        <HoursBanner />
         <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-10">
           <div className="flex items-center justify-between h-16 lg:h-20">
             <Link
@@ -132,14 +134,14 @@ export default function Navbar() {
               <img
                 src={business.logo}
                 alt=""
-                className="w-9 h-9 rounded-full object-cover ring-1 ring-neutral-200 group-hover:ring-black transition-all"
+                className="w-9 h-9 rounded-full object-cover ring-1 ring-brand-200 group-hover:ring-brand-600 transition-all"
                 onError={(e) => {
                   const target = e.currentTarget as HTMLImageElement;
                   if (target.src.endsWith("/logo.svg")) return;
                   target.src = "/logo.svg";
                 }}
               />
-              <span className="font-oswald text-lg font-bold tracking-[0.18em] uppercase hidden sm:block">
+              <span className="font-oswald text-lg font-bold tracking-[0.18em] uppercase hidden sm:block text-brand-900">
                 Generation Bread
               </span>
             </Link>
@@ -151,8 +153,8 @@ export default function Navbar() {
                   href={link.href}
                   className={`px-4 py-2 text-[12px] font-medium tracking-[0.18em] uppercase transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 ${
                     pathname === link.href
-                      ? "text-black"
-                      : "text-neutral-500 hover:text-black"
+                      ? "text-brand-800"
+                      : "text-neutral-500 hover:text-brand-800"
                   }`}
                 >
                   {link.label}
@@ -166,7 +168,7 @@ export default function Navbar() {
                   type="button"
                   onClick={() => setSearchOpen((v) => !v)}
                   className={`p-2.5 transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 ${
-                    searchOpen ? "text-black" : "text-neutral-600 hover:text-black"
+                    searchOpen ? "text-brand-800" : "text-neutral-600 hover:text-brand-800"
                   }`}
                   aria-label="Search products"
                   aria-expanded={searchOpen}
@@ -190,7 +192,7 @@ export default function Navbar() {
                       onChange={(e) => setSearchValue(e.target.value)}
                       placeholder="Search products"
                       aria-label="Search products"
-                      className="w-full px-3 py-2 border border-neutral-300 text-sm focus:outline-none focus:border-black transition-colors"
+                      className="w-full px-3 py-2 border border-neutral-300 text-sm focus:outline-none focus:border-brand-700 transition-colors"
                     />
                   </form>
                 </div>
@@ -199,12 +201,12 @@ export default function Navbar() {
               <button
                 type="button"
                 onClick={open}
-                className="relative p-2.5 text-neutral-600 hover:text-black transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
+                className="relative p-2.5 text-neutral-600 hover:text-brand-800 transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
                 aria-label={`Open cart, ${count} item${count === 1 ? "" : "s"}`}
               >
                 <NavIcon name="cart" />
                 {count > 0 && (
-                  <span className="absolute -top-0.5 -right-0.5 min-w-[18px] h-[18px] px-1 bg-black text-white text-[10px] font-bold flex items-center justify-center">
+                  <span className="absolute -top-0.5 -right-0.5 min-w-[18px] h-[18px] px-1 bg-brand-800 text-white text-[10px] font-bold flex items-center justify-center">
                     {count}
                   </span>
                 )}
@@ -214,7 +216,7 @@ export default function Navbar() {
                 href={messengerUrl(business.social.messenger, "Hi Generation Bread! I'd like to order.")}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="hidden md:inline-flex ml-2 px-5 py-2.5 bg-black text-white text-[11px] font-bold tracking-[0.18em] uppercase hover:bg-neutral-800 transition-colors"
+                className="hidden md:inline-flex ml-2 px-5 py-2.5 bg-brand-800 text-white text-[11px] font-bold tracking-[0.18em] uppercase hover:bg-brand-900 transition-colors"
               >
                 Order Now
               </a>
@@ -222,23 +224,23 @@ export default function Navbar() {
               <button
                 type="button"
                 onClick={() => setIsOpen((v) => !v)}
-                className="lg:hidden p-2.5 text-black ml-1"
+                className="lg:hidden p-2.5 text-brand-900 ml-1"
                 aria-label={isOpen ? "Close menu" : "Open menu"}
                 aria-expanded={isOpen}
               >
                 <div className="w-6 h-4 flex flex-col justify-between">
                   <span
-                    className={`w-full h-[1.5px] bg-black transition-all duration-300 ${
+                    className={`w-full h-[1.5px] bg-brand-900 transition-all duration-300 ${
                       isOpen ? "rotate-45 translate-y-[5px]" : ""
                     }`}
                   />
                   <span
-                    className={`w-full h-[1.5px] bg-black transition-all duration-300 ${
+                    className={`w-full h-[1.5px] bg-brand-900 transition-all duration-300 ${
                       isOpen ? "opacity-0" : ""
                     }`}
                   />
                   <span
-                    className={`w-full h-[1.5px] bg-black transition-all duration-300 ${
+                    className={`w-full h-[1.5px] bg-brand-900 transition-all duration-300 ${
                       isOpen ? "-rotate-45 -translate-y-[5px]" : ""
                     }`}
                   />
@@ -279,7 +281,7 @@ export default function Navbar() {
             target="_blank"
             rel="noopener noreferrer"
             onClick={() => setIsOpen(false)}
-            className="mt-8 px-8 py-4 bg-black text-white font-oswald text-sm font-bold tracking-[0.2em] uppercase text-center"
+            className="mt-8 px-8 py-4 bg-brand-800 text-white font-oswald text-sm font-bold tracking-[0.2em] uppercase text-center"
           >
             Order via Messenger
           </a>
@@ -300,7 +302,7 @@ export default function Navbar() {
                 <span className="relative">
                   <NavIcon name={link.icon} />
                   {isCart && count > 0 && (
-                    <span className="absolute -top-1.5 -right-2.5 min-w-[16px] h-4 px-1 bg-black text-white text-[9px] font-bold flex items-center justify-center">
+                    <span className="absolute -top-1.5 -right-2.5 min-w-[16px] h-4 px-1 bg-brand-800 text-white text-[9px] font-bold flex items-center justify-center">
                       {count}
                     </span>
                   )}
@@ -317,8 +319,8 @@ export default function Navbar() {
                   key="cart"
                   type="button"
                   onClick={open}
-                  className="flex flex-col items-center justify-center py-2.5 text-neutral-600 hover:text-black transition-colors"
-                  aria-label={`Open cart, ${count} items`}
+                className="flex flex-col items-center justify-center py-2.5 text-neutral-600 hover:text-brand-800 transition-colors"
+                aria-label={`Open cart, ${count} items`}
                 >
                   {content}
                 </button>
@@ -331,8 +333,8 @@ export default function Navbar() {
                   key="search"
                   type="button"
                   onClick={() => setSearchOpen(true)}
-                  className="flex flex-col items-center justify-center py-2.5 text-neutral-600 hover:text-black transition-colors"
-                  aria-label="Search products"
+                className="flex flex-col items-center justify-center py-2.5 text-neutral-600 hover:text-brand-800 transition-colors"
+                aria-label="Search products"
                 >
                   {content}
                 </button>
@@ -345,8 +347,8 @@ export default function Navbar() {
                 href={link.href}
                 className={`flex flex-col items-center justify-center py-2.5 transition-colors ${
                   pathname === link.href
-                    ? "text-black"
-                    : "text-neutral-500 hover:text-black"
+                    ? "text-brand-800"
+                    : "text-neutral-500 hover:text-brand-800"
                 }`}
               >
                 {content}

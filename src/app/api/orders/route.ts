@@ -1,10 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createOrder } from "@/lib/store";
-import type { OrderCustomer, PaymentMethod } from "@/lib/types";
+import type { FulfillmentMethod, OrderCustomer, PaymentMethod } from "@/lib/types";
 
 export const dynamic = "force-dynamic";
 
 const PAYMENTS: PaymentMethod[] = ["gcash", "maya", "bank", "cod"];
+const FULFILLMENTS: FulfillmentMethod[] = ["pickup", "delivery"];
 
 export async function POST(request: NextRequest) {
   try {
@@ -12,6 +13,7 @@ export async function POST(request: NextRequest) {
       items?: { productId?: string; qty?: number; variantId?: string | null }[];
       customer?: Partial<OrderCustomer>;
       paymentMethod?: PaymentMethod;
+      fulfillment?: FulfillmentMethod;
     };
 
     if (!Array.isArray(body.items) || !body.items || !body.customer) {
@@ -21,6 +23,9 @@ export async function POST(request: NextRequest) {
     const paymentMethod = PAYMENTS.includes(body.paymentMethod as PaymentMethod)
       ? (body.paymentMethod as PaymentMethod)
       : "gcash";
+    const fulfillment = FULFILLMENTS.includes(body.fulfillment as FulfillmentMethod)
+      ? (body.fulfillment as FulfillmentMethod)
+      : "delivery";
 
     const result = await createOrder({
       items: body.items
@@ -41,6 +46,7 @@ export async function POST(request: NextRequest) {
         notes: body.customer.notes ?? "",
       },
       paymentMethod,
+      fulfillment,
     });
 
     if (!result.ok) {
@@ -56,6 +62,7 @@ export async function POST(request: NextRequest) {
         subtotal: result.order.subtotal,
         total: result.order.total,
         paymentMethod: result.order.paymentMethod,
+        fulfillment: result.order.fulfillment,
         createdAt: result.order.createdAt,
         customer: result.order.customer,
       },

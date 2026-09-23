@@ -135,8 +135,9 @@ export default function AdminOrders() {
                   <p className="text-neutral-500 text-sm mt-1">
                     {order.customer.name} · {order.customer.phone}
                   </p>
-                  <p className="text-neutral-400 text-xs mt-0.5">
+                  <p className="text-xs text-neutral-400 mt-1">
                     {formatDate(order.createdAt)} · {order.paymentMethod.toUpperCase()} ·{" "}
+                    {(order.fulfillment === "pickup" ? "Pickup" : "Delivery")} ·{" "}
                     {order.items.length} item{order.items.length !== 1 ? "s" : ""}
                   </p>
                 </div>
@@ -148,7 +149,7 @@ export default function AdminOrders() {
                     value={order.status}
                     onChange={(e) => changeStatus(order.id, e.target.value as OrderStatus)}
                     aria-label={`Status for ${order.orderNumber}`}
-                    className="px-3 py-2 border border-neutral-300 text-xs bg-white focus:outline-none focus:border-black uppercase tracking-wider"
+                    className="px-3 py-2 border border-neutral-300 text-xs bg-white focus:outline-none focus:border-brand-700 uppercase tracking-wider"
                   >
                     {STATUSES.map((status) => (
                       <option key={status} value={status}>
@@ -225,16 +226,24 @@ export default function AdminOrders() {
                           <dd>{order.customer.email}</dd>
                         </div>
                       )}
-                      <div className="flex gap-3">
-                        <dt className="text-neutral-400 w-20 shrink-0">Address</dt>
-                        <dd>
-                          {order.customer.address}, {order.customer.city},{" "}
-                          {order.customer.province} {order.customer.zip}
-                        </dd>
-                      </div>
+                      {order.fulfillment !== "pickup" && (
+                        <div className="flex gap-3">
+                          <dt className="text-neutral-400 w-20 shrink-0">Address</dt>
+                          <dd>
+                            {order.customer.address}, {order.customer.city},{" "}
+                            {order.customer.province} {order.customer.zip}
+                          </dd>
+                        </div>
+                      )}
                       <div className="flex gap-3">
                         <dt className="text-neutral-400 w-20 shrink-0">Payment</dt>
                         <dd className="uppercase">{order.paymentMethod}</dd>
+                      </div>
+                      <div className="flex gap-3">
+                        <dt className="text-neutral-400 w-20 shrink-0">Fulfillment</dt>
+                        <dd className="uppercase">
+                          {order.fulfillment === "pickup" ? "Store Pickup" : "Delivery"}
+                        </dd>
                       </div>
                       {order.customer.notes && (
                         <div className="flex gap-3">
@@ -250,7 +259,7 @@ export default function AdminOrders() {
                     <ul className="space-y-1.5 text-xs text-neutral-500">
                       {order.history.map((entry, index) => (
                         <li key={index}>
-                          {entry.status} — {new Date(entry.at).toLocaleString("en-PH")}
+                          {entry.status} â€” {new Date(entry.at).toLocaleString("en-PH")}
                           {entry.note ? ` (${entry.note})` : ""}
                         </li>
                       ))}
@@ -280,7 +289,7 @@ function FilterButton({
       type="button"
       onClick={onClick}
       className={`px-4 py-2 text-[11px] font-bold tracking-[0.18em] uppercase transition-colors ${
-        active ? "bg-black text-white" : "bg-white border border-neutral-200 text-neutral-500 hover:text-black"
+        active ? "bg-brand-800 text-white" : "bg-white border border-neutral-200 text-neutral-500 hover:text-black"
       }`}
     >
       {children}

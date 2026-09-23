@@ -16,14 +16,14 @@ export default function Footer() {
               <img
                 src={business.logo}
                 alt=""
-                className="w-10 h-10 rounded-full object-cover ring-1 ring-neutral-200"
+                className="w-10 h-10 rounded-full object-cover ring-1 ring-brand-200"
                 onError={(e) => {
                   const target = e.currentTarget as HTMLImageElement;
                   if (target.src.endsWith("/logo.svg")) return;
                   target.src = "/logo.svg";
                 }}
               />
-              <span className="font-oswald text-xl font-bold tracking-[0.18em] uppercase">
+              <span className="font-oswald text-xl font-bold tracking-[0.18em] uppercase text-brand-950">
                 Generation Bread
               </span>
             </div>
@@ -34,7 +34,7 @@ export default function Footer() {
           </div>
 
           <div>
-            <h3 className="font-oswald text-xs font-bold tracking-[0.2em] uppercase mb-5">
+            <h3 className="font-oswald text-xs font-bold tracking-[0.2em] uppercase mb-5 text-brand-900">
               Navigation
             </h3>
             <ul className="space-y-2.5">
@@ -50,7 +50,7 @@ export default function Footer() {
                 <li key={link.href}>
                   <Link
                     href={link.href}
-                    className="text-neutral-500 hover:text-black text-sm transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
+                    className="text-neutral-500 hover:text-brand-800 text-sm transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
                   >
                     {link.label}
                   </Link>
@@ -60,7 +60,7 @@ export default function Footer() {
           </div>
 
           <div>
-            <h3 className="font-oswald text-xs font-bold tracking-[0.2em] uppercase mb-5">
+            <h3 className="font-oswald text-xs font-bold tracking-[0.2em] uppercase mb-5 text-brand-900">
               Connect
             </h3>
             <div className="space-y-2.5">
@@ -68,7 +68,7 @@ export default function Footer() {
                 href={business.social.facebook}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="block text-neutral-500 hover:text-black text-sm transition-colors"
+                className="block text-neutral-500 hover:text-brand-800 text-sm transition-colors"
               >
                 Facebook
               </a>
@@ -76,7 +76,7 @@ export default function Footer() {
                 href={business.social.tiktok}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="block text-neutral-500 hover:text-black text-sm transition-colors"
+                className="block text-neutral-500 hover:text-brand-800 text-sm transition-colors"
               >
                 Instagram
               </a>
@@ -84,13 +84,13 @@ export default function Footer() {
                 href={business.social.messenger}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="block text-neutral-500 hover:text-black text-sm transition-colors"
+                className="block text-neutral-500 hover:text-brand-800 text-sm transition-colors"
               >
                 Messenger
               </a>
               <a
                 href={`tel:${business.contact.phoneRaw}`}
-                className="block text-neutral-500 hover:text-black text-sm transition-colors"
+                className="block text-neutral-500 hover:text-brand-800 text-sm transition-colors"
               >
                 {business.contact.phone}
               </a>

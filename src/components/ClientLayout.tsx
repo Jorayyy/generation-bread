@@ -27,7 +27,9 @@ export default function ClientLayout({
         {!isAdmin && <Navbar />}
         <main
           className={
-            isAdmin ? "min-h-screen" : "min-h-screen pt-16 lg:pt-20 pb-16 lg:pb-0"
+            isAdmin
+              ? "min-h-screen"
+              : "min-h-screen pt-[5.75rem] lg:pt-[7rem] pb-16 lg:pb-0"
           }
         >
           {children}

@@ -49,10 +49,10 @@ export default async function ProductsPage() {
             bulk orders and custom cakes — message us for a quote.
           </p>
           <a
-            href="https://m.me/61575002625239?text=Hi!%20I%27m%20interested%20in%20bulk%20ordering."
+            href="https://m.me/generationbread?text=Hi!%20I%27m%20interested%20in%20bulk%20ordering."
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex px-8 py-4 bg-black text-white font-oswald text-xs font-bold tracking-[0.2em] uppercase hover:bg-neutral-800 transition-colors"
+            className="inline-flex px-8 py-4 bg-brand-800 text-white font-oswald text-xs font-bold tracking-[0.2em] uppercase hover:bg-brand-900 transition-colors"
           >
             Contact for Bulk Orders
           </a>

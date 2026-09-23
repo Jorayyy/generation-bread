@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { formatPeso } from "@/lib/format";
 import { useCart } from "@/lib/cart-context";
-import type { PaymentMethod } from "@/lib/types";
+import type { FulfillmentMethod, PaymentMethod } from "@/lib/types";
 
 const PAYMENT_OPTIONS: { value: PaymentMethod; label: string; hint: string }[] = [
   { value: "gcash", label: "GCash", hint: "Details sent after order" },
@@ -14,12 +14,18 @@ const PAYMENT_OPTIONS: { value: PaymentMethod; label: string; hint: string }[] =
   { value: "cod", label: "Cash on Delivery", hint: "Select areas only" },
 ];
 
+const FULFILLMENT_OPTIONS: { value: FulfillmentMethod; label: string; hint: string }[] = [
+  { value: "pickup", label: "Store Pickup", hint: "P. Gomez Street · Free" },
+  { value: "delivery", label: "Delivery", hint: "Within Tacloban City" },
+];
+
 export default function CheckoutPage() {
   const { items, subtotal, ready, clear } = useCart();
   const router = useRouter();
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState("");
   const [payment, setPayment] = useState<PaymentMethod>("gcash");
+  const [fulfillment, setFulfillment] = useState<FulfillmentMethod>("pickup");
   const [form, setForm] = useState({
     name: "",
     email: "",
@@ -39,7 +45,13 @@ export default function CheckoutPage() {
     e.preventDefault();
     setError("");
 
-    if (!form.name.trim() || !form.phone.trim() || !form.address.trim() || !form.city.trim() || !form.province.trim()) {
+    const needsAddress = fulfillment === "delivery";
+    if (
+      !form.name.trim() ||
+      !form.phone.trim() ||
+      (needsAddress &&
+        (!form.address.trim() || !form.city.trim() || !form.province.trim()))
+    ) {
       setError("Please fill in all required fields.");
       return;
     }
@@ -57,6 +69,7 @@ export default function CheckoutPage() {
           })),
           customer: form,
           paymentMethod: payment,
+          fulfillment,
         }),
       });
 
@@ -87,7 +100,7 @@ export default function CheckoutPage() {
           </p>
           <Link
             href="/products"
-            className="inline-flex px-8 py-4 bg-black text-white font-oswald text-xs font-bold tracking-[0.2em] uppercase hover:bg-neutral-800 transition-colors"
+            className="inline-flex px-8 py-4 bg-brand-800 text-white font-oswald text-xs font-bold tracking-[0.2em] uppercase hover:bg-brand-900 transition-colors"
           >
             Shop Products
           </Link>
@@ -102,14 +115,55 @@ export default function CheckoutPage() {
         <span className="text-[11px] text-neutral-400 tracking-[0.3em] uppercase block mb-3">
           Checkout
         </span>
-        <h1 className="font-oswald text-4xl lg:text-6xl font-bold uppercase tracking-tight mb-10">
-          Delivery & Payment
+        <h1 className="font-oswald text-4xl lg:text-6xl font-bold uppercase tracking-tight mb-10 text-brand-900">
+          Pickup & Payment
         </h1>
 
         <form onSubmit={handleSubmit} className="grid lg:grid-cols-3 gap-10">
           <div className="lg:col-span-2 space-y-8">
             <fieldset className="border border-neutral-200 p-6">
-              <legend className="px-2 font-oswald text-xs font-bold tracking-[0.2em] uppercase">
+              <legend className="px-2 font-oswald text-xs font-bold tracking-[0.2em] uppercase text-brand-800">
+                How would you like your order?
+              </legend>
+              <div className="grid sm:grid-cols-2 gap-3 mt-3">
+                {FULFILLMENT_OPTIONS.map((option) => (
+                  <label
+                    key={option.value}
+                    className={`flex items-start gap-3 p-4 border cursor-pointer transition-colors ${
+                      fulfillment === option.value
+                        ? "border-brand-700 bg-cream-50"
+                        : "border-neutral-200 hover:border-neutral-400"
+                    }`}
+                  >
+                    <input
+                      type="radio"
+                      name="fulfillment"
+                      value={option.value}
+                      checked={fulfillment === option.value}
+                      onChange={() => setFulfillment(option.value)}
+                      className="mt-1 accent-brand-700"
+                    />
+                    <span>
+                      <span className="block font-oswald text-sm font-bold uppercase">
+                        {option.label}
+                      </span>
+                      <span className="block text-xs text-neutral-500 mt-0.5">
+                        {option.hint}
+                      </span>
+                    </span>
+                  </label>
+                ))}
+              </div>
+              {fulfillment === "pickup" && (
+                <p className="text-xs text-neutral-500 mt-4 bg-cream-100 border border-cream-200 px-3 py-2">
+                  Pick up at <strong>P. Gomez Street, Tacloban City</strong> — daily 7:00 AM – 11:00 PM.
+                  We&apos;ll message you when your bakes are ready.
+                </p>
+              )}
+            </fieldset>
+
+            <fieldset className="border border-neutral-200 p-6">
+              <legend className="px-2 font-oswald text-xs font-bold tracking-[0.2em] uppercase text-brand-800">
                 Contact Information
               </legend>
               <div className="grid sm:grid-cols-2 gap-4 mt-3">
@@ -140,57 +194,77 @@ export default function CheckoutPage() {
               </div>
             </fieldset>
 
-            <fieldset className="border border-neutral-200 p-6">
-              <legend className="px-2 font-oswald text-xs font-bold tracking-[0.2em] uppercase">
-                Delivery Address
-              </legend>
-              <div className="grid sm:grid-cols-2 gap-4 mt-3">
-                <div className="sm:col-span-2">
+            {fulfillment === "delivery" ? (
+              <fieldset className="border border-neutral-200 p-6">
+                <legend className="px-2 font-oswald text-xs font-bold tracking-[0.2em] uppercase text-brand-800">
+                  Delivery Address
+                </legend>
+                <div className="grid sm:grid-cols-2 gap-4 mt-3">
+                  <div className="sm:col-span-2">
+                    <Field
+                      label="Street Address / Barangay"
+                      required
+                      value={form.address}
+                      onChange={(v) => update("address", v)}
+                      placeholder="House no., street, barangay"
+                    />
+                  </div>
                   <Field
-                    label="Street Address / Barangay"
+                    label="City / Municipality"
                     required
-                    value={form.address}
-                    onChange={(v) => update("address", v)}
-                    placeholder="House no., street, barangay"
+                    value={form.city}
+                    onChange={(v) => update("city", v)}
+                    placeholder="Tacloban City"
                   />
+                  <Field
+                    label="Province"
+                    required
+                    value={form.province}
+                    onChange={(v) => update("province", v)}
+                    placeholder="Leyte"
+                  />
+                  <Field
+                    label="ZIP Code"
+                    value={form.zip}
+                    onChange={(v) => update("zip", v)}
+                    placeholder="6500"
+                  />
+                  <div className="sm:col-span-2">
+                    <label className="block text-[11px] font-bold tracking-[0.2em] uppercase mb-2">
+                      Order Notes (optional)
+                    </label>
+                    <textarea
+                      value={form.notes}
+                      onChange={(e) => update("notes", e.target.value)}
+                      rows={3}
+                      placeholder="Landmark, preferred delivery time, etc."
+                      className="w-full px-4 py-3 border border-neutral-300 text-sm focus:outline-none focus:border-brand-700 transition-colors resize-none"
+                    />
+                  </div>
                 </div>
-                <Field
-                  label="City / Municipality"
-                  required
-                  value={form.city}
-                  onChange={(v) => update("city", v)}
-                  placeholder="Tacloban City"
-                />
-                <Field
-                  label="Province"
-                  required
-                  value={form.province}
-                  onChange={(v) => update("province", v)}
-                  placeholder="Leyte"
-                />
-                <Field
-                  label="ZIP Code"
-                  value={form.zip}
-                  onChange={(v) => update("zip", v)}
-                  placeholder="6500"
-                />
-                <div className="sm:col-span-2">
+              </fieldset>
+            ) : (
+              <fieldset className="border border-neutral-200 p-6">
+                <legend className="px-2 font-oswald text-xs font-bold tracking-[0.2em] uppercase text-brand-800">
+                  Pickup Notes (optional)
+                </legend>
+                <div className="mt-3">
                   <label className="block text-[11px] font-bold tracking-[0.2em] uppercase mb-2">
-                    Order Notes (optional)
+                    Order Notes
                   </label>
                   <textarea
                     value={form.notes}
                     onChange={(e) => update("notes", e.target.value)}
                     rows={3}
-                    placeholder="Landmark, preferred delivery time, etc."
-                    className="w-full px-4 py-3 border border-neutral-300 text-sm focus:outline-none focus:border-black transition-colors resize-none"
+                    placeholder="Preferred pickup time, gift message, etc."
+                    className="w-full px-4 py-3 border border-neutral-300 text-sm focus:outline-none focus:border-brand-700 transition-colors resize-none"
                   />
                 </div>
-              </div>
-            </fieldset>
+              </fieldset>
+            )}
 
             <fieldset className="border border-neutral-200 p-6">
-              <legend className="px-2 font-oswald text-xs font-bold tracking-[0.2em] uppercase">
+              <legend className="px-2 font-oswald text-xs font-bold tracking-[0.2em] uppercase text-brand-800">
                 Payment Method
               </legend>
               <div className="grid sm:grid-cols-2 gap-3 mt-3">
@@ -199,7 +273,7 @@ export default function CheckoutPage() {
                     key={option.value}
                     className={`flex items-start gap-3 p-4 border cursor-pointer transition-colors ${
                       payment === option.value
-                        ? "border-black bg-neutral-50"
+                        ? "border-brand-700 bg-cream-50"
                         : "border-neutral-200 hover:border-neutral-400"
                     }`}
                   >
@@ -209,7 +283,7 @@ export default function CheckoutPage() {
                       value={option.value}
                       checked={payment === option.value}
                       onChange={() => setPayment(option.value)}
-                      className="mt-1"
+                      className="mt-1 accent-brand-700"
                     />
                     <span>
                       <span className="block font-oswald text-sm font-bold uppercase">
@@ -267,8 +341,12 @@ export default function CheckoutPage() {
                 <span>{formatPeso(subtotal)}</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-neutral-500">Delivery</span>
-                <span className="text-neutral-400 text-xs">On confirmation</span>
+                <span className="text-neutral-500">
+                  {fulfillment === "pickup" ? "Pickup" : "Delivery"}
+                </span>
+                <span className="text-neutral-400 text-xs">
+                  {fulfillment === "pickup" ? "Free" : "On confirmation"}
+                </span>
               </div>
               <div className="flex justify-between pt-3 border-t border-neutral-200">
                 <span className="font-oswald uppercase tracking-widest text-sm">Total</span>
@@ -285,7 +363,7 @@ export default function CheckoutPage() {
             <button
               type="submit"
               disabled={submitting || items.length === 0}
-              className="w-full py-4 bg-black text-white font-oswald text-xs font-bold tracking-[0.2em] uppercase hover:bg-neutral-800 transition-colors disabled:opacity-50"
+              className="w-full py-4 bg-brand-800 text-white font-oswald text-xs font-bold tracking-[0.2em] uppercase hover:bg-brand-900 transition-colors disabled:opacity-50"
             >
               {submitting ? "Placing Order…" : "Place Order"}
             </button>
@@ -328,7 +406,7 @@ function Field({
         onChange={(e) => onChange(e.target.value)}
         required={required}
         placeholder={placeholder}
-        className="w-full px-4 py-3 border border-neutral-300 text-sm focus:outline-none focus:border-black transition-colors"
+        className="w-full px-4 py-3 border border-neutral-300 text-sm focus:outline-none focus:border-brand-700 transition-colors"
       />
     </div>
   );

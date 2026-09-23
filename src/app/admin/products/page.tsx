@@ -22,6 +22,8 @@ const EMPTY: Product = {
   stock: null,
   lowStockAt: 5,
   variants: [],
+  allergens: [],
+  diet: [],
   createdAt: "",
   updatedAt: "",
 };
@@ -98,6 +100,8 @@ export default function AdminProducts() {
         features: product.features.filter(Boolean),
         images: product.images.filter(Boolean),
         variants: product.variants.filter((v) => v.name && v.value),
+        allergens: (product.allergens ?? []).filter(Boolean),
+        diet: (product.diet ?? []).filter(Boolean),
       };
 
       const badImage = payload.images.find((url) => !isValidImageUrl(url));
@@ -159,7 +163,7 @@ export default function AdminProducts() {
             setEditing({ ...EMPTY, id: "" });
             setIsNew(true);
           }}
-          className="px-6 py-3 bg-black text-white font-oswald text-xs font-bold tracking-[0.2em] uppercase hover:bg-neutral-800 transition-colors"
+          className="px-6 py-3 bg-brand-800 text-white font-oswald text-xs font-bold tracking-[0.2em] uppercase hover:bg-brand-900 transition-colors"
         >
           + Add Product
         </button>
@@ -272,7 +276,7 @@ function StatusPill({ status }: { status: ProductStatus }) {
 
 function Tag({ children }: { children: React.ReactNode }) {
   return (
-    <span className="px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider bg-black text-white">
+    <span className="px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider bg-brand-800 text-white">
       {children}
     </span>
   );
@@ -540,6 +544,63 @@ function ProductEditor({
 
       <div>
         <label className="block text-[11px] font-bold tracking-[0.2em] uppercase mb-2">
+          Allergens
+        </label>
+        <div className="flex flex-wrap gap-2 mb-3">
+          {(form.allergens ?? []).map((allergen, index) => (
+            <span
+              key={`${allergen}-${index}`}
+              className="inline-flex items-center gap-2 px-3 py-1.5 bg-cream-100 text-xs border border-cream-200"
+            >
+              {allergen}
+              <button
+                type="button"
+                onClick={() =>
+                  set(
+                    "allergens",
+                    (form.allergens ?? []).filter((_, i) => i !== index)
+                  )
+                }
+                className="text-neutral-400 hover:text-black"
+                aria-label={`Remove ${allergen}`}
+              >
+                ×
+              </button>
+            </span>
+          ))}
+          {(form.allergens ?? []).length === 0 && (
+            <span className="text-xs text-neutral-400">None tagged</span>
+          )}
+        </div>
+        <div className="flex flex-wrap gap-2">
+          {["Wheat", "Dairy", "Eggs", "Tree Nuts", "Peanuts", "Soy"].map((tag) => {
+            const active = (form.allergens ?? []).includes(tag);
+            return (
+              <button
+                key={tag}
+                type="button"
+                onClick={() => {
+                  const current = form.allergens ?? [];
+                  set(
+                    "allergens",
+                    active ? current.filter((a) => a !== tag) : [...current, tag]
+                  );
+                }}
+                className={`px-3 py-1.5 border text-xs tracking-wider uppercase transition-colors ${
+                  active
+                    ? "border-brand-800 bg-brand-800 text-white"
+                    : "border-neutral-300 text-neutral-600 hover:border-brand-700"
+                }`}
+              >
+                {tag}
+              </button>
+            );
+          })}
+        </div>
+      </div>
+
+      <div>
+        <label className="block text-[11px] font-bold tracking-[0.2em] uppercase mb-2">
           Images
         </label>
         <div className="grid grid-cols-4 sm:grid-cols-6 gap-3 mb-3">
@@ -555,7 +616,7 @@ function ProductEditor({
                     form.images.filter((_, i) => i !== index)
                   )
                 }
-                className="absolute top-1 right-1 w-5 h-5 bg-black text-white text-xs flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
+                className="absolute top-1 right-1 w-5 h-5 bg-brand-800 text-white text-xs flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
                 aria-label="Remove image"
               >
                 ×
@@ -689,7 +750,7 @@ function ProductEditor({
         <button
           type="button"
           onClick={() => onSave(form)}
-          className="px-7 py-3.5 bg-black text-white font-oswald text-xs font-bold tracking-[0.2em] uppercase hover:bg-neutral-800 transition-colors"
+          className="px-7 py-3.5 bg-brand-800 text-white font-oswald text-xs font-bold tracking-[0.2em] uppercase hover:bg-brand-900 transition-colors"
         >
           Save Product
         </button>
@@ -706,7 +767,7 @@ function ProductEditor({
 }
 
 const inputCls =
-  "w-full px-3.5 py-2.5 bg-white border border-neutral-300 text-sm focus:outline-none focus:border-black transition-colors";
+  "w-full px-3.5 py-2.5 bg-white border border-neutral-300 text-sm focus:outline-none focus:border-brand-700 transition-colors";
 
 function Field({ label, children }: { label: string; children: React.ReactNode }) {
   return (

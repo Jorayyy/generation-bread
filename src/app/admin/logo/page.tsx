@@ -107,7 +107,7 @@ export default function AdminLogo() {
               type="url"
               value={logoUrl}
               onChange={(e) => setLogoUrl(e.target.value)}
-              className="w-full px-4 py-3.5 bg-white border border-neutral-300 text-sm focus:outline-none focus:border-black transition-colors"
+              className="w-full px-4 py-3.5 bg-white border border-neutral-300 text-sm focus:outline-none focus:border-brand-700 transition-colors"
               placeholder="https://example.com/logo.jpg"
             />
             <p className="text-neutral-400 text-xs mt-2">
@@ -131,7 +131,7 @@ export default function AdminLogo() {
               type="button"
               onClick={() => save(logoUrl)}
               disabled={saving || !logoUrl}
-              className="px-6 py-3.5 bg-black text-white font-oswald text-xs font-bold tracking-[0.2em] uppercase hover:bg-neutral-800 transition-colors disabled:opacity-50"
+              className="px-6 py-3.5 bg-brand-800 text-white font-oswald text-xs font-bold tracking-[0.2em] uppercase hover:bg-brand-900 transition-colors disabled:opacity-50"
             >
               {saving ? "Saving…" : "Save Logo"}
             </button>

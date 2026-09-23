@@ -463,7 +463,7 @@ export default function MessengerChat() {
   function renderCta(cta: Cta) {
     const external = /^https?:\/\//.test(cta.href);
     const className =
-      "px-3.5 py-2 bg-black text-white text-[10px] font-bold tracking-[0.15em] uppercase hover:bg-neutral-800 transition-colors";
+      "px-3.5 py-2 bg-brand-800 text-white text-[10px] font-bold tracking-[0.15em] uppercase hover:bg-brand-900 transition-colors";
     if (external) {
       return (
         <a key={cta.href} href={cta.href} target="_blank" rel="noopener noreferrer" className={className}>
@@ -527,7 +527,7 @@ export default function MessengerChat() {
       <button
         type="button"
         onClick={() => setOpen((v) => !v)}
-        className="fixed right-4 bottom-20 lg:right-6 lg:bottom-6 z-[55] w-14 h-14 bg-black text-white flex items-center justify-center shadow-lg hover:bg-neutral-800 transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
+        className="fixed right-4 bottom-20 lg:right-6 lg:bottom-6 z-[55] w-14 h-14 bg-brand-800 text-white flex items-center justify-center shadow-lg hover:bg-brand-900 transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
         aria-label={open ? "Close chat" : "Open chat"}
         aria-expanded={open}
       >
@@ -550,7 +550,7 @@ export default function MessengerChat() {
           aria-label="Chat with Generation Bread"
         >
           {/* Header */}
-          <div className="flex items-center gap-3 px-4 py-3.5 border-b border-neutral-200 bg-black text-white shrink-0">
+          <div className="flex items-center gap-3 px-4 py-3.5 border-b border-brand-900 bg-brand-900 text-white shrink-0">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src={business.logo}
@@ -601,7 +601,7 @@ export default function MessengerChat() {
                 <div
                   className={`max-w-[88%] px-4 py-2.5 text-sm leading-relaxed whitespace-pre-line ${
                     msg.from === "user"
-                      ? "bg-black text-white ml-auto rounded-2xl rounded-tr-sm"
+                      ? "bg-brand-800 text-white ml-auto rounded-2xl rounded-tr-sm"
                       : "bg-white text-neutral-800 border border-neutral-200 rounded-2xl rounded-tl-sm"
                   }`}
                 >
@@ -634,7 +634,7 @@ export default function MessengerChat() {
                   key={chip}
                   type="button"
                   onClick={() => handleUserInput(chip)}
-                  className="px-3 py-2 border border-neutral-300 text-[10px] font-bold tracking-[0.12em] uppercase text-neutral-600 hover:border-black hover:text-black transition-colors"
+                  className="px-3 py-2 border border-neutral-300 text-[10px] font-bold tracking-[0.12em] uppercase text-neutral-600 hover:border-brand-700 hover:text-brand-800 transition-colors"
                 >
                   {chip}
                 </button>
@@ -657,12 +657,12 @@ export default function MessengerChat() {
               onChange={(e) => setInput(e.target.value)}
               placeholder="Type a message…"
               aria-label="Message"
-              className="flex-1 min-w-0 px-3 py-2.5 bg-neutral-100 border border-transparent text-sm focus:outline-none focus:border-black transition-colors"
+              className="flex-1 min-w-0 px-3 py-2.5 bg-neutral-100 border border-transparent text-sm focus:outline-none focus:border-brand-700 transition-colors"
             />
             <button
               type="submit"
               disabled={typing || !input.trim()}
-              className="p-2.5 bg-black text-white hover:bg-neutral-800 transition-colors disabled:opacity-40"
+              className="p-2.5 bg-brand-800 text-white hover:bg-brand-900 transition-colors disabled:opacity-40"
               aria-label="Send message"
             >
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">

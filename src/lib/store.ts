@@ -545,6 +545,7 @@ export type OrderDraft = {
   items: { productId: string; qty: number; variantId?: string | null }[];
   customer: OrderCustomer;
   paymentMethod: PaymentMethod;
+  fulfillment?: "pickup" | "delivery";
 };
 
 export type CreateOrderResult =
@@ -557,13 +558,17 @@ function makeOrderNumber(): string {
   const m = String(date.getMonth() + 1).padStart(2, "0");
   const d = String(date.getDate()).padStart(2, "0");
   const suffix = randomUUID().replace(/[^a-z0-9]/gi, "").slice(0, 4).toUpperCase();
-  return `MA-${y}${m}${d}-${suffix}`;
+  return `GB-${y}${m}${d}-${suffix}`;
 }
 
 export async function createOrder(draft: OrderDraft): Promise<CreateOrderResult> {
   if (!draft.items.length) return { ok: false, error: "Your cart is empty." };
 
-  const required: (keyof OrderCustomer)[] = ["name", "phone", "address", "city", "province"];
+  const fulfillment = draft.fulfillment === "pickup" ? "pickup" : "delivery";
+  const required: (keyof OrderCustomer)[] =
+    fulfillment === "delivery"
+      ? ["name", "phone", "address", "city", "province"]
+      : ["name", "phone"];
   for (const field of required) {
     if (!draft.customer[field]?.trim()) {
       return { ok: false, error: `Missing required field: ${field}` };
@@ -689,6 +694,7 @@ export async function createOrder(draft: OrderDraft): Promise<CreateOrderResult>
         notes: draft.customer.notes?.trim() ?? "",
       },
       paymentMethod: draft.paymentMethod,
+      fulfillment,
       createdAt: now,
       updatedAt: now,
       history: [{ status: "pending", at: now }],

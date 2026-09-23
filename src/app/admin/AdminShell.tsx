@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
@@ -30,7 +30,7 @@ export default function AdminShell({ children }: { children: React.ReactNode }) 
           <div className="flex items-center justify-between h-16">
             <div className="flex items-center gap-3">
               <Link href="/" className="flex items-center gap-2.5">
-                <span className="w-8 h-8 bg-black flex items-center justify-center font-oswald text-sm font-bold text-white">
+                <span className="w-8 h-8 bg-brand-800 flex items-center justify-center font-oswald text-sm font-bold text-white">
                   MA
                 </span>
                 <span className="font-oswald text-sm font-bold tracking-[0.18em] uppercase hidden sm:block">
@@ -79,7 +79,7 @@ export default function AdminShell({ children }: { children: React.ReactNode }) 
                   href={link.href}
                   className={`px-4 py-2 text-[11px] font-bold tracking-[0.18em] uppercase whitespace-nowrap transition-all ${
                     active
-                      ? "bg-black text-white"
+                      ? "bg-brand-800 text-white"
                       : "text-neutral-400 hover:text-black hover:bg-neutral-100"
                   }`}
                 >
