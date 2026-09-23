@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { formatDate, formatPeso } from "@/lib/format";
-import type { Order, OrderStatus } from "@/lib/types";
+import type { Order, OrderStatus, PaymentStatus } from "@/lib/types";
 
 const STATUSES: OrderStatus[] = [
   "pending",
@@ -14,6 +14,8 @@ const STATUSES: OrderStatus[] = [
   "cancelled",
 ];
 
+const PAYMENT_STATUSES: PaymentStatus[] = ["unpaid", "paid", "refunded"];
+
 const STATUS_LABELS: Record<OrderStatus, string> = {
   pending: "Pending",
   confirmed: "Confirmed",
@@ -22,6 +24,18 @@ const STATUS_LABELS: Record<OrderStatus, string> = {
   shipped: "Shipped",
   delivered: "Delivered",
   cancelled: "Cancelled",
+};
+
+const PAYMENT_LABELS: Record<PaymentStatus, string> = {
+  unpaid: "Unpaid",
+  paid: "Paid",
+  refunded: "Refunded",
+};
+
+const PAYMENT_STYLES: Record<PaymentStatus, string> = {
+  unpaid: "bg-honey-100 text-honey-800 border-honey-200",
+  paid: "bg-emerald-100 text-emerald-800 border-emerald-200",
+  refunded: "bg-ink-100 text-ink-600 border-ink-200",
 };
 
 const STATUS_STYLES: Record<OrderStatus, string> = {
@@ -84,6 +98,28 @@ export default function AdminOrders() {
     }
   }
 
+  async function changePayment(id: string, paymentStatus: PaymentStatus) {
+    try {
+      const res = await fetch("/api/admin/orders", {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ id, paymentStatus }),
+      });
+      if (res.ok) {
+        setMessage(`Payment marked as ${PAYMENT_LABELS[paymentStatus]}.`);
+        setTimeout(() => setMessage(""), 3000);
+        load();
+      } else {
+        const data = await res.json().catch(() => null);
+        setMessage(data?.error || "Failed to update payment.");
+        setTimeout(() => setMessage(""), 3000);
+      }
+    } catch {
+      setMessage("Failed to update payment.");
+      setTimeout(() => setMessage(""), 3000);
+    }
+  }
+
   const filtered =
     filter === "all" ? orders : orders.filter((order) => order.status === filter);
 
@@ -142,11 +178,13 @@ export default function AdminOrders() {
                     <span className={`badge border ${STATUS_STYLES[order.status]}`}>
                       {STATUS_LABELS[order.status]}
                     </span>
-                    {order.paymentStatus && (
-                      <span className="badge bg-cream-100 text-ink-500 border border-ink-200">
-                        {order.paymentStatus}
-                      </span>
-                    )}
+                    <span
+                      className={`badge border ${
+                        PAYMENT_STYLES[order.paymentStatus ?? "unpaid"]
+                      }`}
+                    >
+                      {PAYMENT_LABELS[order.paymentStatus ?? "unpaid"]}
+                    </span>
                   </div>
                   <p className="text-ink-500 text-sm mt-1">
                     {order.customer.name} · {order.customer.phone}
@@ -170,6 +208,20 @@ export default function AdminOrders() {
                     {STATUSES.map((status) => (
                       <option key={status} value={status}>
                         {STATUS_LABELS[status]}
+                      </option>
+                    ))}
+                  </select>
+                  <select
+                    value={order.paymentStatus ?? "unpaid"}
+                    onChange={(e) =>
+                      changePayment(order.id, e.target.value as PaymentStatus)
+                    }
+                    aria-label={`Payment for ${order.orderNumber}`}
+                    className="input !w-auto !py-2 text-xs"
+                  >
+                    {PAYMENT_STATUSES.map((status) => (
+                      <option key={status} value={status}>
+                        {PAYMENT_LABELS[status]}
                       </option>
                     ))}
                   </select>
@@ -232,6 +284,9 @@ export default function AdminOrders() {
                         </DetailRow>
                       )}
                       <DetailRow label="Payment">{order.paymentMethod}</DetailRow>
+                      <DetailRow label="Payment status">
+                        {PAYMENT_LABELS[order.paymentStatus ?? "unpaid"]}
+                      </DetailRow>
                       <DetailRow label="Fulfillment">
                         {order.fulfillment === "pickup" ? "Store pickup" : "Delivery"}
                       </DetailRow>

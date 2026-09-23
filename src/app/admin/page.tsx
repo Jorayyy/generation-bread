@@ -5,6 +5,7 @@ import { formatPeso } from "@/lib/format";
 export const dynamic = "force-dynamic";
 
 const cards = [
+  { href: "/admin/analytics", label: "Sales", desc: "Revenue, profit, and charts" },
   { href: "/admin/orders", label: "Orders", desc: "Process and update order status" },
   { href: "/admin/products", label: "Products", desc: "Add, edit, price, and stock" },
   { href: "/admin/categories", label: "Categories", desc: "Organize your catalog" },

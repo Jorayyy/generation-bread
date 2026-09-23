@@ -41,6 +41,7 @@ export interface Product {
   allergens?: string[];
   diet?: string[];
   ingredients?: string[];
+  cost?: number | null;
   createdAt: string;
   updatedAt: string;
 }

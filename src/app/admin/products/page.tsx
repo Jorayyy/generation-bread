@@ -25,6 +25,7 @@ const EMPTY: Product = {
   allergens: [],
   diet: [],
   ingredients: [],
+  cost: null,
   createdAt: "",
   updatedAt: "",
 };
@@ -97,6 +98,7 @@ export default function AdminProducts() {
             ? null
             : Number(product.compareAtPrice),
         stock: product.stock === null || product.stock === undefined ? null : Number(product.stock),
+        cost: product.cost === null || product.cost === undefined ? null : Number(product.cost),
         lowStockAt: Number(product.lowStockAt) || 5,
         features: product.features.filter(Boolean),
         images: product.images.filter(Boolean),
@@ -382,6 +384,18 @@ function ProductEditor({
             min={0}
             value={form.price}
             onChange={(e) => set("price", Number(e.target.value))}
+            className={inputCls}
+          />
+        </Field>
+        <Field label="Cost per unit (₱, optional — for profit)">
+          <input
+            type="number"
+            min={0}
+            value={form.cost ?? ""}
+            onChange={(e) =>
+              set("cost", e.target.value === "" ? null : Number(e.target.value))
+            }
+            placeholder="e.g. 45"
             className={inputCls}
           />
         </Field>

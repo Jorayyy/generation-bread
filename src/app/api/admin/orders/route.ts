@@ -1,7 +1,12 @@
 import { NextRequest, NextResponse } from "next/server";
 import { isAdminAuthenticated, isSameOrigin } from "@/lib/admin-auth";
-import { getOrderById, getOrders, updateOrderStatus } from "@/lib/store";
-import type { OrderStatus } from "@/lib/types";
+import {
+  getOrderById,
+  getOrders,
+  updateOrderPaymentStatus,
+  updateOrderStatus,
+} from "@/lib/store";
+import type { OrderStatus, PaymentStatus } from "@/lib/types";
 
 export const dynamic = "force-dynamic";
 
@@ -14,6 +19,8 @@ const STATUSES: OrderStatus[] = [
   "delivered",
   "cancelled",
 ];
+
+const PAYMENT_STATUSES: PaymentStatus[] = ["unpaid", "paid", "refunded"];
 
 export async function GET(request: NextRequest) {
   if (!(await isAdminAuthenticated())) {
@@ -36,8 +43,27 @@ export async function PUT(request: NextRequest) {
     return NextResponse.json({ error: "Invalid request origin" }, { status: 403 });
   }
   try {
-    const body = (await request.json()) as { id?: string; status?: OrderStatus; note?: string };
-    if (!body.id || !body.status || !STATUSES.includes(body.status)) {
+    const body = (await request.json()) as {
+      id?: string;
+      status?: OrderStatus;
+      paymentStatus?: PaymentStatus;
+      note?: string;
+    };
+    if (!body.id) {
+      return NextResponse.json({ error: "Order id required" }, { status: 400 });
+    }
+
+    if (body.paymentStatus && PAYMENT_STATUSES.includes(body.paymentStatus)) {
+      const order = await updateOrderPaymentStatus(
+        body.id,
+        body.paymentStatus,
+        body.note
+      );
+      if (!order) return NextResponse.json({ error: "Order not found" }, { status: 404 });
+      return NextResponse.json({ order });
+    }
+
+    if (!body.status || !STATUSES.includes(body.status)) {
       return NextResponse.json({ error: "Valid id and status required" }, { status: 400 });
     }
     const order = await updateOrderStatus(body.id, body.status, body.note);

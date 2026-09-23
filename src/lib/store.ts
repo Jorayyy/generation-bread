@@ -19,6 +19,7 @@ import type {
   OrderItem,
   OrderStatus,
   PaymentMethod,
+  PaymentStatus,
   Product,
   ProductVariant,
   Review,
@@ -755,6 +756,35 @@ export async function updateOrderStatus(
   await query(
     "UPDATE orders SET status = $2, data = $3::jsonb, updated_at = $4 WHERE id = $1",
     [order.id, order.status, toJson(order), now]
+  );
+  await touchLastUpdated();
+  return order;
+}
+
+export async function updateOrderPaymentStatus(
+  id: string,
+  paymentStatus: PaymentStatus,
+  note?: string
+): Promise<Order | null> {
+  await ensureReady();
+  const rows = await query<{ data: unknown }>(
+    "SELECT data FROM orders WHERE id = $1",
+    [id]
+  );
+  if (!rows[0]) return null;
+  const order = fromJson<Order>(rows[0].data);
+  const now = new Date().toISOString();
+  order.paymentStatus = paymentStatus;
+  order.updatedAt = now;
+  const historyNote = note ?? `Payment marked as ${paymentStatus}`;
+  order.history.push({
+    status: order.status,
+    at: now,
+    note: historyNote,
+  });
+  await query(
+    "UPDATE orders SET data = $2::jsonb, updated_at = $3 WHERE id = $1",
+    [order.id, toJson(order), now]
   );
   await touchLastUpdated();
   return order;
