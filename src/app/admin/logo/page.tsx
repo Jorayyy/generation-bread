@@ -52,23 +52,23 @@ export default function AdminLogo() {
   return (
     <div>
       <div className="mb-9">
-        <h1 className="font-oswald text-4xl font-bold uppercase tracking-tight">Logo</h1>
-        <p className="text-neutral-500 mt-2 text-sm">
+        <h1 className="font-display text-3xl lg:text-4xl text-ink-950">Logo</h1>
+        <p className="text-ink-500 mt-2 text-sm">
           Brand logo shown in the navbar, footer, and about sections
         </p>
       </div>
 
       <div className="grid lg:grid-cols-2 gap-8">
-        <div className="bg-white border border-neutral-200 p-7">
-          <h3 className="font-oswald text-xs font-bold text-neutral-400 tracking-[0.2em] uppercase mb-5">
+        <div className="card p-7">
+          <h3 className="text-xs text-ink-400 mb-5">
             Preview
           </h3>
-          <div className="flex items-center justify-center py-10 bg-neutral-50">
+          <div className="flex items-center justify-center py-10 bg-cream-50">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src={logoUrl}
               alt="Logo preview"
-              className="w-32 h-32 rounded-full object-cover ring-2 ring-neutral-200"
+              className="w-32 h-32 rounded-full object-cover ring-2 ring-ink-200"
               onError={(e) => {
                 const target = e.currentTarget as HTMLImageElement;
                 target.src =
@@ -88,35 +88,35 @@ export default function AdminLogo() {
                   "https://ui-avatars.com/api/?name=MA&background=000&color=fff&size=100";
               }}
             />
-            <span className="font-oswald text-sm font-bold tracking-[0.18em] uppercase">
+            <span className="font-display text-sm text-ink-950">
               Generation Bread
             </span>
           </div>
         </div>
 
-        <div className="bg-white border border-neutral-200 p-7 space-y-5">
-          <h3 className="font-oswald text-xs font-bold text-neutral-400 tracking-[0.2em] uppercase">
+        <div className="card p-7 space-y-5">
+          <h3 className="text-xs text-ink-400">
             Update Logo
           </h3>
 
           <div>
-            <label className="block text-[11px] font-bold tracking-[0.2em] uppercase mb-2">
+            <label className="label mb-2">
               Logo URL
             </label>
             <input
               type="url"
               value={logoUrl}
               onChange={(e) => setLogoUrl(e.target.value)}
-              className="w-full px-4 py-3.5 bg-white border border-neutral-300 text-sm focus:outline-none focus:border-brand-700 transition-colors"
+              className="w-full px-4 py-3.5 bg-white border border-ink-200 text-sm focus:outline-none focus:border-brand-500 transition-colors"
               placeholder="https://example.com/logo.jpg"
             />
-            <p className="text-neutral-400 text-xs mt-2">
+            <p className="text-ink-400 text-xs mt-2">
               JPG, PNG, or SVG URL (JPG/PNG recommended for best rendering)
             </p>
           </div>
 
           {message && (
-            <p className="text-sm bg-neutral-50 border border-neutral-200 px-4 py-3">
+            <p className="text-sm bg-cream-50 border border-ink-100 px-4 py-3">
               {message}
             </p>
           )}
@@ -131,41 +131,41 @@ export default function AdminLogo() {
               type="button"
               onClick={() => save(logoUrl)}
               disabled={saving || !logoUrl}
-              className="px-6 py-3.5 bg-brand-800 text-white font-oswald text-xs font-bold tracking-[0.2em] uppercase hover:bg-brand-900 transition-colors disabled:opacity-50"
+              className="btn btn-primary disabled:opacity-50"
             >
               {saving ? "Saving…" : "Save Logo"}
             </button>
             <button
               type="button"
               onClick={() => save(DEFAULT_LOGO)}
-              className="px-6 py-3.5 border border-neutral-300 font-oswald text-xs font-bold tracking-[0.2em] uppercase hover:bg-neutral-50 transition-colors"
+              className="btn btn-secondary"
             >
               Reset to Default
             </button>
           </div>
 
-          <div className="pt-5 border-t border-neutral-200">
-            <h4 className="font-oswald text-xs font-bold text-neutral-400 tracking-[0.2em] uppercase mb-3">
+          <div className="pt-5 border-t border-ink-200">
+            <h4 className="text-xs text-ink-400 mb-3">
               Quick Sources
             </h4>
             <div className="space-y-2">
               <button
                 type="button"
                 onClick={() => setLogoUrl(DEFAULT_LOGO)}
-                className="block w-full text-left px-4 py-3 bg-neutral-50 border border-neutral-200 text-sm text-neutral-600 hover:text-black hover:border-neutral-400 transition-all"
+                className="block w-full text-left px-4 py-3 bg-cream-50 border border-ink-100 text-sm text-ink-600 hover:text-ink-950 hover:border-ink-400 transition-all"
               >
-                Local MA Logo (default)
+                Local GB Logo (default)
               </button>
               <button
                 type="button"
                 onClick={() =>
                   setLogoUrl(
-                    "https://ui-avatars.com/api/?name=MA&background=000&color=fff&size=400&bold=true&font=oswald"
+                    "https://ui-avatars.com/api/?name=GB&background=0b4558&color=fff&size=400&bold=true"
                   )
                 }
-                className="block w-full text-left px-4 py-3 bg-neutral-50 border border-neutral-200 text-sm text-neutral-600 hover:text-black hover:border-neutral-400 transition-all"
+                className="block w-full text-left px-4 py-3 bg-cream-50 border border-ink-100 text-sm text-ink-600 hover:text-ink-950 hover:border-ink-400 transition-all"
               >
-                Generated MA Avatar
+                Generated GB Avatar
               </button>
             </div>
           </div>

@@ -13,6 +13,9 @@ import type { Business, Faq, Review } from "@/lib/types";
 export const dynamic = "force-dynamic";
 
 export async function GET() {
+  if (!(await isAdminAuthenticated())) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
   const [business, faqs, reviews] = await Promise.all([
     getBusiness(),
     getFaqs(),

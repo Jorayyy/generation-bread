@@ -32,28 +32,25 @@ export default async function AdminDashboard() {
     .reduce((sum, o) => sum + o.total, 0);
 
   const stats = [
-    { label: "Total Orders", value: String(orders.length) },
-    { label: "Pending Orders", value: String(pending.length) },
+    { label: "Total orders", value: String(orders.length) },
+    { label: "Pending orders", value: String(pending.length) },
     { label: "Products", value: String(products.length) },
-    { label: "Active Revenue", value: formatPeso(revenue) },
+    { label: "Active revenue", value: formatPeso(revenue) },
   ];
 
   return (
     <div>
       <div className="mb-9">
-        <h1 className="font-oswald text-4xl font-bold uppercase tracking-tight">
-          Dashboard
-        </h1>
-        <p className="text-neutral-500 mt-2 text-sm">Manage your Generation Bread store</p>
+        <span className="eyebrow mb-2">Admin</span>
+        <h1 className="font-display text-3xl lg:text-4xl text-ink-950">Dashboard</h1>
+        <p className="text-ink-500 mt-2 text-sm">Manage your Generation Bread store</p>
       </div>
 
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-10">
         {stats.map((stat) => (
-          <div key={stat.label} className="bg-white border border-neutral-200 p-5">
-            <p className="text-neutral-400 text-[10px] tracking-[0.2em] uppercase mb-1.5">
-              {stat.label}
-            </p>
-            <p className="font-oswald text-2xl font-bold">{stat.value}</p>
+          <div key={stat.label} className="card p-5">
+            <p className="text-ink-400 text-xs mb-1.5">{stat.label}</p>
+            <p className="font-display text-2xl text-ink-950">{stat.value}</p>
           </div>
         ))}
       </div>
@@ -63,36 +60,32 @@ export default async function AdminDashboard() {
           <Link
             key={card.href}
             href={card.href}
-            className="p-6 bg-white border border-neutral-200 hover:border-brand-700 hover:shadow-sm transition-all group"
+            className="p-6 card hover:border-brand-400 hover:shadow-md transition-all group"
           >
-            <h2 className="font-oswald text-lg font-bold uppercase tracking-wide group-hover:text-neutral-600 transition-colors">
+            <h2 className="font-display text-lg text-ink-950 group-hover:text-brand-700 transition-colors">
               {card.label}
             </h2>
-            <p className="text-neutral-500 text-sm mt-1.5">{card.desc}</p>
+            <p className="text-ink-500 text-sm mt-1.5">{card.desc}</p>
           </Link>
         ))}
       </div>
 
       <div className="mt-12 grid lg:grid-cols-2 gap-4">
-        <div className="bg-white border border-neutral-200 p-6">
-          <h3 className="font-oswald text-xs font-bold text-neutral-400 tracking-[0.2em] uppercase mb-4">
-            Recent Orders
-          </h3>
+        <div className="card p-6">
+          <h3 className="text-xs text-ink-400 mb-4">Recent orders</h3>
           {orders.length === 0 ? (
-            <p className="text-neutral-400 text-sm">No orders yet.</p>
+            <p className="text-ink-400 text-sm">No orders yet.</p>
           ) : (
             <ul className="space-y-3">
               {orders.slice(0, 5).map((order) => (
                 <li key={order.id} className="flex items-center justify-between gap-3 text-sm">
                   <div className="min-w-0">
-                    <p className="font-medium truncate">{order.orderNumber}</p>
-                    <p className="text-xs text-neutral-400 truncate">
-                      {order.customer.name}
-                    </p>
+                    <p className="font-medium text-ink-950 truncate">{order.orderNumber}</p>
+                    <p className="text-xs text-ink-400 truncate">{order.customer.name}</p>
                   </div>
                   <div className="text-right shrink-0">
                     <p className="font-medium">{formatPeso(order.total)}</p>
-                    <p className="text-[10px] uppercase tracking-widest text-neutral-400">
+                    <p className="badge bg-cream-100 text-ink-500 text-[10px]">
                       {order.status}
                     </p>
                   </div>
@@ -103,45 +96,41 @@ export default async function AdminDashboard() {
           {orders.length > 0 && (
             <Link
               href="/admin/orders"
-              className="inline-block mt-4 text-xs tracking-widest uppercase text-neutral-500 hover:text-black transition-colors"
+              className="inline-block mt-4 text-xs text-brand-700 hover:text-brand-950 transition-colors"
             >
               View all orders →
             </Link>
           )}
         </div>
 
-        <div className="bg-white border border-neutral-200 p-6">
-          <h3 className="font-oswald text-xs font-bold text-neutral-400 tracking-[0.2em] uppercase mb-4">
-            Store Health
-          </h3>
+        <div className="card p-6">
+          <h3 className="text-xs text-ink-400 mb-4">Store health</h3>
           <ul className="space-y-3 text-sm">
             <li className="flex justify-between">
-              <span className="text-neutral-500">Categories</span>
+              <span className="text-ink-500">Categories</span>
               <span className="font-medium">{categories.length}</span>
             </li>
             <li className="flex justify-between">
-              <span className="text-neutral-500">Reviews</span>
+              <span className="text-ink-500">Reviews</span>
               <span className="font-medium">{reviews.length}</span>
             </li>
             <li className="flex justify-between">
-              <span className="text-neutral-500">Media files</span>
+              <span className="text-ink-500">Media files</span>
               <span className="font-medium">{media.length}</span>
             </li>
             <li className="flex justify-between">
-              <span className="text-neutral-500">Low stock items</span>
+              <span className="text-ink-500">Low stock items</span>
               <span className={`font-medium ${lowStock.length ? "text-red-600" : ""}`}>
                 {lowStock.length}
               </span>
             </li>
           </ul>
           {lowStock.length > 0 && (
-            <div className="mt-4 pt-4 border-t border-neutral-200">
-              <p className="text-[10px] uppercase tracking-widest text-neutral-400 mb-2">
-                Needs attention
-              </p>
+            <div className="mt-4 pt-4 border-t border-ink-100">
+              <p className="text-xs text-ink-400 mb-2">Needs attention</p>
               <ul className="space-y-1">
                 {lowStock.slice(0, 5).map((product) => (
-                  <li key={product.id} className="text-xs text-neutral-600">
+                  <li key={product.id} className="text-xs text-ink-600">
                     {product.name} — {product.stock} left
                   </li>
                 ))}
@@ -151,10 +140,10 @@ export default async function AdminDashboard() {
         </div>
       </div>
 
-      <div className="mt-8 text-xs text-neutral-400">
+      <div className="mt-8 text-xs text-ink-400">
         <p>
-          Data is stored in Neon Postgres (<code className="text-neutral-500">DATABASE_URL</code>
-          ). Set <code className="text-neutral-500">ADMIN_PASSWORD</code> in production
+          Data is stored in Neon Postgres (<code className="text-ink-500">DATABASE_URL</code>
+          ). Set <code className="text-ink-500">ADMIN_PASSWORD</code> in production
           environment variables.
         </p>
       </div>

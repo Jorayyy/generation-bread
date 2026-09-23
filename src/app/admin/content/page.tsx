@@ -56,7 +56,7 @@ export default function AdminContent() {
     setSaving(false);
   }
 
-  if (!business) return <p className="text-neutral-400 text-sm">Loading…</p>;
+  if (!business) return <p className="text-ink-400 text-sm">Loading…</p>;
 
   function setB<K extends keyof Business>(key: K, value: Business[K]) {
     setBusiness((current) => (current ? { ...current, [key]: value } : current));
@@ -65,13 +65,13 @@ export default function AdminContent() {
   return (
     <div>
       <div className="mb-8">
-        <h1 className="font-oswald text-4xl font-bold uppercase tracking-tight">Content</h1>
-        <p className="text-neutral-500 mt-2 text-sm">
-          Business information, FAQs â€” saved on the server so every visitor sees it
+        <h1 className="font-display text-3xl lg:text-4xl text-ink-950">Content</h1>
+        <p className="text-ink-500 mt-2 text-sm">
+          Business information, FAQs — saved on the server so every visitor sees it
         </p>
       </div>
 
-      <div className="flex items-center gap-1 mb-7 border-b border-neutral-200">
+      <div className="flex items-center gap-1 mb-7 border-b border-ink-200">
         {(
           [
             { key: "business" as Tab, label: "Business Info" },
@@ -82,10 +82,10 @@ export default function AdminContent() {
             key={item.key}
             type="button"
             onClick={() => setTab(item.key)}
-            className={`px-5 py-3 text-[11px] font-bold tracking-[0.2em] uppercase border-b-2 transition-colors ${
+            className={`px-5 py-3 text-xs border-b-2 transition-colors ${
               tab === item.key
-                ? "text-brand-900 border-brand-700"
-                : "text-neutral-400 border-transparent hover:text-neutral-700"
+                ? "text-brand-950 border-brand-700"
+                : "text-ink-400 border-transparent hover:text-ink-700"
             }`}
           >
             {item.label}
@@ -94,7 +94,7 @@ export default function AdminContent() {
       </div>
 
       {message && (
-        <div className="mb-5 px-4 py-3 bg-neutral-50 border border-neutral-200 text-sm">
+        <div className="mb-5 px-4 py-3 bg-cream-50 border border-ink-100 text-sm">
           {message}
         </div>
       )}
@@ -241,9 +241,9 @@ export default function AdminContent() {
       {tab === "faqs" && (
         <div className="space-y-4">
           {faqs.map((faq, index) => (
-            <div key={faq.id} className="bg-white border border-neutral-200 p-5">
+            <div key={faq.id} className="card p-5">
               <div className="flex items-start justify-between gap-3 mb-3">
-                <span className="text-[11px] font-bold tracking-[0.2em] uppercase text-neutral-400">
+                <span className="text-xs text-ink-400">
                   FAQ {index + 1}
                 </span>
                 <button
@@ -289,7 +289,7 @@ export default function AdminContent() {
                 },
               ])
             }
-            className="px-5 py-3 border border-neutral-300 text-xs tracking-widest uppercase hover:bg-white transition-colors"
+            className="px-5 py-3 border border-ink-200 text-xs uppercase tracking-wide hover:bg-white transition-colors"
           >
             + Add FAQ
           </button>
@@ -303,8 +303,8 @@ export default function AdminContent() {
 
 function Section({ title, children }: { title: string; children: React.ReactNode }) {
   return (
-    <div className="bg-white border border-neutral-200 p-6">
-      <h3 className="font-oswald text-xs font-bold text-neutral-400 tracking-[0.2em] uppercase mb-5">
+    <div className="card p-6">
+      <h3 className="text-xs text-ink-400 mb-5">
         {title}
       </h3>
       <div className="space-y-4">{children}</div>
@@ -314,24 +314,24 @@ function Section({ title, children }: { title: string; children: React.ReactNode
 
 function SaveButton({ saving, onClick }: { saving: boolean; onClick: () => void }) {
   return (
-    <div className="pt-5 border-t border-neutral-200">
+    <div className="pt-5 border-t border-ink-200">
       <button
         type="button"
         onClick={onClick}
         disabled={saving}
-        className="px-8 py-4 bg-brand-800 text-white font-oswald text-xs font-bold tracking-[0.2em] uppercase hover:bg-brand-900 transition-colors disabled:opacity-50"
+        className="px-8 py-4 bg-brand-700 text-white font-display text-xs font-bold tracking-[0.2em] uppercase hover:bg-brand-700 transition-colors disabled:opacity-50"
       >
         {saving ? "Saving…" : "Save Changes"}
       </button>
-      <p className="text-neutral-400 text-xs mt-3">
-        Saved to the server â€” visible to every visitor immediately.
+      <p className="text-ink-400 text-xs mt-3">
+        Saved to the server — visible to every visitor immediately.
       </p>
     </div>
   );
 }
 
 const inputCls =
-  "w-full px-3.5 py-2.5 bg-white border border-neutral-300 text-sm focus:outline-none focus:border-brand-700 transition-colors";
+  "input";
 
 function Input({
   label,
@@ -344,7 +344,7 @@ function Input({
 }) {
   return (
     <div>
-      <label className="block text-[11px] font-bold text-neutral-500 tracking-[0.2em] uppercase mb-2">
+      <label className="label mb-2">
         {label}
       </label>
       <input value={value} onChange={(e) => onChange(e.target.value)} className={inputCls} />
@@ -365,7 +365,7 @@ function Textarea({
 }) {
   return (
     <div>
-      <label className="block text-[11px] font-bold text-neutral-500 tracking-[0.2em] uppercase mb-2">
+      <label className="label mb-2">
         {label}
       </label>
       <textarea

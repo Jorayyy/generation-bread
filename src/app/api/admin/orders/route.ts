@@ -8,6 +8,8 @@ export const dynamic = "force-dynamic";
 const STATUSES: OrderStatus[] = [
   "pending",
   "confirmed",
+  "preparing",
+  "ready",
   "shipped",
   "delivered",
   "cancelled",

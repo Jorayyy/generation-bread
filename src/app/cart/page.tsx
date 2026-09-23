@@ -4,45 +4,42 @@ import Link from "next/link";
 import { formatPeso } from "@/lib/format";
 import { messengerUrl, orderMessageText } from "@/lib/messenger";
 import { useCart } from "@/lib/cart-context";
+import { useContent } from "@/lib/content-context";
 
 export default function CartPage() {
   const { items, subtotal, count, setQty, remove, ready } = useCart();
+  const { business } = useContent();
 
   return (
-    <section className="bg-white">
-      <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-10 py-12">
-        <span className="text-[11px] text-neutral-400 tracking-[0.3em] uppercase block mb-3">
-          Your Bag
-        </span>
-        <h1 className="font-oswald text-4xl lg:text-6xl font-bold uppercase tracking-tight mb-10">
+    <section className="section bg-cream-50">
+      <div className="container-site">
+        <span className="eyebrow mb-3">Your bag</span>
+        <h1 className="font-display text-3xl lg:text-4xl text-ink-950 mb-10">
           Cart {ready && count > 0 ? `(${count})` : ""}
         </h1>
 
         {!ready ? (
-          <div className="py-24 text-center text-neutral-400 text-sm">Loading cart…</div>
+          <div className="py-24 text-center text-ink-400 text-sm">Loading cart…</div>
         ) : items.length === 0 ? (
-          <div className="py-20 text-center border border-neutral-200">
-            <p className="font-oswald text-3xl font-bold text-neutral-300 uppercase mb-5">
+          <div className="py-20 text-center border border-dashed border-ink-200 rounded-3xl bg-white">
+            <p className="font-display text-2xl text-ink-300 mb-5">
               Your cart is empty
             </p>
-            <Link
-              href="/products"
-              className="inline-flex px-8 py-4 bg-brand-800 text-white font-oswald text-xs font-bold tracking-[0.2em] uppercase hover:bg-brand-900 transition-colors"
-            >
-              Start Shopping
+            <Link href="/products" className="btn btn-primary">
+              Browse the menu
             </Link>
           </div>
         ) : (
           <div className="grid lg:grid-cols-3 gap-10">
-            <div className="lg:col-span-2 space-y-5">
+            <div className="lg:col-span-2 space-y-4">
               {items.map((item) => (
                 <div
                   key={item.key}
-                  className="flex gap-5 p-4 border border-neutral-200 bg-white"
+                  className="flex gap-5 p-4 border border-ink-100 bg-white rounded-2xl"
                 >
                   <Link
                     href={`/products/${item.slug}`}
-                    className="w-24 h-28 bg-neutral-100 shrink-0 overflow-hidden"
+                    className="w-24 h-28 bg-cream-100 shrink-0 overflow-hidden rounded-xl"
                   >
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
@@ -56,48 +53,48 @@ export default function CartPage() {
                       <div>
                         <Link
                           href={`/products/${item.slug}`}
-                          className="font-oswald text-lg font-bold uppercase hover:text-neutral-600 transition-colors"
+                          className="font-display text-lg text-ink-950 hover:text-brand-700 transition-colors"
                         >
                           {item.name}
                         </Link>
                         {item.variantLabel && (
-                          <p className="text-xs text-neutral-500 mt-1">
+                          <p className="text-xs text-ink-500 mt-1">
                             {item.variantLabel}
                           </p>
                         )}
-                        <p className="text-sm text-neutral-500 mt-1">
+                        <p className="text-sm text-ink-500 mt-1">
                           {formatPeso(item.price)} each
                         </p>
                       </div>
                       <button
                         type="button"
                         onClick={() => remove(item.key)}
-                        className="text-xs text-neutral-400 hover:text-black tracking-widest uppercase transition-colors"
+                        className="text-sm text-ink-400 hover:text-red-600 transition-colors"
                       >
                         Remove
                       </button>
                     </div>
                     <div className="flex items-center justify-between mt-4">
-                      <div className="flex items-center border border-neutral-300">
+                      <div className="flex items-center border border-ink-200 rounded-full bg-white">
                         <button
                           type="button"
                           onClick={() => setQty(item.key, item.qty - 1)}
-                          className="w-9 h-9 hover:bg-neutral-50"
+                          className="w-9 h-9 rounded-full hover:bg-ink-50 text-ink-600"
                           aria-label="Decrease quantity"
                         >
                           −
                         </button>
-                        <span className="w-8 text-center text-sm">{item.qty}</span>
+                        <span className="w-8 text-center text-sm text-ink-900">{item.qty}</span>
                         <button
                           type="button"
                           onClick={() => setQty(item.key, item.qty + 1)}
-                          className="w-9 h-9 hover:bg-neutral-50"
+                          className="w-9 h-9 rounded-full hover:bg-ink-50 text-ink-600"
                           aria-label="Increase quantity"
                         >
                           +
                         </button>
                       </div>
-                      <span className="font-oswald text-lg font-bold">
+                      <span className="font-display text-lg text-ink-950">
                         {formatPeso(item.price * item.qty)}
                       </span>
                     </div>
@@ -106,33 +103,28 @@ export default function CartPage() {
               ))}
             </div>
 
-            <aside className="lg:sticky lg:top-28 h-fit border border-neutral-200 p-6 space-y-5">
-              <h2 className="font-oswald text-lg font-bold uppercase tracking-widest">
-                Order Summary
-              </h2>
+            <aside className="lg:sticky lg:top-32 h-fit border border-ink-100 bg-white rounded-3xl p-6 space-y-5">
+              <h2 className="font-display text-xl text-ink-950">Order summary</h2>
               <div className="flex items-center justify-between text-sm">
-                <span className="text-neutral-500">Subtotal</span>
-                <span className="font-medium">{formatPeso(subtotal)}</span>
+                <span className="text-ink-500">Subtotal</span>
+                <span className="font-medium text-ink-900">{formatPeso(subtotal)}</span>
               </div>
               <div className="flex items-center justify-between text-sm">
-                <span className="text-neutral-500">Fulfillment</span>
-                <span className="text-neutral-400 text-xs">Pickup or delivery at checkout</span>
+                <span className="text-ink-500">Fulfillment</span>
+                <span className="text-ink-400 text-xs">Pickup or delivery at checkout</span>
               </div>
-              <div className="flex items-center justify-between pt-4 border-t border-neutral-200">
-                <span className="font-oswald text-sm uppercase tracking-widest">Total</span>
-                <span className="font-oswald text-2xl font-bold">{formatPeso(subtotal)}</span>
+              <div className="flex items-center justify-between pt-4 border-t border-ink-100">
+                <span className="text-sm font-medium text-ink-700">Total</span>
+                <span className="font-display text-2xl text-ink-950">{formatPeso(subtotal)}</span>
               </div>
 
-              <div className="grid gap-2">
-                <Link
-                  href="/checkout"
-                  className="block w-full py-4 bg-brand-800 text-white text-center font-oswald text-xs font-bold tracking-[0.2em] uppercase hover:bg-brand-900 transition-colors"
-                >
-                  Proceed to Checkout
+              <div className="grid gap-2.5">
+                <Link href="/checkout" className="btn btn-primary w-full !py-3.5">
+                  Proceed to checkout
                 </Link>
                 <a
                   href={messengerUrl(
-                    "https://m.me/generationbread",
+                    business.social.messenger,
                     orderMessageText({
                       id: "cart",
                       orderNumber: "Cart",
@@ -167,19 +159,19 @@ export default function CartPage() {
                   )}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="block w-full py-4 border border-neutral-300 text-center font-oswald text-xs font-bold tracking-[0.2em] uppercase hover:bg-neutral-50 transition-colors"
+                  className="btn btn-secondary w-full !py-3.5"
                 >
                   Order via Messenger
                 </a>
                 <Link
                   href="/products"
-                  className="block w-full py-3 text-center text-xs tracking-[0.15em] uppercase text-neutral-500 hover:text-black transition-colors"
+                  className="btn btn-ghost w-full text-sm"
                 >
-                  Continue Shopping
+                  Continue shopping
                 </Link>
               </div>
 
-              <p className="text-[11px] text-neutral-400 leading-relaxed">
+              <p className="text-xs text-ink-400 leading-relaxed">
                 Payment options: GCash, Maya, bank transfer, or COD for select areas.
                 Choose free store pickup or Tacloban delivery at checkout.
               </p>

@@ -54,6 +54,9 @@ export async function POST(request: NextRequest) {
       stock: normalized.stock ?? null,
       lowStockAt: normalized.lowStockAt ?? 5,
       variants: normalized.variants ?? [],
+      allergens: normalized.allergens ?? [],
+      diet: normalized.diet ?? [],
+      ingredients: normalized.ingredients ?? [],
       slug: normalized.slug,
     });
     return NextResponse.json({ product });
@@ -128,5 +131,8 @@ function normalize(input: Partial<ProductInput>): Partial<ProductInput> {
   if (Array.isArray(out.images)) out.images = out.images.filter(Boolean);
   if (Array.isArray(out.features)) out.features = out.features.filter(Boolean);
   if (Array.isArray(out.variants)) out.variants = out.variants.filter(Boolean);
+  if (Array.isArray(out.allergens)) out.allergens = out.allergens.filter(Boolean);
+  if (Array.isArray(out.diet)) out.diet = out.diet.filter(Boolean);
+  if (Array.isArray(out.ingredients)) out.ingredients = out.ingredients.filter(Boolean);
   return out;
 }

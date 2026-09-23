@@ -2,6 +2,7 @@
 
 import type { Product } from "@/lib/types";
 import { useCart } from "@/lib/cart-context";
+import { useContent } from "@/lib/content-context";
 import { messengerUrl, productInquiryText } from "@/lib/messenger";
 import { formatPeso } from "@/lib/format";
 import { useEffect, useMemo, useState } from "react";
@@ -12,6 +13,7 @@ interface ProductPurchaseProps {
 
 export default function ProductPurchase({ product }: ProductPurchaseProps) {
   const { add } = useCart();
+  const { business } = useContent();
   const [qty, setQty] = useState(1);
   const [selected, setSelected] = useState<Record<string, string>>({});
   const [recent, setRecent] = useState<Product[]>([]);
@@ -102,66 +104,67 @@ export default function ProductPurchase({ product }: ProductPurchaseProps) {
   return (
     <div className="space-y-6">
       <div>
-        <p className="text-[11px] text-neutral-500 tracking-[0.25em] uppercase mb-2">
-          {product.category}
-        </p>
-        <h1 className="font-oswald text-4xl lg:text-5xl font-bold uppercase tracking-tight">
+        <p className="eyebrow mb-3">{product.category}</p>
+        <h1 className="font-display text-3xl lg:text-4xl text-ink-950 leading-tight">
           {product.name}
         </h1>
         <div className="flex items-center gap-3 mt-4">
-          <span className="font-oswald text-3xl font-bold">{formatPeso(price)}</span>
+          <span className="font-display text-2xl text-ink-950">{formatPeso(price)}</span>
           {product.compareAtPrice && product.compareAtPrice > price && (
-            <span className="text-neutral-400 line-through">
+            <span className="text-ink-400 line-through text-lg">
               {formatPeso(product.compareAtPrice)}
             </span>
           )}
           {product.badge && (
-            <span className="px-2.5 py-1 bg-brand-800 text-white text-[10px] font-bold tracking-widest uppercase">
-              {product.badge}
-            </span>
+            <span className="badge bg-brand-50 text-brand-700">{product.badge}</span>
           )}
         </div>
       </div>
 
-      <p className="text-neutral-600 leading-relaxed">{product.description}</p>
+      <p className="text-ink-600 leading-relaxed text-[15px]">{product.description}</p>
 
       {product.allergens && product.allergens.length > 0 && (
-        <div className="border border-cream-200 bg-cream-50 px-4 py-3">
-          <p className="text-[11px] font-bold tracking-[0.2em] uppercase text-brand-800 mb-2">
-            Contains
-          </p>
+        <div className="border border-cream-200 bg-cream-100/60 rounded-2xl px-5 py-4">
+          <p className="label text-brand-700 mb-2.5">Contains</p>
           <div className="flex flex-wrap gap-1.5">
             {product.allergens.map((tag) => (
               <span
                 key={tag}
-                className="px-2 py-0.5 bg-white text-brand-900 text-[10px] font-semibold tracking-wider uppercase border border-cream-300"
+                className="badge bg-white text-ink-700 border border-cream-300"
               >
                 {tag}
               </span>
             ))}
           </div>
-          <p className="text-[11px] text-neutral-500 mt-2">
+          <p className="text-xs text-ink-500 mt-2.5">
             Baked in a facility that handles nuts. Message us for dietary concerns.
           </p>
         </div>
       )}
 
       {product.features.length > 0 && (
-        <ul className="grid sm:grid-cols-2 gap-2">
+        <ul className="grid sm:grid-cols-2 gap-2.5">
           {product.features.map((feature) => (
-            <li key={feature} className="flex items-start gap-2 text-sm text-neutral-600">
-              <span className="mt-1.5 w-1.5 h-1.5 bg-brand-600 shrink-0" />
+            <li key={feature} className="flex items-start gap-2.5 text-sm text-ink-600">
+              <span className="mt-1.5 w-1.5 h-1.5 bg-brand-500 rounded-full shrink-0" />
               {feature}
             </li>
           ))}
         </ul>
       )}
 
+      {product.ingredients && product.ingredients.length > 0 && (
+        <div>
+          <p className="label text-ink-700 mb-2.5">Ingredients</p>
+          <p className="text-sm text-ink-500 leading-relaxed">
+            {product.ingredients.join(", ")}.
+          </p>
+        </div>
+      )}
+
       {variantGroups.map((group) => (
         <div key={group.name}>
-          <p className="text-[11px] font-bold tracking-[0.2em] uppercase mb-2">
-            {group.name}
-          </p>
+          <p className="label text-ink-700 mb-2.5">{group.name}</p>
           <div className="flex flex-wrap gap-2">
             {group.values.map((value) => {
               const active = selected[group.name] === value;
@@ -172,10 +175,10 @@ export default function ProductPurchase({ product }: ProductPurchaseProps) {
                   onClick={() =>
                     setSelected((current) => ({ ...current, [group.name]: value }))
                   }
-                  className={`px-4 py-2.5 border text-sm transition-colors ${
+                  className={`px-4 py-2.5 border rounded-full text-sm font-medium transition-all ${
                     active
-                      ? "border-brand-800 bg-brand-800 text-white"
-                      : "border-neutral-300 hover:border-brand-700"
+                      ? "border-brand-800 bg-brand-700 text-white"
+                      : "border-ink-200 hover:border-brand-500 text-ink-700"
                   }`}
                   aria-pressed={active}
                 >
@@ -188,27 +191,27 @@ export default function ProductPurchase({ product }: ProductPurchaseProps) {
       ))}
 
       <div className="flex flex-wrap items-center gap-4">
-        <div className="flex items-center border border-neutral-300">
+        <div className="flex items-center border border-ink-200 rounded-full bg-white">
           <button
             type="button"
             onClick={() => setQty((q) => Math.max(1, q - 1))}
-            className="w-11 h-12 hover:bg-neutral-50 transition-colors"
+            className="w-11 h-11 rounded-full hover:bg-ink-50 transition-colors text-ink-600"
             aria-label="Decrease quantity"
           >
             −
           </button>
-          <span className="w-10 text-center text-sm font-medium">{qty}</span>
+          <span className="w-8 text-center text-sm font-medium text-ink-900">{qty}</span>
           <button
             type="button"
             onClick={() => setQty((q) => Math.min(99, q + 1))}
-            className="w-11 h-12 hover:bg-neutral-50 transition-colors"
+            className="w-11 h-11 rounded-full hover:bg-ink-50 transition-colors text-ink-600"
             aria-label="Increase quantity"
           >
             +
           </button>
         </div>
 
-        <span className="text-sm text-neutral-500">
+        <span className="text-sm text-ink-500">
           {!available
             ? "Sold out"
             : product.stock !== null && product.stock <= product.lowStockAt
@@ -222,54 +225,47 @@ export default function ProductPurchase({ product }: ProductPurchaseProps) {
           type="button"
           onClick={handleAdd}
           disabled={!canAdd}
-          className="py-4 bg-brand-800 text-white font-oswald text-xs font-bold tracking-[0.2em] uppercase hover:bg-brand-900 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+          className="btn btn-primary w-full !py-3.5 disabled:opacity-40 disabled:cursor-not-allowed"
         >
-          {needsSelection ? `Select ${variantGroups[0]?.name}` : "Add to Cart"}
+          {needsSelection ? `Select ${variantGroups[0]?.name}` : "Add to cart"}
         </button>
         <a
-          href={messengerUrl(
-            "https://m.me/generationbread",
-            productInquiryText(product)
-          )}
+          href={messengerUrl(business.social.messenger, productInquiryText(product))}
           target="_blank"
           rel="noopener noreferrer"
-          className="py-4 border border-neutral-300 text-center font-oswald text-xs font-bold tracking-[0.2em] uppercase hover:bg-neutral-50 transition-colors"
+          className="btn btn-secondary w-full !py-3.5"
         >
           Ask via Messenger
         </a>
       </div>
 
-      <div className="grid grid-cols-3 gap-3 border-t border-neutral-200 pt-6 text-center">
+      <div className="grid grid-cols-3 gap-4 border-t border-ink-100 pt-6 text-center">
         {[
           { label: "Pickup & Delivery", hint: "Tacloban City" },
           { label: "GCash / Maya", hint: "Also COD" },
-          { label: "7-Day Returns", hint: "Unused items" },
+          { label: "Baked Fresh", hint: "Daily, 7 AM" },
         ].map((item) => (
           <div key={item.label}>
-            <p className="font-oswald text-[11px] font-bold uppercase tracking-wider">
-              {item.label}
-            </p>
-            <p className="text-[11px] text-neutral-400 mt-0.5">{item.hint}</p>
+            <p className="text-xs font-semibold text-ink-800">{item.label}</p>
+            <p className="text-xs text-ink-400 mt-0.5">{item.hint}</p>
           </div>
         ))}
       </div>
 
       {recent.length > 0 && (
-        <div className="pt-6 border-t border-neutral-200">
-          <p className="text-[11px] font-bold tracking-[0.2em] uppercase mb-3">
-            Recently Viewed
-          </p>
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+        <div className="pt-6 border-t border-ink-100">
+          <p className="label text-ink-700 mb-3">Recently viewed</p>
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
             {recent.map((item) => (
               <a
                 key={item.slug}
                 href={`/products/${item.slug}`}
-                className="group block bg-neutral-100 p-3 hover:bg-neutral-200 transition-colors"
+                className="group block bg-white border border-ink-100 rounded-xl p-3 hover:border-brand-300 transition-colors"
               >
-                <p className="font-oswald text-xs font-semibold uppercase truncate">
+                <p className="text-sm font-medium text-ink-800 truncate group-hover:text-brand-700">
                   {item.name}
                 </p>
-                <p className="text-xs text-neutral-500 mt-0.5">
+                <p className="text-xs text-ink-500 mt-0.5">
                   {formatPeso(item.price)}
                 </p>
               </a>

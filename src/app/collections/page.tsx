@@ -7,9 +7,9 @@ import { getCategories, getProducts } from "@/lib/store";
 export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
-  title: "Collections",
+  title: "Menu",
   description:
-    "Explore Generation Bread collections — breads, pastries, and cakes baked daily in Tacloban City.",
+    "Explore Generation Bread categories — breads, pastries, and cakes baked daily in Tacloban City.",
   alternates: { canonical: "/collections" },
 };
 
@@ -18,53 +18,49 @@ export default async function CollectionsPage() {
 
   return (
     <>
-      <section className="bg-white">
-        <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-10 pt-14 pb-10">
-          <span className="text-[11px] text-neutral-400 tracking-[0.3em] uppercase block mb-3">
-            Collections
-          </span>
-          <h1 className="font-oswald text-5xl lg:text-7xl font-bold uppercase tracking-tight">
-            Shop the Lineup
+      <section className="bg-cream-50 border-b border-ink-100">
+        <div className="container-site pt-14 pb-10">
+          <span className="eyebrow mb-3">Menu</span>
+          <h1 className="font-display text-4xl lg:text-5xl text-ink-950">
+            Browse the lineup
           </h1>
-          <p className="text-neutral-500 mt-5 max-w-lg">
-            Browse every Generation Bread category. Fresh bakes from Tacloban City.
+          <p className="text-ink-500 mt-4 max-w-lg">
+            Every Generation Bread category. Fresh bakes from Tacloban City.
           </p>
         </div>
       </section>
 
-      <section className="pb-20 bg-white">
-        <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-10 space-y-16">
+      <section className="section bg-white">
+        <div className="container-site space-y-16">
           {categories.map((category, index) => {
             const items = products.filter((p) => p.category === category.slug);
             return (
               <Reveal key={category.id} delay={index * 60}>
                 <div>
-                  <div className="flex flex-wrap items-end justify-between gap-4 mb-7 pb-5 border-b border-neutral-200">
+                  <div className="flex flex-wrap items-end justify-between gap-4 mb-7 pb-5 border-b border-ink-100">
                     <div>
-                      <span className="text-[11px] text-neutral-400 tracking-[0.3em] uppercase block mb-2">
-                        Collection 0{index + 1}
-                      </span>
-                      <h2 className="font-oswald text-3xl lg:text-4xl font-bold uppercase tracking-tight">
+                      <span className="eyebrow mb-2">Collection 0{index + 1}</span>
+                      <h2 className="font-display text-2xl lg:text-3xl text-ink-950">
                         {category.name}
                       </h2>
-                      <p className="text-neutral-500 text-sm mt-2 max-w-lg">
+                      <p className="text-ink-500 text-sm mt-2 max-w-lg">
                         {category.description}
                       </p>
                     </div>
                     <Link
                       href={`/products?category=${category.slug}`}
-                      className="text-sm tracking-widest uppercase text-neutral-500 hover:text-black transition-colors"
+                      className="btn btn-ghost text-sm"
                     >
-                      View All ({items.length})
+                      View all ({items.length})
                     </Link>
                   </div>
 
                   {items.length === 0 ? (
-                    <p className="text-neutral-400 text-sm py-6">
+                    <p className="text-ink-400 text-sm py-6">
                       Fresh bakes are on the way. Check back soon.
                     </p>
                   ) : (
-                    <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
+                    <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-x-5 gap-y-8">
                       {items.slice(0, 4).map((product) => (
                         <ProductCard key={product.id} product={product} />
                       ))}
@@ -76,8 +72,8 @@ export default async function CollectionsPage() {
           })}
 
           {categories.length === 0 && (
-            <div className="py-20 text-center border border-neutral-200">
-              <p className="font-oswald text-2xl font-bold text-neutral-300 uppercase">
+            <div className="py-20 text-center border border-dashed border-ink-200 rounded-3xl">
+              <p className="font-display text-2xl text-ink-300">
                 No collections yet
               </p>
             </div>

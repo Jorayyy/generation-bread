@@ -70,18 +70,18 @@ export default async function ProductPage({ params }: PageProps) {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
 
-      <section className="bg-white">
-        <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-10 py-8">
+      <section className="bg-cream-50">
+        <div className="container-site py-8">
           <nav aria-label="Breadcrumb" className="mb-6">
-            <ol className="flex flex-wrap items-center gap-2 text-xs text-neutral-400 tracking-wide">
+            <ol className="flex flex-wrap items-center gap-2 text-sm text-ink-400">
               <li>
-                <Link href="/" className="hover:text-black transition-colors">
+                <Link href="/" className="hover:text-brand-700 transition-colors">
                   Home
                 </Link>
               </li>
               <li aria-hidden="true">/</li>
               <li>
-                <Link href="/products" className="hover:text-black transition-colors">
+                <Link href="/products" className="hover:text-brand-700 transition-colors">
                   Shop
                 </Link>
               </li>
@@ -91,7 +91,7 @@ export default async function ProductPage({ params }: PageProps) {
                   <li>
                     <Link
                       href={`/products?category=${category.slug}`}
-                      className="hover:text-black transition-colors"
+                      className="hover:text-brand-700 transition-colors"
                     >
                       {category.name}
                     </Link>
@@ -99,13 +99,13 @@ export default async function ProductPage({ params }: PageProps) {
                 </>
               )}
               <li aria-hidden="true">/</li>
-              <li className="text-black">{product.name}</li>
+              <li className="text-ink-800">{product.name}</li>
             </ol>
           </nav>
 
           <div className="grid lg:grid-cols-2 gap-10">
             <div className="space-y-4">
-              <div className="relative aspect-[4/5] bg-neutral-100 overflow-hidden group">
+              <div className="relative aspect-[4/5] bg-cream-100 rounded-3xl overflow-hidden group">
                 <ProductImage
                   src={product.images[0] ?? ""}
                   alt={product.name}
@@ -114,7 +114,7 @@ export default async function ProductPage({ params }: PageProps) {
                   priority
                 />
                 {product.badge && (
-                  <div className="absolute top-4 left-4 px-3 py-1.5 bg-white text-black text-[10px] font-bold tracking-widest uppercase">
+                  <div className="absolute top-4 left-4 badge bg-white/95 text-brand-700">
                     {product.badge}
                   </div>
                 )}
@@ -125,7 +125,7 @@ export default async function ProductPage({ params }: PageProps) {
                   {product.images.slice(1, 5).map((image, i) => (
                     <div
                       key={`${image}-${i}`}
-                      className="relative aspect-square bg-neutral-100 overflow-hidden group"
+                      className="relative aspect-square bg-cream-100 rounded-xl overflow-hidden group"
                     >
                       <ProductImage
                         src={image}
@@ -147,25 +147,20 @@ export default async function ProductPage({ params }: PageProps) {
       </section>
 
       {related.length > 0 && (
-        <section className="py-16 bg-neutral-50 border-t border-neutral-200">
-          <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-10">
+        <section className="section bg-white border-t border-ink-100">
+          <div className="container-site">
             <div className="flex items-end justify-between mb-8">
               <div>
-                <span className="text-[11px] text-neutral-400 tracking-[0.3em] uppercase block mb-2">
-                  Keep Exploring
-                </span>
-                <h2 className="font-oswald text-3xl lg:text-4xl font-bold uppercase tracking-tight">
-                  You May Also Like
+                <span className="eyebrow mb-3">Keep exploring</span>
+                <h2 className="font-display text-2xl lg:text-3xl text-ink-950">
+                  You may also like
                 </h2>
               </div>
-              <Link
-                href="/products"
-                className="text-sm text-neutral-500 hover:text-black tracking-widest uppercase transition-colors"
-              >
-                View All
+              <Link href="/products" className="btn btn-ghost text-sm">
+                View all
               </Link>
             </div>
-            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
+            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-x-5 gap-y-8">
               {related.map((item) => (
                 <ProductCard key={item.id} product={item} />
               ))}

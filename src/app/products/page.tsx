@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import { Suspense } from "react";
 import ShopBrowser from "@/components/ShopBrowser";
-import { getCategories, getProducts } from "@/lib/store";
+import { getBusiness, getCategories, getProducts } from "@/lib/store";
+import { messengerUrl } from "@/lib/messenger";
 
 export const dynamic = "force-dynamic";
 
@@ -13,48 +14,51 @@ export const metadata: Metadata = {
 };
 
 export default async function ProductsPage() {
-  const [products, categories] = await Promise.all([getProducts(), getCategories()]);
+  const [products, categories, business] = await Promise.all([
+    getProducts(),
+    getCategories(),
+    getBusiness(),
+  ]);
 
   return (
     <>
-      <section className="bg-white">
-        <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-10 pt-14 pb-10">
-          <span className="text-[11px] text-neutral-400 tracking-[0.3em] uppercase block mb-3">
-            Shop
-          </span>
-          <h1 className="font-oswald text-5xl lg:text-7xl font-bold uppercase tracking-tight">
-            Products
+      <section className="bg-cream-50 border-b border-ink-100">
+        <div className="container-site pt-14 pb-10">
+          <span className="eyebrow mb-3">Shop</span>
+          <h1 className="font-display text-4xl lg:text-5xl text-ink-950">
+            The menu
           </h1>
-          <p className="text-neutral-500 mt-5 max-w-lg">
+          <p className="text-ink-500 mt-4 max-w-lg">
             Freshly baked in Tacloban City. Breads, pastries, and cakes made
             with quality ingredients every day.
           </p>
         </div>
       </section>
 
-      <Suspense fallback={<div className="py-24 text-center text-neutral-400">Loading products…</div>}>
+      <Suspense fallback={<div className="py-24 text-center text-ink-400">Loading products…</div>}>
         <ShopBrowser products={products} categories={categories} />
       </Suspense>
 
-      <section className="py-16 bg-neutral-50 border-t border-neutral-200">
-        <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-10 text-center">
-          <span className="text-[11px] text-neutral-400 tracking-[0.3em] uppercase block mb-3">
-            Custom Orders
-          </span>
-          <h2 className="font-oswald text-3xl lg:text-4xl font-bold uppercase tracking-tight mb-4">
-            Bulk Orders Available
+      <section className="section bg-cream-100 border-t border-ink-100">
+        <div className="container-site text-center">
+          <span className="eyebrow mb-3">Custom orders</span>
+          <h2 className="font-display text-3xl lg:text-4xl text-ink-950 mb-4">
+            Bulk orders available
           </h2>
-          <p className="text-neutral-500 mb-7 max-w-lg mx-auto text-sm">
+          <p className="text-ink-500 mb-7 max-w-lg mx-auto">
             Planning an event or need trays of bread? We offer special pricing for
             bulk orders and custom cakes — message us for a quote.
           </p>
           <a
-            href="https://m.me/generationbread?text=Hi!%20I%27m%20interested%20in%20bulk%20ordering."
+            href={messengerUrl(
+              business.social.messenger,
+              "Hi! I'm interested in bulk ordering."
+            )}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex px-8 py-4 bg-brand-800 text-white font-oswald text-xs font-bold tracking-[0.2em] uppercase hover:bg-brand-900 transition-colors"
+            className="btn btn-primary"
           >
-            Contact for Bulk Orders
+            Contact for bulk orders
           </a>
         </div>
       </section>

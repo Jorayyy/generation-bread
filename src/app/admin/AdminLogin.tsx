@@ -34,32 +34,29 @@ export default function AdminLogin() {
   }
 
   return (
-    <div className="min-h-screen bg-neutral-100 flex items-center justify-center px-4">
+    <div className="min-h-screen bg-cream-50 flex items-center justify-center px-4">
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
-          <div className="w-16 h-16 mx-auto bg-brand-800 flex items-center justify-center font-oswald text-2xl font-bold text-white mb-4">
-            MA
+          <div className="w-16 h-16 mx-auto bg-brand-700 rounded-2xl flex items-center justify-center font-display text-2xl text-white mb-4">
+            GB
           </div>
-          <h1 className="font-oswald text-3xl font-bold uppercase tracking-wider">
-            Admin Panel
-          </h1>
-          <p className="text-neutral-500 mt-2 text-sm tracking-widest uppercase">
-            Generation Bread Manager
-          </p>
+          <h1 className="font-display text-3xl text-ink-950">Admin Panel</h1>
+          <p className="text-ink-500 mt-2 text-sm">Generation Bread Manager</p>
         </div>
 
         <form
           onSubmit={handleSubmit}
-          className="bg-white p-8 border border-neutral-200 shadow-sm"
+          className="bg-white p-8 border border-ink-100 rounded-3xl shadow-sm"
         >
-          <label className="block text-[11px] font-bold text-neutral-500 tracking-[0.2em] uppercase mb-3">
+          <label htmlFor="admin-password" className="label">
             Password
           </label>
           <input
+            id="admin-password"
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className="w-full px-4 py-3.5 bg-neutral-50 border border-neutral-200 text-sm focus:outline-none focus:border-brand-700 transition-colors placeholder:text-neutral-400"
+            className="input"
             placeholder="Enter password"
             autoFocus
             required
@@ -70,7 +67,7 @@ export default function AdminLogin() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full mt-5 py-4 bg-brand-800 text-white font-oswald text-xs font-bold tracking-[0.2em] uppercase hover:bg-brand-900 transition-colors disabled:opacity-50"
+            className="btn btn-primary w-full mt-5 disabled:opacity-50"
           >
             {loading ? "Logging in…" : "Login"}
           </button>
@@ -79,9 +76,9 @@ export default function AdminLogin() {
         <p className="text-center mt-6">
           <Link
             href="/"
-            className="text-xs text-neutral-500 hover:text-black tracking-widest uppercase transition-colors"
+            className="text-sm text-ink-500 hover:text-brand-700 transition-colors"
           >
-            â† Back to site
+            ← Back to site
           </Link>
         </p>
       </div>

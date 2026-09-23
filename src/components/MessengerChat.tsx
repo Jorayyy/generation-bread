@@ -463,7 +463,7 @@ export default function MessengerChat() {
   function renderCta(cta: Cta) {
     const external = /^https?:\/\//.test(cta.href);
     const className =
-      "px-3.5 py-2 bg-brand-800 text-white text-[10px] font-bold tracking-[0.15em] uppercase hover:bg-brand-900 transition-colors";
+      "px-3.5 py-2 bg-brand-700 text-white text-[10px] font-bold tracking-[0.15em] uppercase hover:bg-brand-800 transition-colors";
     if (external) {
       return (
         <a key={cta.href} href={cta.href} target="_blank" rel="noopener noreferrer" className={className}>
@@ -527,7 +527,7 @@ export default function MessengerChat() {
       <button
         type="button"
         onClick={() => setOpen((v) => !v)}
-        className="fixed right-4 bottom-20 lg:right-6 lg:bottom-6 z-[55] w-14 h-14 bg-brand-800 text-white flex items-center justify-center shadow-lg hover:bg-brand-900 transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
+        className="fixed right-4 bottom-20 lg:right-6 lg:bottom-6 z-[55] w-14 h-14 bg-brand-700 text-white flex items-center justify-center shadow-lg hover:bg-brand-800 transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
         aria-label={open ? "Close chat" : "Open chat"}
         aria-expanded={open}
       >
@@ -545,7 +545,7 @@ export default function MessengerChat() {
       {/* Chat panel */}
       {open && (
         <div
-          className="fixed z-[55] left-3 right-3 top-20 bottom-36 sm:left-auto sm:right-4 sm:bottom-36 sm:w-[380px] sm:h-[min(540px,calc(100dvh-220px))] sm:top-auto lg:right-6 lg:bottom-24 lg:h-[min(540px,calc(100dvh-160px))] bg-white border border-neutral-200 shadow-2xl flex flex-col animate-chat-pop"
+          className="fixed z-[55] left-3 right-3 top-20 bottom-36 sm:left-auto sm:right-4 sm:bottom-36 sm:w-[380px] sm:h-[min(540px,calc(100dvh-220px))] sm:top-auto lg:right-6 lg:bottom-24 lg:h-[min(540px,calc(100dvh-160px))] bg-white border border-ink-200 shadow-2xl flex flex-col animate-chat-pop"
           role="dialog"
           aria-label="Chat with Generation Bread"
         >
@@ -563,10 +563,10 @@ export default function MessengerChat() {
               }}
             />
             <div className="flex-1 min-w-0">
-              <p className="font-oswald text-sm font-bold tracking-[0.12em] uppercase leading-tight">
+              <p className="font-display text-sm leading-tight text-white">
                 Generation Bread
               </p>
-              <p className="text-[11px] text-neutral-400 flex items-center gap-1.5">
+              <p className="text-[11px] text-ink-400 flex items-center gap-1.5">
                 <span className="w-1.5 h-1.5 bg-emerald-400 rounded-full" aria-hidden="true" />
                 Auto-replies instantly
               </p>
@@ -575,7 +575,7 @@ export default function MessengerChat() {
               href={messengerLink}
               target="_blank"
               rel="noopener noreferrer"
-              className="p-2 text-neutral-400 hover:text-white transition-colors"
+              className="p-2 text-ink-400 hover:text-white transition-colors"
               aria-label="Open Messenger"
             >
               <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
@@ -585,7 +585,7 @@ export default function MessengerChat() {
             <button
               type="button"
               onClick={() => setOpen(false)}
-              className="p-2 text-neutral-400 hover:text-white transition-colors"
+              className="p-2 text-ink-400 hover:text-white transition-colors"
               aria-label="Close chat"
             >
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
@@ -595,14 +595,14 @@ export default function MessengerChat() {
           </div>
 
           {/* Messages */}
-          <div ref={scrollRef} className="flex-1 overflow-y-auto px-4 py-4 space-y-3 bg-neutral-50">
+          <div ref={scrollRef} className="flex-1 overflow-y-auto px-4 py-4 space-y-3 bg-cream-50">
             {messages.map((msg) => (
               <div key={msg.id}>
                 <div
                   className={`max-w-[88%] px-4 py-2.5 text-sm leading-relaxed whitespace-pre-line ${
                     msg.from === "user"
-                      ? "bg-brand-800 text-white ml-auto rounded-2xl rounded-tr-sm"
-                      : "bg-white text-neutral-800 border border-neutral-200 rounded-2xl rounded-tl-sm"
+                      ? "bg-brand-700 text-white ml-auto rounded-2xl rounded-tr-sm"
+                      : "bg-white text-ink-800 border border-ink-200 rounded-2xl rounded-tl-sm"
                   }`}
                 >
                   {msg.text}
@@ -616,11 +616,11 @@ export default function MessengerChat() {
             ))}
 
             {typing && (
-              <div className="bg-white border border-neutral-200 rounded-2xl rounded-tl-sm px-4 py-3 w-fit" aria-hidden="true">
+              <div className="bg-white border border-ink-200 rounded-2xl rounded-tl-sm px-4 py-3 w-fit" aria-hidden="true">
                 <span className="flex gap-1">
-                  <span className="w-1.5 h-1.5 bg-neutral-400 rounded-full animate-bounce" />
-                  <span className="w-1.5 h-1.5 bg-neutral-400 rounded-full animate-bounce" style={{ animationDelay: "0.15s" }} />
-                  <span className="w-1.5 h-1.5 bg-neutral-400 rounded-full animate-bounce" style={{ animationDelay: "0.3s" }} />
+                  <span className="w-1.5 h-1.5 bg-ink-300 rounded-full animate-bounce" />
+                  <span className="w-1.5 h-1.5 bg-ink-300 rounded-full animate-bounce" style={{ animationDelay: "0.15s" }} />
+                  <span className="w-1.5 h-1.5 bg-ink-300 rounded-full animate-bounce" style={{ animationDelay: "0.3s" }} />
                 </span>
               </div>
             )}
@@ -628,13 +628,13 @@ export default function MessengerChat() {
 
           {/* Quick replies */}
           {chips.length > 0 && !typing && (
-            <div className="flex flex-wrap gap-2 px-4 py-3 border-t border-neutral-200 bg-white shrink-0">
+            <div className="flex flex-wrap gap-2 px-4 py-3 border-t border-ink-200 bg-white shrink-0">
               {chips.map((chip) => (
                 <button
                   key={chip}
                   type="button"
                   onClick={() => handleUserInput(chip)}
-                  className="px-3 py-2 border border-neutral-300 text-[10px] font-bold tracking-[0.12em] uppercase text-neutral-600 hover:border-brand-700 hover:text-brand-800 transition-colors"
+                  className="px-3 py-2 border border-ink-200 text-[10px] font-bold tracking-[0.12em] uppercase text-ink-600 hover:border-brand-700 hover:text-brand-700 transition-colors"
                 >
                   {chip}
                 </button>
@@ -644,7 +644,7 @@ export default function MessengerChat() {
 
           {/* Input */}
           <form
-            className="flex items-center gap-2 px-3 py-3 border-t border-neutral-200 bg-white shrink-0"
+            className="flex items-center gap-2 px-3 py-3 border-t border-ink-200 bg-white shrink-0"
             onSubmit={(e) => {
               e.preventDefault();
               handleUserInput(input);
@@ -657,12 +657,12 @@ export default function MessengerChat() {
               onChange={(e) => setInput(e.target.value)}
               placeholder="Type a message…"
               aria-label="Message"
-              className="flex-1 min-w-0 px-3 py-2.5 bg-neutral-100 border border-transparent text-sm focus:outline-none focus:border-brand-700 transition-colors"
+              className="flex-1 min-w-0 px-3 py-2.5 bg-cream-100 border border-transparent text-sm focus:outline-none focus:border-brand-500 transition-colors"
             />
             <button
               type="submit"
               disabled={typing || !input.trim()}
-              className="p-2.5 bg-brand-800 text-white hover:bg-brand-900 transition-colors disabled:opacity-40"
+              className="p-2.5 bg-brand-700 text-white hover:bg-brand-800 transition-colors disabled:opacity-40"
               aria-label="Send message"
             >
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">

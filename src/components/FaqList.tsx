@@ -12,56 +12,51 @@ export default function FaqList({
   faqs: Faq[];
   messenger: string;
 }) {
-  const [openIndex, setOpenIndex] = useState<number | null>(null);
+  const [openIndex, setOpenIndex] = useState<number | null>(0);
 
   return (
     <>
-      <div className="divide-y divide-neutral-200">
+      <div className="divide-y divide-ink-100 border-y border-ink-100">
         {faqs.map((faq, i) => (
-          <div key={faq.id} className="py-1">
+          <div key={faq.id}>
             <button
               type="button"
               onClick={() => setOpenIndex(openIndex === i ? null : i)}
-              className="w-full flex items-center justify-between py-5 text-left group focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
+              className="w-full flex items-center justify-between gap-4 py-5 text-left group focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-700"
               aria-expanded={openIndex === i}
             >
-              <span className="font-oswald text-lg font-bold uppercase pr-4 group-hover:text-neutral-600 transition-colors">
+              <span className="font-display text-lg text-ink-950 group-hover:text-brand-700 transition-colors">
                 {faq.question}
               </span>
-              <svg
-                className={`w-5 h-5 shrink-0 text-neutral-400 transition-transform duration-300 ${
-                  openIndex === i ? "rotate-45" : ""
+              <span
+                className={`w-8 h-8 shrink-0 rounded-full border border-ink-200 text-ink-500 flex items-center justify-center transition-all group-hover:border-brand-400 ${
+                  openIndex === i ? "rotate-45 bg-brand-600 border-brand-600 text-white" : ""
                 }`}
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
                 aria-hidden="true"
               >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M12 6v12M6 12h12"
-                />
-              </svg>
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v12M6 12h12" />
+                </svg>
+              </span>
             </button>
             <div
               className={`overflow-hidden transition-all duration-300 ${
                 openIndex === i ? "max-h-96 pb-6" : "max-h-0"
               }`}
             >
-              <p className="text-neutral-600 leading-relaxed text-sm">{faq.answer}</p>
+              <p className="text-ink-500 leading-relaxed text-sm pr-12">{faq.answer}</p>
             </div>
           </div>
         ))}
       </div>
 
       <div className="mt-16 text-center">
-        <h2 className="font-oswald text-3xl lg:text-4xl font-bold uppercase tracking-tight mb-4">
-          Still Have Questions?
+        <span className="eyebrow mb-3">Still stuck?</span>
+        <h2 className="font-display text-2xl lg:text-3xl text-ink-950 mb-4">
+          Message us
         </h2>
-        <p className="text-neutral-500 mb-7 max-w-lg mx-auto text-sm">
-          Can&apos;t find the answer you&apos;re looking for? Message us on Facebook and
+        <p className="text-ink-500 mb-7 max-w-lg mx-auto text-sm">
+          Can&apos;t find the answer you&apos;re looking for? Message us on Messenger and
           we&apos;ll get back to you as soon as possible.
         </p>
         <div className="flex flex-col sm:flex-row gap-3 justify-center">
@@ -69,15 +64,12 @@ export default function FaqList({
             href={messengerUrl(messenger, "Hi Generation Bread! I have a question.")}
             target="_blank"
             rel="noopener noreferrer"
-            className="px-8 py-4 bg-brand-800 text-white font-oswald text-xs font-bold tracking-[0.2em] uppercase hover:bg-brand-900 transition-colors"
+            className="btn btn-primary"
           >
-            Message Us
+            Message us
           </a>
-          <Link
-            href="/contact"
-            className="px-8 py-4 border border-neutral-300 font-oswald text-xs font-bold tracking-[0.2em] uppercase hover:bg-neutral-50 transition-colors"
-          >
-            Contact Page
+          <Link href="/contact" className="btn btn-secondary">
+            Contact page
           </Link>
         </div>
       </div>

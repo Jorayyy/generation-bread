@@ -7,9 +7,9 @@ export const metadata: Metadata = {
 
 export default function Loading() {
   return (
-    <div className="min-h-[60vh] flex flex-col items-center justify-center gap-4">
-      <div className="w-8 h-8 border-2 border-neutral-300 border-t-black rounded-full animate-spin" />
-      <p className="text-xs tracking-[0.25em] uppercase text-neutral-400">Loading</p>
+    <div className="min-h-[60vh] bg-cream-50 flex flex-col items-center justify-center gap-4">
+      <div className="w-8 h-8 border-2 border-ink-200 border-t-brand-700 rounded-full animate-spin" />
+      <p className="font-display text-sm text-ink-400">Loading…</p>
     </div>
   );
 }

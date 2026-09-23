@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter, Oswald } from "next/font/google";
+import { Fraunces, Inter } from "next/font/google";
 import "./globals.css";
 import ClientLayout from "@/components/ClientLayout";
 import { getBusiness, getFaqs } from "@/lib/store";
@@ -9,11 +9,14 @@ import { organizationJsonLd } from "@/lib/seo";
 const inter = Inter({
   subsets: ["latin"],
   variable: "--font-inter",
+  display: "swap",
 });
 
-const oswald = Oswald({
+const fraunces = Fraunces({
   subsets: ["latin"],
-  variable: "--font-oswald",
+  variable: "--font-fraunces",
+  display: "swap",
+  axes: ["SOFT", "WONK"],
 });
 
 export const metadata: Metadata = {
@@ -93,7 +96,7 @@ export default async function RootLayout({
           }}
         />
       </head>
-      <body className={`${inter.variable} ${oswald.variable} font-sans antialiased`}>
+      <body className={`${inter.variable} ${fraunces.variable} font-sans antialiased`}>
         <ClientLayout business={business} faqs={faqs}>{children}</ClientLayout>
       </body>
     </html>

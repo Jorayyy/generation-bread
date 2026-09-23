@@ -4,7 +4,7 @@ import { getBusiness } from "@/lib/store";
 export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
-  title: "Contact",
+  title: "Visit",
   description:
     "Get in touch with Generation Bread — P. Gomez Street, Tacloban City, Leyte. Call, message on Messenger, or follow us on Facebook and Instagram.",
   alternates: { canonical: "/contact" },
@@ -35,7 +35,7 @@ export default async function ContactPage() {
     {
       href: business.social.messenger,
       label: "Messenger",
-      value: "Message Us",
+      value: "Message us",
       icon: (
         <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
           <path
@@ -71,23 +71,21 @@ export default async function ContactPage() {
 
   return (
     <>
-      <section className="bg-white">
-        <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-10 pt-14 pb-8">
-          <span className="text-[11px] text-neutral-400 tracking-[0.3em] uppercase block mb-3">
-            Contact
-          </span>
-          <h1 className="font-oswald text-5xl lg:text-7xl font-bold uppercase tracking-tight">
-            Get in Touch
+      <section className="bg-cream-50 border-b border-ink-100">
+        <div className="container-site pt-14 pb-10">
+          <span className="eyebrow mb-3">Contact</span>
+          <h1 className="font-display text-4xl lg:text-5xl text-ink-950">
+            Get in touch
           </h1>
-          <p className="text-neutral-500 mt-5 max-w-lg">
+          <p className="text-ink-500 mt-4 max-w-lg">
             Have a question, custom order, or just want to say hello? We&apos;d love to hear
             from you.
           </p>
         </div>
       </section>
 
-      <section className="pb-16 bg-white">
-        <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-10">
+      <section className="section bg-white">
+        <div className="container-site">
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {cards.map((card) => (
               <a
@@ -95,13 +93,13 @@ export default async function ContactPage() {
                 href={card.href}
                 target={card.href.startsWith("http") ? "_blank" : undefined}
                 rel={card.href.startsWith("http") ? "noopener noreferrer" : undefined}
-                className="p-7 bg-neutral-50 border border-neutral-100 hover:bg-white hover:border-neutral-300 hover:shadow-sm transition-all group"
+                className="p-7 bg-cream-50 border border-ink-100 rounded-2xl hover:bg-white hover:border-brand-300 hover:shadow-md transition-all group"
               >
-                <div className="mb-5 text-black">{card.icon}</div>
-                <h2 className="text-[11px] font-bold tracking-[0.2em] uppercase text-neutral-400 mb-2">
+                <div className="mb-5 text-brand-700">{card.icon}</div>
+                <h2 className="text-xs font-semibold tracking-[0.1em] uppercase text-ink-400 mb-2">
                   {card.label}
                 </h2>
-                <p className="font-oswald text-lg font-bold group-hover:text-neutral-600 transition-colors">
+                <p className="font-display text-lg text-ink-950 group-hover:text-brand-700 transition-colors">
                   {card.value}
                 </p>
               </a>
@@ -110,40 +108,38 @@ export default async function ContactPage() {
         </div>
       </section>
 
-      <section className="py-16 bg-neutral-50 border-t border-neutral-200">
-        <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-10">
+      <section className="section bg-cream-50 border-y border-ink-100">
+        <div className="container-site">
           <div className="grid lg:grid-cols-2 gap-12">
             <div className="space-y-6">
-              <span className="text-[11px] text-neutral-400 tracking-[0.3em] uppercase block">
-                Visit Us
-              </span>
-              <h2 className="font-oswald text-3xl font-bold uppercase tracking-tight">
+              <span className="eyebrow">Visit us</span>
+              <h2 className="font-display text-3xl text-ink-950">
                 {business.location.city}
               </h2>
-              <p className="text-neutral-500 leading-relaxed">{business.contact.address}</p>
+              <p className="text-ink-600 leading-relaxed">{business.contact.address}</p>
 
               <dl className="space-y-3">
                 <div className="flex items-center gap-4">
-                  <dt className="text-[11px] text-neutral-400 tracking-widest uppercase w-24">
+                  <dt className="text-xs font-semibold tracking-[0.1em] uppercase text-ink-400 w-24">
                     Hours
                   </dt>
-                  <dd className="text-sm">{business.contact.hours}</dd>
+                  <dd className="text-sm text-ink-800">{business.contact.hours}</dd>
                 </div>
                 <div className="flex items-center gap-4">
-                  <dt className="text-[11px] text-neutral-400 tracking-widest uppercase w-24">
+                  <dt className="text-xs font-semibold tracking-[0.1em] uppercase text-ink-400 w-24">
                     Region
                   </dt>
-                  <dd className="text-sm">{business.contact.region}</dd>
+                  <dd className="text-sm text-ink-800">{business.contact.region}</dd>
                 </div>
               </dl>
             </div>
 
-            <div className="aspect-[4/3] bg-neutral-200 relative overflow-hidden grayscale">
+            <div className="aspect-[4/3] bg-cream-200 relative overflow-hidden rounded-3xl">
               <iframe
                 src={MAPS_SRC}
                 width="100%"
                 height="100%"
-                style={{ border: 0, filter: "grayscale(1) contrast(1.05)" }}
+                style={{ border: 0 }}
                 allowFullScreen
                 loading="lazy"
                 referrerPolicy="no-referrer-when-downgrade"
@@ -154,21 +150,21 @@ export default async function ContactPage() {
         </div>
       </section>
 
-      <section className="py-16 bg-white">
-        <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-10 text-center">
-          <h2 className="font-oswald text-3xl lg:text-4xl font-bold uppercase tracking-tight mb-4">
-            Ready to Order?
+      <section className="section bg-white">
+        <div className="container-site text-center">
+          <h2 className="font-display text-3xl lg:text-4xl text-ink-950 mb-4">
+            Ready to order?
           </h2>
-          <p className="text-neutral-500 mb-8 max-w-lg mx-auto text-sm">
-            Message us directly on Facebook Messenger for quick response and easy ordering.
+          <p className="text-ink-500 mb-8 max-w-lg mx-auto">
+            Message us on Messenger for quick response and easy ordering.
           </p>
           <a
             href={business.social.messenger}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex px-8 py-4 bg-brand-800 text-white font-oswald text-xs font-bold tracking-[0.2em] uppercase hover:bg-brand-900 transition-colors"
+            className="btn btn-primary"
           >
-            Order Now
+            Order now
           </a>
         </div>
       </section>

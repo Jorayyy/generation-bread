@@ -24,6 +24,7 @@ const EMPTY: Product = {
   variants: [],
   allergens: [],
   diet: [],
+  ingredients: [],
   createdAt: "",
   updatedAt: "",
 };
@@ -152,10 +153,10 @@ export default function AdminProducts() {
     <div>
       <div className="flex flex-wrap items-start justify-between gap-4 mb-9">
         <div>
-          <h1 className="font-oswald text-4xl font-bold uppercase tracking-tight">
+          <h1 className="font-display text-3xl lg:text-4xl text-ink-950">
             Products
           </h1>
-          <p className="text-neutral-500 mt-2 text-sm">Manage your product catalog</p>
+          <p className="text-ink-500 mt-2 text-sm">Manage your product catalog</p>
         </div>
         <button
           type="button"
@@ -163,14 +164,14 @@ export default function AdminProducts() {
             setEditing({ ...EMPTY, id: "" });
             setIsNew(true);
           }}
-          className="px-6 py-3 bg-brand-800 text-white font-oswald text-xs font-bold tracking-[0.2em] uppercase hover:bg-brand-900 transition-colors"
+          className="btn btn-primary"
         >
           + Add Product
         </button>
       </div>
 
       {message && (
-        <div className="mb-5 px-4 py-3 bg-neutral-50 border border-neutral-200 text-sm">
+        <div className="mb-5 px-4 py-3 bg-cream-50 border border-ink-100 text-sm">
           {message}
         </div>
       )}
@@ -192,13 +193,13 @@ export default function AdminProducts() {
           }}
         />
       ) : loading ? (
-        <p className="text-neutral-400 text-sm py-10">Loading…</p>
+        <p className="text-ink-400 text-sm py-10">Loading…</p>
       ) : (
         <div className="space-y-3">
           {products.map((product) => (
-            <div key={product.id} className="bg-white border border-neutral-200 p-5">
+            <div key={product.id} className="card p-5">
               <div className="flex flex-wrap items-center gap-5">
-                <div className="w-16 h-16 bg-neutral-100 shrink-0 overflow-hidden">
+                <div className="w-16 h-16 bg-cream-100 shrink-0 overflow-hidden">
                   {product.images[0] && (
                     // eslint-disable-next-line @next/next/no-img-element
                     <img
@@ -210,18 +211,18 @@ export default function AdminProducts() {
                 </div>
                 <div className="flex-1 min-w-[160px]">
                   <div className="flex flex-wrap items-center gap-2">
-                    <h3 className="font-oswald text-lg font-bold uppercase">
+                    <h3 className="font-display text-lg text-ink-950">
                       {product.name}
                     </h3>
                     <StatusPill status={product.status} />
                     {product.featured && <Tag>Featured</Tag>}
                     {product.isNew && <Tag>New</Tag>}
                   </div>
-                  <p className="text-neutral-500 text-sm mt-1">
+                  <p className="text-ink-500 text-sm mt-1">
                     ₱{product.price} · {product.category} ·{" "}
                     {product.stock === null ? "Stock not tracked" : `${product.stock} in stock`}
                   </p>
-                  <p className="text-neutral-400 text-xs mt-0.5">/{product.slug}</p>
+                  <p className="text-ink-400 text-xs mt-0.5">/{product.slug}</p>
                 </div>
                 <div className="flex items-center gap-2">
                   <button
@@ -230,7 +231,7 @@ export default function AdminProducts() {
                       setEditing(product);
                       setIsNew(false);
                     }}
-                    className="px-4 py-2 text-xs border border-neutral-300 hover:bg-neutral-50 transition-all tracking-widest uppercase"
+                    className="px-4 py-2 text-xs border border-ink-200 hover:bg-cream-50 transition-all tracking-widest uppercase"
                   >
                     Edit
                   </button>
@@ -247,8 +248,8 @@ export default function AdminProducts() {
           ))}
 
           {products.length === 0 && (
-            <div className="py-16 bg-white border border-neutral-200 text-center">
-              <p className="font-oswald text-2xl font-bold text-neutral-300 uppercase">
+            <div className="py-16 card text-center">
+              <p className="font-display text-2xl text-ink-300">
                 No products yet
               </p>
             </div>
@@ -263,11 +264,11 @@ function StatusPill({ status }: { status: ProductStatus }) {
   const styles: Record<ProductStatus, string> = {
     active: "bg-green-50 text-green-700 border-green-200",
     draft: "bg-amber-50 text-amber-700 border-amber-200",
-    archived: "bg-neutral-100 text-neutral-500 border-neutral-200",
+    archived: "bg-cream-100 text-ink-500 border-ink-200",
   };
   return (
     <span
-      className={`px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider border ${styles[status]}`}
+      className={`badge border ${styles[status]}`}
     >
       {status}
     </span>
@@ -276,7 +277,7 @@ function StatusPill({ status }: { status: ProductStatus }) {
 
 function Tag({ children }: { children: React.ReactNode }) {
   return (
-    <span className="px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider bg-brand-800 text-white">
+    <span className="badge bg-brand-700 text-white border-brand-700">
       {children}
     </span>
   );
@@ -345,15 +346,15 @@ function ProductEditor({
   }
 
   return (
-    <div className="bg-white border border-neutral-200 p-6 space-y-6">
+    <div className="card p-6 space-y-6">
       <div className="flex items-center justify-between">
-        <h2 className="font-oswald text-xl font-bold uppercase tracking-wide">
+        <h2 className="font-display text-xl text-ink-950">
           {isNew ? "New Product" : `Edit: ${product.name}`}
         </h2>
         <button
           type="button"
           onClick={onCancel}
-          className="text-xs tracking-widest uppercase text-neutral-500 hover:text-black"
+          className="text-xs uppercase tracking-wide text-ink-500 hover:text-ink-950"
         >
           Cancel
         </button>
@@ -485,14 +486,14 @@ function ProductEditor({
       </Field>
 
       <div>
-        <label className="block text-[11px] font-bold tracking-[0.2em] uppercase mb-2">
+        <label className="label mb-2">
           Features
         </label>
         <div className="flex flex-wrap gap-2 mb-3">
           {form.features.map((feature, index) => (
             <span
               key={`${feature}-${index}`}
-              className="inline-flex items-center gap-2 px-3 py-1.5 bg-neutral-100 text-xs"
+              className="inline-flex items-center gap-2 px-3 py-1.5 bg-cream-100 text-xs"
             >
               {feature}
               <button
@@ -503,7 +504,7 @@ function ProductEditor({
                     form.features.filter((_, i) => i !== index)
                   )
                 }
-                className="text-neutral-400 hover:text-black"
+                className="text-ink-400 hover:text-ink-950"
                 aria-label={`Remove ${feature}`}
               >
                 ×
@@ -535,7 +536,7 @@ function ProductEditor({
                 setFeatureInput("");
               }
             }}
-            className="px-4 border border-neutral-300 text-xs tracking-widest uppercase hover:bg-neutral-50"
+            className="px-4 border border-ink-200 text-xs uppercase tracking-wide hover:bg-cream-50"
           >
             Add
           </button>
@@ -543,7 +544,7 @@ function ProductEditor({
       </div>
 
       <div>
-        <label className="block text-[11px] font-bold tracking-[0.2em] uppercase mb-2">
+        <label className="label mb-2">
           Allergens
         </label>
         <div className="flex flex-wrap gap-2 mb-3">
@@ -561,7 +562,7 @@ function ProductEditor({
                     (form.allergens ?? []).filter((_, i) => i !== index)
                   )
                 }
-                className="text-neutral-400 hover:text-black"
+                className="text-ink-400 hover:text-ink-950"
                 aria-label={`Remove ${allergen}`}
               >
                 ×
@@ -569,7 +570,7 @@ function ProductEditor({
             </span>
           ))}
           {(form.allergens ?? []).length === 0 && (
-            <span className="text-xs text-neutral-400">None tagged</span>
+            <span className="text-xs text-ink-400">None tagged</span>
           )}
         </div>
         <div className="flex flex-wrap gap-2">
@@ -586,10 +587,10 @@ function ProductEditor({
                     active ? current.filter((a) => a !== tag) : [...current, tag]
                   );
                 }}
-                className={`px-3 py-1.5 border text-xs tracking-wider uppercase transition-colors ${
+                className={`badge border cursor-pointer transition-colors ${
                   active
-                    ? "border-brand-800 bg-brand-800 text-white"
-                    : "border-neutral-300 text-neutral-600 hover:border-brand-700"
+                    ? "border-brand-800 bg-brand-700 text-white"
+                    : "border-ink-200 text-ink-600 hover:border-brand-700"
                 }`}
               >
                 {tag}
@@ -600,12 +601,36 @@ function ProductEditor({
       </div>
 
       <div>
-        <label className="block text-[11px] font-bold tracking-[0.2em] uppercase mb-2">
+        <label className="label mb-2">
+          Ingredients (optional)
+        </label>
+        <textarea
+          value={(form.ingredients ?? []).join(", ")}
+          onChange={(e) =>
+            set(
+              "ingredients",
+              e.target.value
+                .split(",")
+                .map((s) => s.trim())
+                .filter(Boolean)
+            )
+          }
+          rows={3}
+          placeholder="Flour, butter, sugar, eggs…"
+          className={`${inputCls} resize-none`}
+        />
+        <p className="text-xs text-ink-400 mt-1.5">
+          Comma-separated. Leave blank if not provided.
+        </p>
+      </div>
+
+      <div>
+        <label className="label mb-2">
           Images
         </label>
         <div className="grid grid-cols-4 sm:grid-cols-6 gap-3 mb-3">
           {form.images.map((image, index) => (
-            <div key={`${image}-${index}`} className="relative group aspect-square bg-neutral-100">
+            <div key={`${image}-${index}`} className="relative group aspect-square bg-cream-100">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img src={image} alt="" className="w-full h-full object-cover" />
               <button
@@ -616,7 +641,7 @@ function ProductEditor({
                     form.images.filter((_, i) => i !== index)
                   )
                 }
-                className="absolute top-1 right-1 w-5 h-5 bg-brand-800 text-white text-xs flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
+                className="absolute top-1 right-1 w-5 h-5 bg-brand-700 text-white text-xs flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
                 aria-label="Remove image"
               >
                 ×
@@ -644,11 +669,11 @@ function ProductEditor({
               set("images", [...form.images, url]);
               setImageInput("");
             }}
-            className="px-4 border border-neutral-300 text-xs tracking-widest uppercase hover:bg-neutral-50"
+            className="px-4 border border-ink-200 text-xs uppercase tracking-wide hover:bg-cream-50"
           >
             Add URL
           </button>
-          <label className="px-4 py-3 border border-neutral-300 text-xs tracking-widest uppercase hover:bg-neutral-50 cursor-pointer">
+          <label className="px-4 py-3 border border-ink-200 text-xs uppercase tracking-wide hover:bg-cream-50 cursor-pointer">
             {uploading ? "Uploading…" : "Upload"}
             <input
               type="file"
@@ -669,19 +694,19 @@ function ProductEditor({
 
       <div>
         <div className="flex items-center justify-between mb-3">
-          <label className="block text-[11px] font-bold tracking-[0.2em] uppercase">
+          <label className="block text-xs">
             Variants (optional)
           </label>
           <button
             type="button"
             onClick={addVariant}
-            className="text-xs tracking-widest uppercase text-neutral-500 hover:text-black"
+            className="text-xs uppercase tracking-wide text-ink-500 hover:text-ink-950"
           >
             + Add variant
           </button>
         </div>
         {form.variants.length === 0 ? (
-          <p className="text-neutral-400 text-sm">
+          <p className="text-ink-400 text-sm">
             No variants. Leave empty for single-SKU products.
           </p>
         ) : (
@@ -736,7 +761,7 @@ function ProductEditor({
                       form.variants.filter((v) => v.id !== variant.id)
                     )
                   }
-                  className="h-[46px] px-3 text-xs text-red-600 border border-red-200 hover:bg-red-50 uppercase tracking-widest"
+                  className="btn btn-ghost !py-2 text-xs !text-red-600 border-red-200 hover:bg-red-50"
                 >
                   Remove
                 </button>
@@ -746,18 +771,18 @@ function ProductEditor({
         )}
       </div>
 
-      <div className="pt-4 border-t border-neutral-200 flex gap-3">
+      <div className="pt-4 border-t border-ink-200 flex gap-3">
         <button
           type="button"
           onClick={() => onSave(form)}
-          className="px-7 py-3.5 bg-brand-800 text-white font-oswald text-xs font-bold tracking-[0.2em] uppercase hover:bg-brand-900 transition-colors"
+          className="btn btn-primary"
         >
           Save Product
         </button>
         <button
           type="button"
           onClick={onCancel}
-          className="px-7 py-3.5 border border-neutral-300 font-oswald text-xs font-bold tracking-[0.2em] uppercase hover:bg-neutral-50 transition-colors"
+          className="btn btn-secondary"
         >
           Cancel
         </button>
@@ -767,12 +792,12 @@ function ProductEditor({
 }
 
 const inputCls =
-  "w-full px-3.5 py-2.5 bg-white border border-neutral-300 text-sm focus:outline-none focus:border-brand-700 transition-colors";
+  "input";
 
 function Field({ label, children }: { label: string; children: React.ReactNode }) {
   return (
     <div>
-      <label className="block text-[11px] font-bold text-neutral-500 tracking-[0.2em] uppercase mb-2">
+      <label className="label mb-2">
         {label}
       </label>
       {children}

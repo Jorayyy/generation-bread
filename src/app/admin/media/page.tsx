@@ -82,12 +82,12 @@ export default function AdminMedia() {
     <div>
       <div className="flex flex-wrap items-start justify-between gap-4 mb-8">
         <div>
-          <h1 className="font-oswald text-4xl font-bold uppercase tracking-tight">Media</h1>
-          <p className="text-neutral-500 mt-2 text-sm">
+          <h1 className="font-display text-3xl lg:text-4xl text-ink-950">Media</h1>
+          <p className="text-ink-500 mt-2 text-sm">
             Upload images and copy their URLs into products, content, or logo
           </p>
         </div>
-        <label className="px-6 py-3 bg-brand-800 text-white font-oswald text-xs font-bold tracking-[0.2em] uppercase hover:bg-brand-900 transition-colors cursor-pointer">
+        <label className="btn btn-primary cursor-pointer">
           {uploading ? "Uploading…" : "Upload Image"}
           <input
             type="file"
@@ -104,7 +104,7 @@ export default function AdminMedia() {
       </div>
 
       {message && (
-        <div className="mb-5 px-4 py-3 bg-neutral-50 border border-neutral-200 text-sm">
+        <div className="mb-5 px-4 py-3 bg-cream-50 border border-ink-100 text-sm">
           {message}
         </div>
       )}
@@ -116,36 +116,36 @@ export default function AdminMedia() {
 
       <div className="mb-6 bg-amber-50 border border-amber-200 px-4 py-3 text-sm text-amber-800">
         Uploads are stored in <code>.data/uploads</code> on the server. On serverless hosts
-        these files reset on redeploy â€” for permanent images, drop files into{" "}
+        these files reset on redeploy — for permanent images, drop files into{" "}
         <code>public/images</code> or paste an external URL.
       </div>
 
       {media.length === 0 ? (
-        <div className="py-16 bg-white border border-neutral-200 text-center">
-          <p className="font-oswald text-2xl font-bold text-neutral-300 uppercase">
+        <div className="py-16 card text-center">
+          <p className="font-display text-2xl text-ink-300">
             No uploads yet
           </p>
-          <p className="text-neutral-400 text-sm mt-2">
+          <p className="text-ink-400 text-sm mt-2">
             Use &quot;Upload Image&quot; or add files to public/images
           </p>
         </div>
       ) : (
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
           {media.map((item) => (
-            <div key={item.id} className="bg-white border border-neutral-200 p-4">
-              <div className="aspect-square bg-neutral-100 mb-3 overflow-hidden">
+            <div key={item.id} className="card p-4">
+              <div className="aspect-square bg-cream-100 mb-3 overflow-hidden">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img src={item.url} alt={item.filename} className="w-full h-full object-cover" />
               </div>
-              <p className="text-xs text-neutral-500 truncate">{item.filename}</p>
-              <p className="text-[10px] text-neutral-400 mt-0.5">
+              <p className="text-xs text-ink-500 truncate">{item.filename}</p>
+              <p className="text-[10px] text-ink-400 mt-0.5">
                 {(item.size / 1024).toFixed(0)} KB
               </p>
               <div className="flex gap-2 mt-3">
                 <button
                   type="button"
                   onClick={() => copyUrl(item.url)}
-                  className="flex-1 px-3 py-2 text-[10px] border border-neutral-300 hover:bg-neutral-50 uppercase tracking-widest"
+                  className="flex-1 px-3 py-2 text-[10px] border border-ink-200 hover:bg-cream-50 uppercase tracking-widest"
                 >
                   {copied === item.url ? "Copied" : "Copy URL"}
                 </button>

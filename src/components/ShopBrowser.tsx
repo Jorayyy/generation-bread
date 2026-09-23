@@ -92,19 +92,19 @@ export default function ShopBrowser({ products, categories }: ShopBrowserProps) 
   return (
     <>
       {/* Filter bar */}
-      <div className="sticky top-[5.75rem] lg:top-[7rem] z-30 bg-white/95 backdrop-blur border-y border-neutral-200">
-        <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-10">
-          <div className="flex flex-col lg:flex-row lg:items-center gap-3 py-3">
-            <div className="flex items-center gap-1 overflow-x-auto scrollbar-hide flex-1">
+      <div className="sticky top-[5.5rem] lg:top-[6.25rem] z-30 bg-cream-50/95 backdrop-blur-md border-b border-ink-100">
+        <div className="container-site">
+          <div className="flex flex-col lg:flex-row lg:items-center gap-3 py-3.5">
+            <div className="flex items-center gap-1.5 overflow-x-auto scrollbar-hide flex-1">
               {[{ slug: "all", name: "All" }, ...categories].map((cat) => (
                 <button
                   key={cat.slug}
                   type="button"
                   onClick={() => updateParams({ category: cat.slug === "all" ? null : cat.slug })}
-                  className={`px-4 py-2 text-[11px] font-bold tracking-[0.18em] uppercase whitespace-nowrap transition-colors ${
+                  className={`px-4 py-2 text-sm font-medium whitespace-nowrap rounded-full transition-colors ${
                     activeCategory === cat.slug
-                      ? "bg-brand-800 text-cream-50"
-                      : "text-neutral-500 hover:text-brand-800 hover:bg-cream-100"
+                      ? "bg-brand-800 text-white"
+                      : "text-ink-500 hover:text-brand-800 hover:bg-white"
                   }`}
                 >
                   {cat.name}
@@ -117,7 +117,7 @@ export default function ShopBrowser({ products, categories }: ShopBrowserProps) 
                 value={sort}
                 onChange={(e) => updateParams({ sort: e.target.value === "featured" ? null : e.target.value })}
                 aria-label="Sort products"
-                className="px-3 py-2 border border-neutral-300 text-sm bg-white focus:outline-none focus:border-brand-700"
+                className="input !w-auto !py-2 text-sm cursor-pointer"
               >
                 {SORTS.map((option) => (
                   <option key={option.key} value={option.key}>
@@ -130,12 +130,12 @@ export default function ShopBrowser({ products, categories }: ShopBrowserProps) 
                 value={maxPrice || ""}
                 onChange={(e) => updateParams({ max: e.target.value || null })}
                 aria-label="Maximum price"
-                className="px-3 py-2 border border-neutral-300 text-sm bg-white focus:outline-none focus:border-brand-700"
+                className="input !w-auto !py-2 text-sm cursor-pointer"
               >
                 <option value="">Any price</option>
+                <option value="100">Under ₱100</option>
+                <option value="200">Under ₱200</option>
                 <option value="300">Under ₱300</option>
-                <option value="350">Under ₱350</option>
-                <option value="500">Under ₱500</option>
               </select>
             </div>
           </div>
@@ -143,10 +143,10 @@ export default function ShopBrowser({ products, categories }: ShopBrowserProps) 
       </div>
 
       {/* Grid */}
-      <section className="py-12 bg-white">
-        <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-10">
-          <div className="flex items-center justify-between mb-6">
-            <p className="text-neutral-500 text-sm">
+      <section className="section">
+        <div className="container-site">
+          <div className="flex items-center justify-between mb-8">
+            <p className="text-ink-500 text-sm">
               {filtered.length} product{filtered.length !== 1 ? "s" : ""}
               {query ? ` for “${query}”` : ""}
             </p>
@@ -157,7 +157,7 @@ export default function ShopBrowser({ products, categories }: ShopBrowserProps) 
                   router.replace("/products", { scroll: false });
                   setLimit(PAGE_SIZE);
                 }}
-                className="text-xs tracking-[0.15em] uppercase text-neutral-500 hover:text-brand-800 transition-colors"
+                className="text-sm font-medium text-brand-700 hover:text-brand-900 transition-colors"
               >
                 Clear filters
               </button>
@@ -165,22 +165,22 @@ export default function ShopBrowser({ products, categories }: ShopBrowserProps) 
           </div>
 
           {filtered.length === 0 ? (
-            <div className="py-24 text-center border border-neutral-200">
-              <p className="font-oswald text-3xl font-bold text-neutral-300 uppercase mb-4">
-                No products found
+            <div className="py-24 text-center border border-dashed border-ink-200 rounded-2xl bg-white">
+              <p className="font-display text-2xl text-ink-300 mb-4">
+                Nothing matches that
               </p>
               <button
                 type="button"
                 onClick={() => {
                   router.replace("/products", { scroll: false });
                 }}
-                className="px-6 py-3 bg-brand-800 text-white font-oswald text-xs font-bold tracking-[0.2em] uppercase hover:bg-brand-900 transition-colors"
+                className="btn btn-primary"
               >
-                View All Products
+                View all products
               </button>
             </div>
           ) : (
-            <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-5 gap-y-10">
               {visible.map((product, index) => (
                 <ProductCard key={product.id} product={product} priority={index < 4} />
               ))}
@@ -188,13 +188,13 @@ export default function ShopBrowser({ products, categories }: ShopBrowserProps) 
           )}
 
           {filtered.length > visible.length && (
-            <div className="mt-10 text-center">
+            <div className="mt-12 text-center">
               <button
                 type="button"
                 onClick={() => setLimit((value) => value + PAGE_SIZE)}
-                className="px-8 py-4 border border-neutral-300 font-oswald text-xs font-bold tracking-[0.2em] uppercase hover:bg-neutral-50 transition-colors"
+                className="btn btn-secondary"
               >
-                Load More ({filtered.length - visible.length} remaining)
+                Load more ({filtered.length - visible.length} remaining)
               </button>
             </div>
           )}

@@ -10,10 +10,10 @@ import HoursBanner from "@/components/HoursBanner";
 
 const navLinks = [
   { href: "/products", label: "Shop" },
-  { href: "/collections", label: "Collections" },
-  { href: "/about", label: "About" },
+  { href: "/collections", label: "Menu" },
+  { href: "/about", label: "Our Story" },
   { href: "/faq", label: "FAQ" },
-  { href: "/contact", label: "Contact" },
+  { href: "/contact", label: "Visit" },
 ];
 
 const bottomLinks = [
@@ -116,45 +116,45 @@ export default function Navbar() {
   return (
     <>
       <header
-        className={`fixed top-0 inset-x-0 z-50 transition-colors duration-300 ${
+        className={`fixed top-0 inset-x-0 z-50 transition-all duration-300 ${
           scrolled || isOpen
-            ? "bg-white/95 backdrop-blur border-b border-neutral-200"
-            : "bg-white/80 backdrop-blur-sm border-b border-transparent"
+            ? "bg-cream-50/95 backdrop-blur-md border-b border-ink-100 shadow-sm"
+            : "bg-cream-50/80 backdrop-blur-sm border-b border-transparent"
         }`}
       >
         <HoursBanner />
-        <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-10">
-          <div className="flex items-center justify-between h-16 lg:h-20">
+        <div className="container-site">
+          <div className="flex items-center justify-between h-16 lg:h-[4.5rem]">
             <Link
               href="/"
-              className="flex items-center gap-2.5 group shrink-0"
+              className="flex items-center gap-3 group shrink-0"
               aria-label="Generation Bread home"
             >
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src={business.logo}
                 alt=""
-                className="w-9 h-9 rounded-full object-cover ring-1 ring-brand-200 group-hover:ring-brand-600 transition-all"
+                className="w-10 h-10 rounded-full object-cover ring-2 ring-brand-200 group-hover:ring-brand-500 transition-all"
                 onError={(e) => {
                   const target = e.currentTarget as HTMLImageElement;
                   if (target.src.endsWith("/logo.svg")) return;
                   target.src = "/logo.svg";
                 }}
               />
-              <span className="font-oswald text-lg font-bold tracking-[0.18em] uppercase hidden sm:block text-brand-900">
+              <span className="font-display text-xl text-ink-950 hidden sm:block leading-none">
                 Generation Bread
               </span>
             </Link>
 
-            <nav className="hidden lg:flex items-center gap-1" aria-label="Primary">
+            <nav className="hidden lg:flex items-center gap-0.5" aria-label="Primary">
               {navLinks.map((link) => (
                 <Link
                   key={link.href}
                   href={link.href}
-                  className={`px-4 py-2 text-[12px] font-medium tracking-[0.18em] uppercase transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 ${
+                  className={`px-4 py-2 text-[15px] font-medium rounded-full transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 ${
                     pathname === link.href
-                      ? "text-brand-800"
-                      : "text-neutral-500 hover:text-brand-800"
+                      ? "text-brand-800 bg-brand-50"
+                      : "text-ink-600 hover:text-brand-800 hover:bg-ink-50"
                   }`}
                 >
                   {link.label}
@@ -162,13 +162,13 @@ export default function Navbar() {
               ))}
             </nav>
 
-            <div className="flex items-center gap-1 sm:gap-2">
+            <div className="flex items-center gap-1 sm:gap-1.5">
               <div className="relative">
                 <button
                   type="button"
                   onClick={() => setSearchOpen((v) => !v)}
-                  className={`p-2.5 transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 ${
-                    searchOpen ? "text-brand-800" : "text-neutral-600 hover:text-brand-800"
+                  className={`p-2.5 rounded-full transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 ${
+                    searchOpen ? "text-brand-800 bg-brand-50" : "text-ink-500 hover:text-brand-800 hover:bg-ink-50"
                   }`}
                   aria-label="Search products"
                   aria-expanded={searchOpen}
@@ -176,23 +176,22 @@ export default function Navbar() {
                   <NavIcon name="search" />
                 </button>
 
-                {/* Search dropdown below the search icon */}
                 <div
-                  className={`absolute top-full left-1/2 -translate-x-1/2 mt-1 w-60 sm:w-64 bg-white border shadow-sm overflow-hidden transition-all duration-300 ${
+                  className={`absolute top-full right-0 mt-2 w-72 bg-white border border-ink-200 rounded-2xl shadow-lg overflow-hidden transition-all duration-300 ${
                     searchOpen
-                      ? "max-h-24 opacity-100 border-neutral-200"
-                      : "max-h-0 opacity-0 border-transparent shadow-none pointer-events-none"
+                      ? "max-h-24 opacity-100 translate-y-0"
+                      : "max-h-0 opacity-0 -translate-y-2 border-transparent shadow-none pointer-events-none"
                   }`}
                 >
-                  <form onSubmit={submitSearch} className="p-2.5">
+                  <form onSubmit={submitSearch} className="p-3">
                     <input
                       ref={searchInputRef}
                       type="search"
                       value={searchValue}
                       onChange={(e) => setSearchValue(e.target.value)}
-                      placeholder="Search products"
+                      placeholder="Search breads, pastries…"
                       aria-label="Search products"
-                      className="w-full px-3 py-2 border border-neutral-300 text-sm focus:outline-none focus:border-brand-700 transition-colors"
+                      className="input"
                     />
                   </form>
                 </div>
@@ -201,12 +200,12 @@ export default function Navbar() {
               <button
                 type="button"
                 onClick={open}
-                className="relative p-2.5 text-neutral-600 hover:text-brand-800 transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
+                className="relative p-2.5 rounded-full text-ink-500 hover:text-brand-800 hover:bg-ink-50 transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
                 aria-label={`Open cart, ${count} item${count === 1 ? "" : "s"}`}
               >
                 <NavIcon name="cart" />
                 {count > 0 && (
-                  <span className="absolute -top-0.5 -right-0.5 min-w-[18px] h-[18px] px-1 bg-brand-800 text-white text-[10px] font-bold flex items-center justify-center">
+                  <span className="absolute -top-0.5 -right-0.5 min-w-[18px] h-[18px] px-1 bg-brand-800 text-white text-[10px] font-semibold flex items-center justify-center rounded-full">
                     {count}
                   </span>
                 )}
@@ -216,31 +215,31 @@ export default function Navbar() {
                 href={messengerUrl(business.social.messenger, "Hi Generation Bread! I'd like to order.")}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="hidden md:inline-flex ml-2 px-5 py-2.5 bg-brand-800 text-white text-[11px] font-bold tracking-[0.18em] uppercase hover:bg-brand-900 transition-colors"
+                className="hidden md:inline-flex btn btn-primary ml-2 !py-2.5 !px-5 text-sm"
               >
-                Order Now
+                Order online
               </a>
 
               <button
                 type="button"
                 onClick={() => setIsOpen((v) => !v)}
-                className="lg:hidden p-2.5 text-brand-900 ml-1"
+                className="lg:hidden p-2.5 text-ink-800 ml-1 rounded-full hover:bg-ink-50"
                 aria-label={isOpen ? "Close menu" : "Open menu"}
                 aria-expanded={isOpen}
               >
                 <div className="w-6 h-4 flex flex-col justify-between">
                   <span
-                    className={`w-full h-[1.5px] bg-brand-900 transition-all duration-300 ${
+                    className={`w-full h-[1.5px] bg-ink-800 rounded-full transition-all duration-300 ${
                       isOpen ? "rotate-45 translate-y-[5px]" : ""
                     }`}
                   />
                   <span
-                    className={`w-full h-[1.5px] bg-brand-900 transition-all duration-300 ${
+                    className={`w-full h-[1.5px] bg-ink-800 rounded-full transition-all duration-300 ${
                       isOpen ? "opacity-0" : ""
                     }`}
                   />
                   <span
-                    className={`w-full h-[1.5px] bg-brand-900 transition-all duration-300 ${
+                    className={`w-full h-[1.5px] bg-ink-800 rounded-full transition-all duration-300 ${
                       isOpen ? "-rotate-45 -translate-y-[5px]" : ""
                     }`}
                   />
@@ -253,18 +252,18 @@ export default function Navbar() {
 
       {/* Mobile menu */}
       <div
-        className={`fixed inset-0 z-40 bg-white transition-all duration-300 lg:hidden ${
+        className={`fixed inset-0 z-40 bg-cream-50 transition-all duration-300 lg:hidden ${
           isOpen ? "opacity-100 visible" : "opacity-0 invisible pointer-events-none"
         }`}
       >
-        <div className="pt-24 pb-28 px-6 h-full flex flex-col">
+        <div className="pt-32 pb-28 px-6 h-full flex flex-col">
           <nav className="flex flex-col gap-1" aria-label="Mobile">
             {navLinks.map((link, i) => (
               <Link
                 key={link.href}
                 href={link.href}
                 onClick={() => setIsOpen(false)}
-                className="font-oswald text-4xl font-bold uppercase tracking-wide py-3 border-b border-neutral-100 hover:text-neutral-500 transition-colors"
+                className="font-display text-3xl text-ink-950 py-3 border-b border-ink-100 hover:text-brand-700 transition-colors"
                 style={{
                   transitionDelay: isOpen ? `${i * 60}ms` : "0ms",
                   transform: isOpen ? "translateY(0)" : "translateY(16px)",
@@ -281,7 +280,7 @@ export default function Navbar() {
             target="_blank"
             rel="noopener noreferrer"
             onClick={() => setIsOpen(false)}
-            className="mt-8 px-8 py-4 bg-brand-800 text-white font-oswald text-sm font-bold tracking-[0.2em] uppercase text-center"
+            className="btn btn-primary mt-8 w-full text-base"
           >
             Order via Messenger
           </a>
@@ -290,7 +289,7 @@ export default function Navbar() {
 
       {/* Mobile bottom bar */}
       <nav
-        className="lg:hidden fixed bottom-0 inset-x-0 z-50 bg-white border-t border-neutral-200 pb-[env(safe-area-inset-bottom)]"
+        className="lg:hidden fixed bottom-0 inset-x-0 z-50 bg-white/95 backdrop-blur-md border-t border-ink-100 pb-[env(safe-area-inset-bottom)]"
         aria-label="Mobile quick links"
       >
         <div className="grid grid-cols-4">
@@ -302,12 +301,12 @@ export default function Navbar() {
                 <span className="relative">
                   <NavIcon name={link.icon} />
                   {isCart && count > 0 && (
-                    <span className="absolute -top-1.5 -right-2.5 min-w-[16px] h-4 px-1 bg-brand-800 text-white text-[9px] font-bold flex items-center justify-center">
+                    <span className="absolute -top-1.5 -right-2.5 min-w-[16px] h-4 px-1 bg-brand-800 text-white text-[9px] font-semibold flex items-center justify-center rounded-full">
                       {count}
                     </span>
                   )}
                 </span>
-                <span className="text-[10px] tracking-[0.15em] uppercase mt-1">
+                <span className="text-[10px] font-medium text-ink-500 mt-1">
                   {link.label}
                 </span>
               </>
@@ -319,8 +318,8 @@ export default function Navbar() {
                   key="cart"
                   type="button"
                   onClick={open}
-                className="flex flex-col items-center justify-center py-2.5 text-neutral-600 hover:text-brand-800 transition-colors"
-                aria-label={`Open cart, ${count} items`}
+                  className="flex flex-col items-center justify-center py-2.5 text-ink-500 hover:text-brand-800 transition-colors"
+                  aria-label={`Open cart, ${count} items`}
                 >
                   {content}
                 </button>
@@ -333,8 +332,8 @@ export default function Navbar() {
                   key="search"
                   type="button"
                   onClick={() => setSearchOpen(true)}
-                className="flex flex-col items-center justify-center py-2.5 text-neutral-600 hover:text-brand-800 transition-colors"
-                aria-label="Search products"
+                  className="flex flex-col items-center justify-center py-2.5 text-ink-500 hover:text-brand-800 transition-colors"
+                  aria-label="Search products"
                 >
                   {content}
                 </button>
@@ -348,7 +347,7 @@ export default function Navbar() {
                 className={`flex flex-col items-center justify-center py-2.5 transition-colors ${
                   pathname === link.href
                     ? "text-brand-800"
-                    : "text-neutral-500 hover:text-brand-800"
+                    : "text-ink-500 hover:text-brand-800"
                 }`}
               >
                 {content}

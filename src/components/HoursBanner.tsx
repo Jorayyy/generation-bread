@@ -20,18 +20,18 @@ export default function HoursBanner() {
   }, []);
 
   return (
-    <div className="bg-brand-900 text-cream-100 text-[11px] tracking-[0.12em] uppercase">
-      <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-10 h-9 flex items-center justify-between gap-3">
+    <div className="bg-brand-950 text-cream-100 text-[13px]">
+      <div className="container-site h-9 flex items-center justify-between gap-3">
         <div className="flex items-center gap-2 min-w-0">
           <span
-            className={`w-1.5 h-1.5 rounded-full shrink-0 ${open ? "bg-emerald-400" : "bg-amber-400"}`}
+            className={`w-1.5 h-1.5 rounded-full shrink-0 ${open ? "bg-emerald-400" : "bg-honey-400"}`}
             aria-hidden="true"
           />
           <span className="truncate">
-            {open ? "Open Now — Fresh Bakes All Day" : "Closed Now — Opens 7:00 AM"}
+            {open ? "Open now — fresh bakes all day" : "Closed now — opens 7:00 AM"}
           </span>
         </div>
-        <span className="hidden sm:inline text-cream-300 shrink-0">
+        <span className="hidden sm:inline text-cream-400/70 shrink-0">
           {business.contact.hours}
         </span>
       </div>

@@ -7,17 +7,31 @@ import type { Order, OrderStatus } from "@/lib/types";
 const STATUSES: OrderStatus[] = [
   "pending",
   "confirmed",
+  "preparing",
+  "ready",
   "shipped",
   "delivered",
   "cancelled",
 ];
 
+const STATUS_LABELS: Record<OrderStatus, string> = {
+  pending: "Pending",
+  confirmed: "Confirmed",
+  preparing: "Preparing",
+  ready: "Ready",
+  shipped: "Shipped",
+  delivered: "Delivered",
+  cancelled: "Cancelled",
+};
+
 const STATUS_STYLES: Record<OrderStatus, string> = {
-  pending: "bg-amber-50 text-amber-700 border-amber-200",
-  confirmed: "bg-blue-50 text-blue-700 border-blue-200",
-  shipped: "bg-indigo-50 text-indigo-700 border-indigo-200",
-  delivered: "bg-green-50 text-green-700 border-green-200",
-  cancelled: "bg-red-50 text-red-700 border-red-200",
+  pending: "bg-honey-100 text-honey-800 border-honey-200",
+  confirmed: "bg-brand-100 text-brand-700 border-brand-200",
+  preparing: "bg-amber-100 text-amber-800 border-amber-200",
+  ready: "bg-emerald-100 text-emerald-800 border-emerald-200",
+  shipped: "bg-indigo-100 text-indigo-800 border-indigo-200",
+  delivered: "bg-green-100 text-green-800 border-green-200",
+  cancelled: "bg-red-100 text-red-800 border-red-200",
 };
 
 export default function AdminOrders() {
@@ -55,7 +69,7 @@ export default function AdminOrders() {
         body: JSON.stringify({ id, status }),
       });
       if (res.ok) {
-        setMessage(`Order marked as ${status}.`);
+        setMessage(`Order marked as ${STATUS_LABELS[status]}.`);
         setTimeout(() => setMessage(""), 3000);
         load();
       } else {
@@ -81,14 +95,15 @@ export default function AdminOrders() {
   return (
     <div>
       <div className="mb-8">
-        <h1 className="font-oswald text-4xl font-bold uppercase tracking-tight">Orders</h1>
-        <p className="text-neutral-500 mt-2 text-sm">
+        <span className="eyebrow mb-2">Admin</span>
+        <h1 className="font-display text-3xl lg:text-4xl text-ink-950">Orders</h1>
+        <p className="text-ink-500 mt-2 text-sm">
           Review incoming orders and update their status
         </p>
       </div>
 
       {message && (
-        <div className="mb-5 px-4 py-3 bg-neutral-50 border border-neutral-200 text-sm">
+        <div className="mb-5 px-4 py-3 card text-sm bg-brand-50 border-brand-200 text-brand-700">
           {message}
         </div>
       )}
@@ -103,64 +118,65 @@ export default function AdminOrders() {
             active={filter === status}
             onClick={() => setFilter(status)}
           >
-            {status} ({counts[status] ?? 0})
+            {STATUS_LABELS[status]} ({counts[status] ?? 0})
           </FilterButton>
         ))}
       </div>
 
       {loading ? (
-        <p className="text-neutral-400 text-sm">Loading orders…</p>
+        <p className="text-ink-400 text-sm">Loading orders…</p>
       ) : filtered.length === 0 ? (
-        <div className="py-16 bg-white border border-neutral-200 text-center">
-          <p className="font-oswald text-2xl font-bold text-neutral-300 uppercase">
+        <div className="py-16 card text-center">
+          <p className="font-display text-2xl text-ink-300">
             No orders {filter !== "all" ? `with status ${filter}` : "yet"}
           </p>
         </div>
       ) : (
         <div className="space-y-3">
           {filtered.map((order) => (
-            <div key={order.id} className="bg-white border border-neutral-200">
+            <div key={order.id} className="card">
               <div className="p-5 flex flex-wrap items-center gap-4">
                 <div className="flex-1 min-w-[200px]">
                   <div className="flex flex-wrap items-center gap-2">
-                    <p className="font-oswald text-lg font-bold tracking-wide">
-                      {order.orderNumber}
-                    </p>
-                    <span
-                      className={`px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider border ${STATUS_STYLES[order.status]}`}
-                    >
-                      {order.status}
+                    <p className="font-display text-lg text-ink-950">{order.orderNumber}</p>
+                    <span className={`badge border ${STATUS_STYLES[order.status]}`}>
+                      {STATUS_LABELS[order.status]}
                     </span>
+                    {order.paymentStatus && (
+                      <span className="badge bg-cream-100 text-ink-500 border border-ink-200">
+                        {order.paymentStatus}
+                      </span>
+                    )}
                   </div>
-                  <p className="text-neutral-500 text-sm mt-1">
+                  <p className="text-ink-500 text-sm mt-1">
                     {order.customer.name} · {order.customer.phone}
                   </p>
-                  <p className="text-xs text-neutral-400 mt-1">
+                  <p className="text-xs text-ink-400 mt-1">
                     {formatDate(order.createdAt)} · {order.paymentMethod.toUpperCase()} ·{" "}
                     {(order.fulfillment === "pickup" ? "Pickup" : "Delivery")} ·{" "}
                     {order.items.length} item{order.items.length !== 1 ? "s" : ""}
                   </p>
                 </div>
 
-                <p className="font-oswald text-xl font-bold">{formatPeso(order.total)}</p>
+                <p className="font-display text-xl text-ink-950">{formatPeso(order.total)}</p>
 
                 <div className="flex flex-wrap items-center gap-2">
                   <select
                     value={order.status}
                     onChange={(e) => changeStatus(order.id, e.target.value as OrderStatus)}
                     aria-label={`Status for ${order.orderNumber}`}
-                    className="px-3 py-2 border border-neutral-300 text-xs bg-white focus:outline-none focus:border-brand-700 uppercase tracking-wider"
+                    className="input !w-auto !py-2 text-xs"
                   >
                     {STATUSES.map((status) => (
                       <option key={status} value={status}>
-                        {status}
+                        {STATUS_LABELS[status]}
                       </option>
                     ))}
                   </select>
                   <button
                     type="button"
                     onClick={() => setExpanded(expanded === order.id ? null : order.id)}
-                    className="px-4 py-2 text-xs border border-neutral-300 hover:bg-neutral-50 tracking-widest uppercase"
+                    className="btn btn-ghost !py-2 text-xs"
                   >
                     {expanded === order.id ? "Hide" : "Details"}
                   </button>
@@ -168,30 +184,24 @@ export default function AdminOrders() {
               </div>
 
               {expanded === order.id && (
-                <div className="border-t border-neutral-200 p-5 grid md:grid-cols-2 gap-6">
+                <div className="border-t border-ink-100 p-5 grid md:grid-cols-2 gap-6">
                   <div>
-                    <h3 className="text-[11px] font-bold tracking-[0.2em] uppercase text-neutral-400 mb-3">
-                      Items
-                    </h3>
+                    <h3 className="text-xs text-ink-400 mb-3">Items</h3>
                     <ul className="space-y-3">
                       {order.items.map((item, index) => (
                         <li key={`${item.productId}-${index}`} className="flex gap-3 text-sm">
-                          <div className="w-12 h-14 bg-neutral-100 shrink-0 overflow-hidden">
+                          <div className="w-12 h-14 bg-cream-100 shrink-0 overflow-hidden rounded-lg">
                             {item.image && (
                               // eslint-disable-next-line @next/next/no-img-element
-                              <img
-                                src={item.image}
-                                alt=""
-                                className="w-full h-full object-cover"
-                              />
+                              <img src={item.image} alt="" className="w-full h-full object-cover" />
                             )}
                           </div>
                           <div className="flex-1">
-                            <p className="font-medium">{item.name}</p>
+                            <p className="font-medium text-ink-950">{item.name}</p>
                             {item.variantLabel && (
-                              <p className="text-xs text-neutral-500">{item.variantLabel}</p>
+                              <p className="text-xs text-ink-400">{item.variantLabel}</p>
                             )}
-                            <p className="text-xs text-neutral-500">
+                            <p className="text-xs text-ink-400">
                               {item.qty} × {formatPeso(item.price)}
                             </p>
                           </div>
@@ -201,65 +211,41 @@ export default function AdminOrders() {
                         </li>
                       ))}
                     </ul>
-                    <div className="mt-4 pt-3 border-t border-neutral-200 text-sm flex justify-between">
-                      <span className="text-neutral-500">Subtotal</span>
+                    <div className="mt-4 pt-3 border-t border-ink-100 text-sm flex justify-between">
+                      <span className="text-ink-500">Subtotal</span>
                       <span className="font-medium">{formatPeso(order.subtotal)}</span>
                     </div>
                   </div>
 
                   <div>
-                    <h3 className="text-[11px] font-bold tracking-[0.2em] uppercase text-neutral-400 mb-3">
-                      Customer
-                    </h3>
+                    <h3 className="text-xs text-ink-400 mb-3">Customer</h3>
                     <dl className="space-y-2 text-sm">
-                      <div className="flex gap-3">
-                        <dt className="text-neutral-400 w-20 shrink-0">Name</dt>
-                        <dd>{order.customer.name}</dd>
-                      </div>
-                      <div className="flex gap-3">
-                        <dt className="text-neutral-400 w-20 shrink-0">Phone</dt>
-                        <dd>{order.customer.phone}</dd>
-                      </div>
+                      <DetailRow label="Name">{order.customer.name}</DetailRow>
+                      <DetailRow label="Phone">{order.customer.phone}</DetailRow>
                       {order.customer.email && (
-                        <div className="flex gap-3">
-                          <dt className="text-neutral-400 w-20 shrink-0">Email</dt>
-                          <dd>{order.customer.email}</dd>
-                        </div>
+                        <DetailRow label="Email">{order.customer.email}</DetailRow>
                       )}
                       {order.fulfillment !== "pickup" && (
-                        <div className="flex gap-3">
-                          <dt className="text-neutral-400 w-20 shrink-0">Address</dt>
-                          <dd>
-                            {order.customer.address}, {order.customer.city},{" "}
-                            {order.customer.province} {order.customer.zip}
-                          </dd>
-                        </div>
+                        <DetailRow label="Address">
+                          {order.customer.address}, {order.customer.city},{" "}
+                          {order.customer.province} {order.customer.zip}
+                        </DetailRow>
                       )}
-                      <div className="flex gap-3">
-                        <dt className="text-neutral-400 w-20 shrink-0">Payment</dt>
-                        <dd className="uppercase">{order.paymentMethod}</dd>
-                      </div>
-                      <div className="flex gap-3">
-                        <dt className="text-neutral-400 w-20 shrink-0">Fulfillment</dt>
-                        <dd className="uppercase">
-                          {order.fulfillment === "pickup" ? "Store Pickup" : "Delivery"}
-                        </dd>
-                      </div>
+                      <DetailRow label="Payment">{order.paymentMethod}</DetailRow>
+                      <DetailRow label="Fulfillment">
+                        {order.fulfillment === "pickup" ? "Store pickup" : "Delivery"}
+                      </DetailRow>
                       {order.customer.notes && (
-                        <div className="flex gap-3">
-                          <dt className="text-neutral-400 w-20 shrink-0">Notes</dt>
-                          <dd>{order.customer.notes}</dd>
-                        </div>
+                        <DetailRow label="Notes">{order.customer.notes}</DetailRow>
                       )}
                     </dl>
 
-                    <h3 className="text-[11px] font-bold tracking-[0.2em] uppercase text-neutral-400 mt-5 mb-3">
-                      History
-                    </h3>
-                    <ul className="space-y-1.5 text-xs text-neutral-500">
+                    <h3 className="text-xs text-ink-400 mt-5 mb-3">History</h3>
+                    <ul className="space-y-1.5 text-xs text-ink-500">
                       {order.history.map((entry, index) => (
                         <li key={index}>
-                          {entry.status} â€” {new Date(entry.at).toLocaleString("en-PH")}
+                          {STATUS_LABELS[entry.status] ?? entry.status} —{" "}
+                          {new Date(entry.at).toLocaleString("en-PH")}
                           {entry.note ? ` (${entry.note})` : ""}
                         </li>
                       ))}
@@ -271,6 +257,15 @@ export default function AdminOrders() {
           ))}
         </div>
       )}
+    </div>
+  );
+}
+
+function DetailRow({ label, children }: { label: string; children: React.ReactNode }) {
+  return (
+    <div className="flex gap-3">
+      <dt className="text-ink-400 w-24 shrink-0">{label}</dt>
+      <dd className="text-ink-800">{children}</dd>
     </div>
   );
 }
@@ -288,8 +283,10 @@ function FilterButton({
     <button
       type="button"
       onClick={onClick}
-      className={`px-4 py-2 text-[11px] font-bold tracking-[0.18em] uppercase transition-colors ${
-        active ? "bg-brand-800 text-white" : "bg-white border border-neutral-200 text-neutral-500 hover:text-black"
+      className={`px-4 py-2 text-xs rounded-full transition-colors ${
+        active
+          ? "bg-brand-700 text-white"
+          : "bg-white border border-ink-200 text-ink-500 hover:text-ink-900"
       }`}
     >
       {children}

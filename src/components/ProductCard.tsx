@@ -18,64 +18,52 @@ export default function ProductCard({ product, priority = false }: ProductCardPr
   return (
     <Link
       href={`/products/${product.slug}`}
-      className="group relative bg-neutral-100 overflow-hidden"
+      className="group block h-full"
     >
-      <div className="relative aspect-[4/5] overflow-hidden">
+      <div className="relative aspect-[4/5] overflow-hidden rounded-2xl bg-cream-100">
         <ProductImage
           src={image}
           alt={product.name}
-          className="w-full h-full"
+          className="w-full h-full transition-transform duration-500 group-hover:scale-[1.04]"
           priority={priority}
         />
 
         {product.badge && (
-          <div className="absolute top-3 left-3 px-2.5 py-1 bg-white text-brand-800 text-[10px] font-bold tracking-widest uppercase">
+          <span className="absolute top-3 left-3 badge bg-white/95 text-brand-800 shadow-sm backdrop-blur-sm">
             {product.badge}
-          </div>
+          </span>
         )}
-
-        <div className="absolute top-3 right-3 px-2.5 py-1.5 bg-brand-800 text-white text-xs font-bold">
-          {formatPeso(product.price)}
-        </div>
 
         {!available && (
-          <div className="absolute inset-0 bg-white/70 flex items-center justify-center">
-            <span className="font-oswald text-sm font-bold tracking-[0.2em] uppercase">
-              Sold Out
-            </span>
+          <div className="absolute inset-0 bg-cream-50/70 flex items-center justify-center rounded-2xl">
+            <span className="badge bg-ink-900 text-cream-50">Sold out</span>
           </div>
         )}
-
-        <div className="absolute inset-x-0 bottom-0 p-4 translate-y-2 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300">
-          <span className="block w-full py-3 bg-brand-800 text-white text-center font-oswald text-xs font-bold tracking-[0.2em] uppercase">
-            View Product
-          </span>
-        </div>
       </div>
 
-      <div className="p-4 bg-white border border-neutral-200 border-t-0">
-        <p className="text-[10px] text-neutral-500 tracking-[0.2em] uppercase mb-1">
+      <div className="pt-4 px-1">
+        <p className="text-[11px] font-medium text-ink-400 capitalize tracking-wide">
           {product.category}
         </p>
-        <h3 className="font-oswald text-base font-semibold uppercase tracking-wide text-brand-900">
+        <h3 className="font-display text-lg text-ink-950 mt-1 leading-snug group-hover:text-brand-700 transition-colors">
           {product.name}
         </h3>
-        <div className="flex items-center gap-2 mt-1">
-          <span className="text-sm font-medium text-brand-900">
+        <div className="flex items-baseline gap-2 mt-1.5">
+          <span className="text-[15px] font-medium text-ink-900">
             {formatPeso(product.price)}
           </span>
           {product.compareAtPrice && product.compareAtPrice > product.price && (
-            <span className="text-xs text-neutral-400 line-through">
+            <span className="text-sm text-ink-400 line-through">
               {formatPeso(product.compareAtPrice)}
             </span>
           )}
         </div>
         {product.allergens && product.allergens.length > 0 && (
-          <div className="flex flex-wrap gap-1.5 mt-2">
+          <div className="flex flex-wrap gap-1 mt-2.5">
             {product.allergens.slice(0, 3).map((tag) => (
               <span
                 key={tag}
-                className="px-1.5 py-0.5 bg-cream-100 text-brand-800 text-[9px] font-semibold tracking-wider uppercase border border-cream-200"
+                className="text-[10px] font-medium text-ink-500 bg-cream-100 rounded-full px-2 py-0.5"
               >
                 {tag}
               </span>

@@ -45,6 +45,7 @@ type Seed = {
   badge?: string | null;
   allergens?: string[];
   diet?: string[];
+  ingredients?: string[];
   id?: string;
   createdAt?: string;
 };
@@ -334,6 +335,7 @@ export const products: Product[] = seeds.map((seed, index) => ({
   variants: [],
   allergens: seed.allergens ?? defaultAllergens[seed.category],
   diet: seed.diet ?? [],
+  ingredients: seed.ingredients ?? [],
   createdAt: seed.createdAt ?? addDays(index),
   updatedAt: seed.createdAt ?? addDays(index),
 }));

@@ -694,6 +694,7 @@ export async function createOrder(draft: OrderDraft): Promise<CreateOrderResult>
         notes: draft.customer.notes?.trim() ?? "",
       },
       paymentMethod: draft.paymentMethod,
+      paymentStatus: draft.paymentMethod === "cod" ? "unpaid" : "unpaid",
       fulfillment,
       createdAt: now,
       updatedAt: now,

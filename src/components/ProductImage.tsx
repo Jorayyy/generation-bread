@@ -23,7 +23,7 @@ export default function ProductImage({
         className={`relative overflow-hidden bg-gradient-to-br from-brand-800 to-brand-950 flex items-center justify-center ${className}`}
         aria-hidden="true"
       >
-        <span className="font-oswald text-6xl font-bold text-white/10">GB</span>
+        <span className="font-display text-6xl text-white/20">GB</span>
       </div>
     );
   }

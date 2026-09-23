@@ -88,8 +88,8 @@ export default function AdminReviews() {
     <div>
       <div className="flex flex-wrap items-start justify-between gap-4 mb-9">
         <div>
-          <h1 className="font-oswald text-4xl font-bold uppercase tracking-tight">Reviews</h1>
-          <p className="text-neutral-500 mt-2 text-sm">
+          <h1 className="font-display text-3xl lg:text-4xl text-ink-950">Reviews</h1>
+          <p className="text-ink-500 mt-2 text-sm">
             Manage the reviews shown on your homepage
           </p>
         </div>
@@ -98,14 +98,14 @@ export default function AdminReviews() {
           onClick={() => {
             setEditing(empty);
           }}
-          className="px-6 py-3 bg-brand-800 text-white font-oswald text-xs font-bold tracking-[0.2em] uppercase hover:bg-brand-900 transition-colors"
+          className="btn btn-primary"
         >
           + Add Review
         </button>
       </div>
 
       {message && (
-        <div className="mb-5 px-4 py-3 bg-neutral-50 border border-neutral-200 text-sm">
+        <div className="mb-5 px-4 py-3 bg-cream-50 border border-ink-100 text-sm">
           {message}
         </div>
       )}
@@ -116,10 +116,10 @@ export default function AdminReviews() {
       )}
 
       {editing && (
-        <div className="bg-white border border-neutral-200 p-6 mb-6 space-y-4">
+        <div className="card p-6 mb-6 space-y-4">
           <div className="grid sm:grid-cols-2 gap-4">
             <div>
-              <label className="block text-[11px] font-bold tracking-[0.2em] uppercase mb-2">
+              <label className="label mb-2">
                 Name
               </label>
               <input
@@ -129,7 +129,7 @@ export default function AdminReviews() {
               />
             </div>
             <div>
-              <label className="block text-[11px] font-bold tracking-[0.2em] uppercase mb-2">
+              <label className="label mb-2">
                 Source
               </label>
               <input
@@ -139,7 +139,7 @@ export default function AdminReviews() {
               />
             </div>
             <div>
-              <label className="block text-[11px] font-bold tracking-[0.2em] uppercase mb-2">
+              <label className="label mb-2">
                 Rating
               </label>
               <select
@@ -155,7 +155,7 @@ export default function AdminReviews() {
               </select>
             </div>
             <div>
-              <label className="block text-[11px] font-bold tracking-[0.2em] uppercase mb-2">
+              <label className="label mb-2">
                 Status
               </label>
               <select
@@ -170,7 +170,7 @@ export default function AdminReviews() {
               </select>
             </div>
             <div className="sm:col-span-2">
-              <label className="block text-[11px] font-bold tracking-[0.2em] uppercase mb-2">
+              <label className="label mb-2">
                 Review text
               </label>
               <textarea
@@ -185,7 +185,7 @@ export default function AdminReviews() {
             <button
               type="button"
               onClick={() => save(editing)}
-              className="px-6 py-3 bg-brand-800 text-white font-oswald text-xs font-bold tracking-[0.2em] uppercase hover:bg-brand-900"
+              className="btn btn-primary"
             >
               Save
             </button>
@@ -194,7 +194,7 @@ export default function AdminReviews() {
               onClick={() => {
                 setEditing(null);
               }}
-              className="px-6 py-3 border border-neutral-300 font-oswald text-xs font-bold tracking-[0.2em] uppercase hover:bg-neutral-50"
+              className="btn btn-secondary"
             >
               Cancel
             </button>
@@ -206,27 +206,27 @@ export default function AdminReviews() {
         {reviews.map((review) => (
           <div
             key={review.id}
-            className="bg-white border border-neutral-200 p-5 flex flex-wrap gap-4 items-start"
+            className="card p-5 flex flex-wrap gap-4 items-start"
           >
             <div className="flex-1 min-w-[220px]">
               <div className="flex flex-wrap items-center gap-2">
-                <h3 className="font-oswald text-lg font-bold uppercase">{review.name}</h3>
-                <span className="text-xs text-neutral-400">{review.source}</span>
+                <h3 className="font-display text-lg text-ink-950">{review.name}</h3>
+                <span className="text-xs text-ink-400">{review.source}</span>
                 <span
-                  className={`px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider border ${
+                  className={`badge border ${
                     review.status === "published"
                       ? "bg-green-50 text-green-700 border-green-200"
-                      : "bg-neutral-100 text-neutral-500 border-neutral-200"
+                      : "bg-cream-100 text-ink-500 border-ink-200"
                   }`}
                 >
                   {review.status}
                 </span>
                 <span className="text-xs" aria-label={`${review.rating} stars`}>
-                  {"â˜…".repeat(review.rating)}
-                  {"â˜†".repeat(5 - review.rating)}
+                  {"★".repeat(review.rating)}
+                  {"☆".repeat(5 - review.rating)}
                 </span>
               </div>
-              <p className="text-neutral-600 text-sm mt-2">{review.text}</p>
+              <p className="text-ink-600 text-sm mt-2">{review.text}</p>
             </div>
             <div className="flex gap-2">
               <button
@@ -234,14 +234,14 @@ export default function AdminReviews() {
                 onClick={() => {
                   setEditing(review);
                 }}
-                className="px-4 py-2 text-xs border border-neutral-300 hover:bg-neutral-50 tracking-widest uppercase"
+                className="px-4 py-2 text-xs border border-ink-200 hover:bg-cream-50 tracking-widest uppercase"
               >
                 Edit
               </button>
               <button
                 type="button"
                 onClick={() => remove(review.id)}
-                className="px-4 py-2 text-xs text-red-600 border border-red-200 hover:bg-red-50 tracking-widest uppercase"
+                className="btn btn-ghost !py-2 text-xs !text-red-600 border-red-200 hover:bg-red-50"
               >
                 Delete
               </button>
@@ -249,8 +249,8 @@ export default function AdminReviews() {
           </div>
         ))}
         {reviews.length === 0 && (
-          <div className="py-16 bg-white border border-neutral-200 text-center">
-            <p className="font-oswald text-2xl font-bold text-neutral-300 uppercase">
+          <div className="py-16 card text-center">
+            <p className="font-display text-2xl text-ink-300">
               No reviews yet
             </p>
           </div>
@@ -261,4 +261,4 @@ export default function AdminReviews() {
 }
 
 const inputCls =
-  "w-full px-3.5 py-2.5 bg-white border border-neutral-300 text-sm focus:outline-none focus:border-brand-700 transition-colors";
+  "input";

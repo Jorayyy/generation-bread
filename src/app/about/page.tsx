@@ -16,43 +16,35 @@ export default async function AboutPage() {
 
   return (
     <>
-      <section className="bg-white">
-        <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-10 pt-14 pb-8">
-          <span className="text-[11px] text-neutral-400 tracking-[0.3em] uppercase block mb-3">
-            About
-          </span>
-          <h1 className="font-oswald text-5xl lg:text-7xl font-bold uppercase tracking-tight">
-            Our Story
+      <section className="bg-cream-50 border-b border-ink-100">
+        <div className="container-site pt-14 pb-10">
+          <span className="eyebrow mb-3">About</span>
+          <h1 className="font-display text-4xl lg:text-5xl text-ink-950">
+            Our story
           </h1>
         </div>
       </section>
 
-      <section className="pb-20 bg-white">
-        <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-10">
+      <section className="section bg-white">
+        <div className="container-site">
           <div className="grid lg:grid-cols-2 gap-14">
             <div className="space-y-5">
-              <span className="text-[11px] text-neutral-400 tracking-[0.3em] uppercase block">
-                The Beginning
-              </span>
-              <h2 className="font-oswald text-3xl lg:text-4xl font-bold uppercase tracking-tight">
-                {business.founded}
-                <br />
-                {business.location.city}
+              <span className="eyebrow">The beginning</span>
+              <h2 className="font-display text-3xl text-ink-950">
+                {business.founded} · {business.location.city}
               </h2>
-              <p className="text-neutral-500 leading-relaxed text-base">
+              <p className="text-ink-600 leading-relaxed">
                 {business.description}
               </p>
             </div>
 
             <div className="space-y-5">
-              <span className="text-[11px] text-neutral-400 tracking-[0.3em] uppercase block">
-                Our Purpose
-              </span>
-              <h2 className="font-oswald text-3xl lg:text-4xl font-bold uppercase tracking-tight">
-                Bread & <span className="text-neutral-400">Craft</span>
+              <span className="eyebrow">Our purpose</span>
+              <h2 className="font-display text-3xl text-ink-950">
+                Bread &amp; craft
               </h2>
-              <p className="text-neutral-500 leading-relaxed">{business.mission}</p>
-              <p className="text-neutral-400 italic text-base border-l-2 border-neutral-200 pl-5">
+              <p className="text-ink-600 leading-relaxed">{business.mission}</p>
+              <p className="text-ink-500 italic font-display text-lg border-l-2 border-brand-300 pl-5">
                 &ldquo;{business.motto}&rdquo;
               </p>
             </div>
@@ -60,30 +52,28 @@ export default async function AboutPage() {
         </div>
       </section>
 
-      <section className="py-20 bg-neutral-50 border-y border-neutral-200">
-        <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-10">
+      <section className="section bg-cream-50 border-y border-ink-100">
+        <div className="container-site">
           <div className="text-center mb-12">
-            <span className="text-[11px] text-neutral-400 tracking-[0.3em] uppercase block mb-3">
-              Values
-            </span>
-            <h2 className="font-oswald text-4xl lg:text-5xl font-bold uppercase tracking-tight">
-              What We Stand For
+            <span className="eyebrow mb-3">Values</span>
+            <h2 className="font-display text-3xl lg:text-4xl text-ink-950">
+              What we stand for
             </h2>
           </div>
 
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {business.values.map((value, i) => (
               <div
                 key={value.title}
-                className="p-7 bg-white border border-neutral-200 hover:shadow-sm transition-all"
+                className="p-7 bg-white border border-ink-100 rounded-2xl hover:shadow-md transition-shadow"
               >
-                <span className="font-oswald text-4xl font-bold text-neutral-100">
+                <span className="font-display text-sm text-brand-500 block mb-4">
                   0{i + 1}
                 </span>
-                <h3 className="font-oswald text-xl font-bold uppercase mt-4 mb-3">
+                <h3 className="font-display text-xl text-ink-950 mb-3">
                   {value.title}
                 </h3>
-                <p className="text-neutral-500 text-sm leading-relaxed">
+                <p className="text-ink-500 text-sm leading-relaxed">
                   {value.description}
                 </p>
               </div>
@@ -92,13 +82,11 @@ export default async function AboutPage() {
         </div>
       </section>
 
-      <section className="py-20 bg-white">
-        <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-10">
+      <section className="section bg-white">
+        <div className="container-site">
           <div className="text-center mb-12">
-            <span className="text-[11px] text-neutral-400 tracking-[0.3em] uppercase block mb-3">
-              Journey
-            </span>
-            <h2 className="font-oswald text-4xl lg:text-5xl font-bold uppercase tracking-tight">
+            <span className="eyebrow mb-3">Journey</span>
+            <h2 className="font-display text-3xl lg:text-4xl text-ink-950">
               Milestones
             </h2>
           </div>
@@ -107,20 +95,20 @@ export default async function AboutPage() {
             {business.milestones.map((milestone, i) => (
               <div
                 key={`${milestone.year}-${i}`}
-                className="flex gap-6 pb-10 border-l border-neutral-200 pl-7 relative group"
+                className="flex gap-6 pb-10 border-l border-ink-200 pl-7 relative group"
               >
                 <span
-                  className="absolute left-0 top-0 w-2 h-2 bg-brand-700 -translate-x-[4.5px] group-hover:scale-150 transition-transform"
+                  className="absolute left-0 top-0 w-2.5 h-2.5 bg-brand-500 rounded-full -translate-x-[5.5px] group-hover:scale-150 transition-transform"
                   aria-hidden="true"
                 />
-                <div className="font-oswald text-sm font-bold text-neutral-400 tracking-widest uppercase w-20 shrink-0 pt-0.5">
+                <div className="font-display text-sm text-brand-600 w-20 shrink-0 pt-0.5">
                   {milestone.year}
                 </div>
                 <div>
-                  <h3 className="font-oswald text-lg font-bold uppercase mb-2">
+                  <h3 className="font-display text-lg text-ink-950 mb-2">
                     {milestone.title}
                   </h3>
-                  <p className="text-neutral-500 text-sm leading-relaxed">
+                  <p className="text-ink-500 text-sm leading-relaxed">
                     {milestone.description}
                   </p>
                 </div>
@@ -130,29 +118,25 @@ export default async function AboutPage() {
         </div>
       </section>
 
-      <section className="py-16 bg-neutral-50 border-t border-neutral-200">
-        <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-10 text-center">
-          <h2 className="font-oswald text-3xl lg:text-4xl font-bold uppercase tracking-tight mb-4">
-            Join the Community
+      <section className="section bg-cream-100 border-t border-ink-100">
+        <div className="container-site text-center">
+          <h2 className="font-display text-3xl lg:text-4xl text-ink-950 mb-4">
+            Join the community
           </h2>
-          <p className="text-neutral-500 mb-8 max-w-lg mx-auto text-sm">
-            Be part of the Generation Bread community. Follow us for fresh bakes,
-            menu specials, and café updates.
+          <p className="text-ink-500 mb-8 max-w-lg mx-auto">
+            Follow us for fresh bakes, menu specials, and café updates.
           </p>
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
             <a
               href={business.social.facebook}
               target="_blank"
               rel="noopener noreferrer"
-              className="px-8 py-4 bg-brand-800 text-white font-oswald text-xs font-bold tracking-[0.2em] uppercase hover:bg-brand-900 transition-colors"
+              className="btn btn-primary"
             >
               Follow on Facebook
             </a>
-            <Link
-              href="/products"
-              className="px-8 py-4 border border-neutral-300 font-oswald text-xs font-bold tracking-[0.2em] uppercase hover:bg-white transition-colors"
-            >
-              Shop Now
+            <Link href="/products" className="btn btn-secondary">
+              Shop now
             </Link>
           </div>
         </div>

@@ -1,6 +1,14 @@
 export type ProductStatus = "active" | "draft" | "archived";
-export type OrderStatus = "pending" | "confirmed" | "shipped" | "delivered" | "cancelled";
+export type OrderStatus =
+  | "pending"
+  | "confirmed"
+  | "preparing"
+  | "ready"
+  | "shipped"
+  | "delivered"
+  | "cancelled";
 export type PaymentMethod = "gcash" | "maya" | "bank" | "cod";
+export type PaymentStatus = "unpaid" | "paid" | "refunded";
 export type FulfillmentMethod = "pickup" | "delivery";
 
 export interface ProductVariant {
@@ -32,6 +40,7 @@ export interface Product {
   variants: ProductVariant[];
   allergens?: string[];
   diet?: string[];
+  ingredients?: string[];
   createdAt: string;
   updatedAt: string;
 }
@@ -94,6 +103,7 @@ export interface Order {
   total: number;
   customer: OrderCustomer;
   paymentMethod: PaymentMethod;
+  paymentStatus?: PaymentStatus;
   fulfillment?: FulfillmentMethod;
   createdAt: string;
   updatedAt: string;

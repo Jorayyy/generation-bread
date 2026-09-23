@@ -24,39 +24,35 @@ export default function AdminShell({ children }: { children: React.ReactNode }) 
   }
 
   return (
-    <div className="min-h-screen bg-neutral-100">
-      <header className="bg-white border-b border-neutral-200 sticky top-0 z-50">
-        <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-10">
+    <div className="min-h-screen bg-cream-50">
+      <header className="bg-white border-b border-ink-100 sticky top-0 z-50">
+        <div className="container-site">
           <div className="flex items-center justify-between h-16">
             <div className="flex items-center gap-3">
               <Link href="/" className="flex items-center gap-2.5">
-                <span className="w-8 h-8 bg-brand-800 flex items-center justify-center font-oswald text-sm font-bold text-white">
-                  MA
+                <span className="w-8 h-8 bg-brand-700 rounded-lg flex items-center justify-center font-display text-sm text-white">
+                  GB
                 </span>
-                <span className="font-oswald text-sm font-bold tracking-[0.18em] uppercase hidden sm:block">
+                <span className="font-display text-base text-ink-950 hidden sm:block">
                   Generation Bread
                 </span>
               </Link>
-              <span className="text-neutral-300" aria-hidden="true">
-                |
-              </span>
-              <span className="font-oswald text-xs font-bold text-neutral-400 tracking-[0.18em] uppercase">
-                Admin
-              </span>
+              <span className="text-ink-200" aria-hidden="true">|</span>
+              <span className="text-sm text-ink-400">Admin</span>
             </div>
 
             <div className="flex items-center gap-3">
               <Link
                 href="/"
                 target="_blank"
-                className="text-neutral-500 hover:text-black text-xs tracking-widest uppercase transition-colors"
+                className="text-ink-500 hover:text-brand-700 text-sm transition-colors"
               >
-                View Site
+                View site
               </Link>
               <button
                 type="button"
                 onClick={handleLogout}
-                className="px-4 py-2 text-xs text-neutral-500 hover:text-black border border-neutral-300 hover:bg-neutral-50 transition-all tracking-widest uppercase"
+                className="btn btn-secondary !py-2 !px-4 text-sm"
               >
                 Logout
               </button>
@@ -65,8 +61,8 @@ export default function AdminShell({ children }: { children: React.ReactNode }) 
         </div>
       </header>
 
-      <div className="bg-white border-b border-neutral-200">
-        <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-10">
+      <div className="bg-white border-b border-ink-100">
+        <div className="container-site">
           <nav className="flex items-center gap-1 py-3 overflow-x-auto scrollbar-hide" aria-label="Admin">
             {links.map((link) => {
               const active =
@@ -77,10 +73,10 @@ export default function AdminShell({ children }: { children: React.ReactNode }) 
                 <Link
                   key={link.href}
                   href={link.href}
-                  className={`px-4 py-2 text-[11px] font-bold tracking-[0.18em] uppercase whitespace-nowrap transition-all ${
+                  className={`px-4 py-2 text-sm font-medium whitespace-nowrap rounded-full transition-colors ${
                     active
-                      ? "bg-brand-800 text-white"
-                      : "text-neutral-400 hover:text-black hover:bg-neutral-100"
+                      ? "bg-brand-700 text-white"
+                      : "text-ink-500 hover:text-brand-700 hover:bg-ink-50"
                   }`}
                 >
                   {link.label}
@@ -91,7 +87,7 @@ export default function AdminShell({ children }: { children: React.ReactNode }) 
         </div>
       </div>
 
-      <main className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-10 py-10">{children}</main>
+      <main className="container-site py-10">{children}</main>
     </div>
   );
 }

@@ -90,10 +90,10 @@ export default function AdminCategories() {
     <div>
       <div className="flex flex-wrap items-start justify-between gap-4 mb-9">
         <div>
-          <h1 className="font-oswald text-4xl font-bold uppercase tracking-tight">
+          <h1 className="font-display text-3xl lg:text-4xl text-ink-950">
             Categories
           </h1>
-          <p className="text-neutral-500 mt-2 text-sm">Organize products into collections</p>
+          <p className="text-ink-500 mt-2 text-sm">Organize products into collections</p>
         </div>
         <button
           type="button"
@@ -101,14 +101,14 @@ export default function AdminCategories() {
             setEditing(empty);
             setIsNew(true);
           }}
-          className="px-6 py-3 bg-brand-800 text-white font-oswald text-xs font-bold tracking-[0.2em] uppercase hover:bg-brand-900 transition-colors"
+          className="btn btn-primary"
         >
           + Add Category
         </button>
       </div>
 
       {message && (
-        <div className="mb-5 px-4 py-3 bg-neutral-50 border border-neutral-200 text-sm">
+        <div className="mb-5 px-4 py-3 bg-cream-50 border border-ink-100 text-sm">
           {message}
         </div>
       )}
@@ -119,13 +119,13 @@ export default function AdminCategories() {
       )}
 
       {editing && (
-        <div className="bg-white border border-neutral-200 p-6 mb-6 space-y-4">
-          <h2 className="font-oswald text-lg font-bold uppercase">
+        <div className="card p-6 mb-6 space-y-4">
+          <h2 className="font-display text-lg text-ink-950">
             {isNew ? "New Category" : `Edit: ${editing.name}`}
           </h2>
           <div className="grid sm:grid-cols-2 gap-4">
             <div>
-              <label className="block text-[11px] font-bold tracking-[0.2em] uppercase mb-2">
+              <label className="label mb-2">
                 Name
               </label>
               <input
@@ -135,7 +135,7 @@ export default function AdminCategories() {
               />
             </div>
             <div>
-              <label className="block text-[11px] font-bold tracking-[0.2em] uppercase mb-2">
+              <label className="label mb-2">
                 Slug
               </label>
               <input
@@ -146,7 +146,7 @@ export default function AdminCategories() {
               />
             </div>
             <div className="sm:col-span-2">
-              <label className="block text-[11px] font-bold tracking-[0.2em] uppercase mb-2">
+              <label className="label mb-2">
                 Description
               </label>
               <textarea
@@ -157,7 +157,7 @@ export default function AdminCategories() {
               />
             </div>
             <div>
-              <label className="block text-[11px] font-bold tracking-[0.2em] uppercase mb-2">
+              <label className="label mb-2">
                 Order
               </label>
               <input
@@ -168,7 +168,7 @@ export default function AdminCategories() {
               />
             </div>
             <div>
-              <label className="block text-[11px] font-bold tracking-[0.2em] uppercase mb-2">
+              <label className="label mb-2">
                 Status
               </label>
               <select
@@ -187,7 +187,7 @@ export default function AdminCategories() {
             <button
               type="button"
               onClick={() => save(editing)}
-              className="px-6 py-3 bg-brand-800 text-white font-oswald text-xs font-bold tracking-[0.2em] uppercase hover:bg-brand-900"
+              className="btn btn-primary"
             >
               Save
             </button>
@@ -197,7 +197,7 @@ export default function AdminCategories() {
                 setEditing(null);
                 setIsNew(false);
               }}
-              className="px-6 py-3 border border-neutral-300 font-oswald text-xs font-bold tracking-[0.2em] uppercase hover:bg-neutral-50"
+              className="btn btn-secondary"
             >
               Cancel
             </button>
@@ -209,23 +209,23 @@ export default function AdminCategories() {
         {categories.map((category) => (
           <div
             key={category.id}
-            className="bg-white border border-neutral-200 p-5 flex flex-wrap items-center gap-4"
+            className="card p-5 flex flex-wrap items-center gap-4"
           >
             <div className="flex-1 min-w-[200px]">
               <div className="flex items-center gap-2">
-                <h3 className="font-oswald text-lg font-bold uppercase">{category.name}</h3>
+                <h3 className="font-display text-lg text-ink-950">{category.name}</h3>
                 <span
-                  className={`px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider border ${
+                  className={`badge border ${
                     category.status === "active"
                       ? "bg-green-50 text-green-700 border-green-200"
-                      : "bg-neutral-100 text-neutral-500 border-neutral-200"
+                      : "bg-cream-100 text-ink-500 border-ink-200"
                   }`}
                 >
                   {category.status}
                 </span>
               </div>
-              <p className="text-neutral-500 text-sm mt-1">{category.description}</p>
-              <p className="text-neutral-400 text-xs mt-0.5">
+              <p className="text-ink-500 text-sm mt-1">{category.description}</p>
+              <p className="text-ink-400 text-xs mt-0.5">
                 /{category.slug} · order {category.order}
               </p>
             </div>
@@ -236,14 +236,14 @@ export default function AdminCategories() {
                   setEditing(category);
                   setIsNew(false);
                 }}
-                className="px-4 py-2 text-xs border border-neutral-300 hover:bg-neutral-50 tracking-widest uppercase"
+                className="px-4 py-2 text-xs border border-ink-200 hover:bg-cream-50 tracking-widest uppercase"
               >
                 Edit
               </button>
               <button
                 type="button"
                 onClick={() => remove(category.id)}
-                className="px-4 py-2 text-xs text-red-600 border border-red-200 hover:bg-red-50 tracking-widest uppercase"
+                className="btn btn-ghost !py-2 text-xs !text-red-600 border-red-200 hover:bg-red-50"
               >
                 Delete
               </button>
@@ -256,4 +256,4 @@ export default function AdminCategories() {
 }
 
 const inputCls =
-  "w-full px-3.5 py-2.5 bg-white border border-neutral-300 text-sm focus:outline-none focus:border-brand-700 transition-colors";
+  "input";

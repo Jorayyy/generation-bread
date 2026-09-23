@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
+import Link from "next/link";
 
 export default function GlobalError({
   error,
@@ -14,22 +15,23 @@ export default function GlobalError({
   }, [error]);
 
   return (
-    <div className="min-h-[70vh] flex items-center justify-center px-6">
+    <div className="min-h-[70vh] bg-cream-50 flex items-center justify-center px-6 py-24">
       <div className="text-center max-w-md">
-        <p className="font-oswald text-7xl font-bold text-neutral-200 mb-4">500</p>
-        <h1 className="font-oswald text-2xl font-bold uppercase tracking-tight mb-3">
+        <p className="font-display text-7xl text-ink-200 mb-4">500</p>
+        <h1 className="font-display text-3xl text-ink-950 mb-3">
           Something went wrong
         </h1>
-        <p className="text-neutral-500 text-sm mb-8">
+        <p className="text-ink-500 text-sm mb-9">
           An unexpected error occurred. Please try again.
         </p>
-        <button
-          type="button"
-          onClick={reset}
-          className="px-8 py-4 bg-brand-800 text-white font-oswald text-xs font-bold tracking-[0.2em] uppercase hover:bg-brand-900 transition-colors"
-        >
-          Try Again
-        </button>
+        <div className="flex flex-col sm:flex-row gap-3 justify-center">
+          <button type="button" onClick={reset} className="btn btn-primary">
+            Try again
+          </button>
+          <Link href="/" className="btn btn-secondary">
+            Back to home
+          </Link>
+        </div>
       </div>
     </div>
   );
